@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{43BFC27C-3000-43BF-B1BD-DBF3A677345F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PohodaConnector", "PohodaConnector\PohodaConnector.csproj", "{46DDCA77-73F9-47EC-8B70-E596C1652F94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpandoConnector", "ExpandoConnector\ExpandoConnector.csproj", "{DB59938C-CF56-4B1D-A522-00AA0DFDB473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketaConnector", "PacketaConnector\PacketaConnector.csproj", "{C7B99574-3118-421D-97A9-D31C60FAABD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43BFC27C-3000-43BF-B1BD-DBF3A677345F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BFC27C-3000-43BF-B1BD-DBF3A677345F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BFC27C-3000-43BF-B1BD-DBF3A677345F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BFC27C-3000-43BF-B1BD-DBF3A677345F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DDCA77-73F9-47EC-8B70-E596C1652F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DDCA77-73F9-47EC-8B70-E596C1652F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DDCA77-73F9-47EC-8B70-E596C1652F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DDCA77-73F9-47EC-8B70-E596C1652F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB59938C-CF56-4B1D-A522-00AA0DFDB473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB59938C-CF56-4B1D-A522-00AA0DFDB473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB59938C-CF56-4B1D-A522-00AA0DFDB473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB59938C-CF56-4B1D-A522-00AA0DFDB473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B99574-3118-421D-97A9-D31C60FAABD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B99574-3118-421D-97A9-D31C60FAABD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B99574-3118-421D-97A9-D31C60FAABD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B99574-3118-421D-97A9-D31C60FAABD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32327CAA-FDAE-4015-83BA-1B9059F49AA3}
+	EndGlobalSection
+EndGlobal
