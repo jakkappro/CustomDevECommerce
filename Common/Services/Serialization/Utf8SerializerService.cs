@@ -1,12 +1,12 @@
 ﻿using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Common.Interfaces;
 
 namespace Common.Services.Serialization;
 
 public class Utf8SerializerService : ISerializer
 {
-    // only utf-8 mode for now
     public string Serialize<T>(T data)
     {
         var x = new XmlSerializer(data.GetType());

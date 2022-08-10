@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\XMLFeed\" />
+    <Folder Include="Services\ImageDownloadService\" />
   </ItemGroup>
 
 </Project>
