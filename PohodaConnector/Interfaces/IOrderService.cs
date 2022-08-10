@@ -9,4 +9,6 @@ public interface IOrderService
     bool Exist(string id);
 
     void UpdateOrder(string id, bool executed = false);
+
+    void Initialize(short lookBackDays);
 }

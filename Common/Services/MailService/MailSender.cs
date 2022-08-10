@@ -1,4 +1,5 @@
 ﻿using Common.Interfaces;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Mail;
 
@@ -6,18 +7,24 @@ namespace Common.Services.MailService;
 
 public class MailSender : IMailSender
 {
-    private readonly string _cc;
-    private readonly string _from;
-    private readonly string _password;
-    private readonly string _to;
+    private string _cc;
+    private string _from;
+    private string _password;
+    private readonly ILogger<MailSender> _logger;
+    private string _to;
 
-    private string messageTemplate;
-    private string rowTemplate;
-    private string itemTemplate;
+    private string _messageTemplate;
+    private string _rowTemplate;
+    private string _itemTemplate;
 
-    private string emailRows;
+    private string _emailRows;
 
-    public MailSender(string from, string to, string cc, string password)
+    public MailSender(ILogger<MailSender> logger)
+    {
+        _logger = logger;
+    }
+
+    public void SetInformation(string from, string to, string cc, string password)
     {
         _from = from;
         _to = to;
@@ -25,48 +32,47 @@ public class MailSender : IMailSender
         _password = password;
     }
 
-
     public void LoadTemplatesFromFile(string messageTemplatePath, string rowTemplatePath, string itemTemplatePath)
     {
-        if (File.Exists(messageTemplatePath)) messageTemplate = File.ReadAllText(messageTemplatePath);
+        if (File.Exists(messageTemplatePath)) _messageTemplate = File.ReadAllText(messageTemplatePath);
 
-        if (File.Exists(rowTemplatePath)) rowTemplate = File.ReadAllText(rowTemplatePath);
+        if (File.Exists(rowTemplatePath)) _rowTemplate = File.ReadAllText(rowTemplatePath);
 
-        if (File.Exists(itemTemplatePath)) itemTemplate = File.ReadAllText(itemTemplatePath);
+        if (File.Exists(itemTemplatePath)) _itemTemplate = File.ReadAllText(itemTemplatePath);
     }
 
     public void LoadTemplatesFromFile()
     {
         if (File.Exists("./Templates/messageTemplate.html"))
-            messageTemplate = File.ReadAllText("./Templates/messageTemplate.html");
+            _messageTemplate = File.ReadAllText("./Templates/messageTemplate.html");
 
         if (File.Exists("./Templates/itemTemplate.html"))
-            rowTemplate = File.ReadAllText("./Templates/itemTemplate.html");
+            _rowTemplate = File.ReadAllText("./Templates/itemTemplate.html");
 
         if (File.Exists("./Templates/rowTemplate.html"))
-            itemTemplate = File.ReadAllText("./Templates/rowTemplate.html");
+            _itemTemplate = File.ReadAllText("./Templates/rowTemplate.html");
     }
 
     public void AddRowFromTemplate(Order order)
     {
-        emailRows += rowTemplate;
-        emailRows = emailRows.Replace("[[OrderId]]", order.OrderId);
-        emailRows = emailRows.Replace("[[purchaseDate]]", order.PurchaseDate);
-        emailRows = emailRows.Replace("[[latestShipDate]]", order.PurchaseDate);
-        emailRows = emailRows.Replace("[[totalPrice]]", order.TotalPrice);
-        emailRows = emailRows.Replace("[[companyName]]", order.CompanyName);
-        emailRows = emailRows.Replace("[[name]]", order.Name);
-        emailRows = emailRows.Replace("[[address]]", order.Address);
-        emailRows = emailRows.Replace("[[city]]", order.City);
-        emailRows = emailRows.Replace("[[zip]]", order.Zip);
-        emailRows = emailRows.Replace("[[country]]", order.Country);
-        emailRows = emailRows.Replace("[[PohodaId", order.PohodaId);
+        _emailRows += _rowTemplate;
+        _emailRows = _emailRows.Replace("[[OrderId]]", order.OrderId);
+        _emailRows = _emailRows.Replace("[[purchaseDate]]", order.PurchaseDate);
+        _emailRows = _emailRows.Replace("[[latestShipDate]]", order.PurchaseDate);
+        _emailRows = _emailRows.Replace("[[totalPrice]]", order.TotalPrice);
+        _emailRows = _emailRows.Replace("[[companyName]]", order.CompanyName);
+        _emailRows = _emailRows.Replace("[[name]]", order.Name);
+        _emailRows = _emailRows.Replace("[[address]]", order.Address);
+        _emailRows = _emailRows.Replace("[[city]]", order.City);
+        _emailRows = _emailRows.Replace("[[zip]]", order.Zip);
+        _emailRows = _emailRows.Replace("[[country]]", order.Country);
+        _emailRows = _emailRows.Replace("[[PohodaId", order.PohodaId);
 
         var data = "";
 
         foreach (var item in order.Items)
         {
-            var itemData = itemTemplate;
+            var itemData = _itemTemplate;
             itemData = itemData.Replace("[[ID]]", item.ItemId);
             itemData = itemData.Replace("[[EAN]]", item.Ean);
             itemData = itemData.Replace("[[URL]]", item.Url);
@@ -74,7 +80,7 @@ public class MailSender : IMailSender
             data += itemData;
         }
 
-        emailRows = emailRows.Replace("[[items]]", data);
+        _emailRows = _emailRows.Replace("[[items]]", data);
     }
 
     public void SendMail(string body)
@@ -99,12 +105,13 @@ public class MailSender : IMailSender
         }
         catch (Exception)
         {
-            Console.WriteLine("Error while sending mail :(");
+            _logger.LogError("Couldn't send mail.");
+            throw;
         }
     }
 
     public void SendMail()
     {
-        SendMail(messageTemplate.Replace("[[items]]", emailRows));
+        SendMail(_messageTemplate.Replace("[[items]]", _emailRows));
     }
 }

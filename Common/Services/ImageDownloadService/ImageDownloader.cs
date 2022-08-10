@@ -1,21 +1,24 @@
 ﻿using Common.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Services.ImageDownloadService;
 
 public class ImageDownloader : IDownloader
 {
-    private readonly HttpClient client;
+    private readonly HttpClient _client;
+    private readonly ILogger<ImageDownloader> _logger;
 
-    public ImageDownloader(HttpClient client)
+    public ImageDownloader(HttpClient client, ILogger<ImageDownloader> logger)
     {
-        this.client = client;
+        this._client = client;
+        _logger = logger;
     }
 
     public async void Download(string url, string destination)
     {
         try
         {
-            var fileBytes = await client.GetByteArrayAsync(url);
+            var fileBytes = await _client.GetByteArrayAsync(url);
             if (File.Exists(destination))
                 return;
 
@@ -25,8 +28,8 @@ public class ImageDownloader : IDownloader
         }
         catch (Exception e)
         {
-            Console.WriteLine(
-                $"Failed to download image, path {url}, message {e.Message}");
+            _logger.LogError(e, "Error downloading image, url: {url}", url);
+            throw;
         }
     }
 }

@@ -1,18 +1,21 @@
 ﻿using Common.Interfaces;
 using ExpandoConnector.DTO.ExpandoFeed;
 using ExpandoConnector.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace ExpandoConnector.Services;
 
-public class OrderService : IOrder
+public class ExpandoOrderService : IOrder
 {
     private readonly HttpClient _client;
     private readonly IXmlFeedParser _parser;
+    private readonly ILogger<ExpandoOrderService> _logger;
 
-    public OrderService(HttpClient client, IXmlFeedParser parser)
+    public ExpandoOrderService(HttpClient client, IXmlFeedParser parser, ILogger<ExpandoOrderService> logger)
     {
         _client = client;
         _parser = parser;
+        _logger = logger;
     }
 
     public async Task<GetExpandoFeedRequest.orders> GetOrders(int numberOfDays)

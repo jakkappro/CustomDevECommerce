@@ -10,7 +10,10 @@
     <Folder Include="DTO\PrehomeFeed\" />
     <Folder Include="Mappers\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,25 +1,38 @@
-﻿using Common.Services.Serialization;
+﻿using Common.Interfaces;
+using Microsoft.Extensions.Logging;
 using PohodaConnector.Builders.CreateOrder;
 using PohodaConnector.Builders.Orders;
 using PohodaConnector.DTO.GetOrdersByDate;
 using PohodaConnector.Interfaces;
 
-
 namespace PohodaConnector.Services.OrderService;
 
 public class OrderService : IOrderService
 {
-    private readonly IAccountingSoftware _mServer;
+    private readonly IAccountingSoftware _server;
     private List<GetOrdersByDateResponse.listOrderOrder> _existingOrders;
+    private readonly ILogger<OrderService> _logger;
     private readonly ISerializer _serializer;
 
-    public async Task<OrderService> CreateService(short lookBackDays)
+    public OrderService(ILogger<OrderService> logger, ISerializer serializer, IAccountingSoftware server)
     {
-        var service = new OrderService();
-        service._mServer.StartServer();
+        _logger = logger;
+        _serializer = serializer;
+        _server = server;
+    }
 
-        if (!await service._mServer.IsConnectionAvailable(3))
-            throw new ArgumentNullException("No _mServer :(");
+    public async void Initialize(short lookBackDays)
+    {
+        _server.Initialize("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"",
+            "http://127.0.0.1:5336", "admin", "acecom", 1000);
+
+        _server.StartServer();
+
+        if (!await _server.IsConnectionAvailable(3))
+        {
+            _logger.LogError("Can't connect to server.");
+            throw new ArgumentNullException();
+        }
 
         var getOrdersByDateRequest = new GetOrdersByDateRequestBuilder()
             .WithDate(lookBackDays)
@@ -27,18 +40,8 @@ public class OrderService : IOrderService
 
         _existingOrders =
             (_serializer.Deserialize<GetOrdersByDateResponse.responsePack>(
-                    await service._mServer.SendRequest(_serializer.Serialize(getOrdersByDateRequest)))
+                    await _server.SendRequest(_serializer.Serialize(getOrdersByDateRequest)))
                 .responsePackItem.listOrder.order ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
-
-        return service;
-    }
-
-    private OrderService()
-    {
-        _mServer = new MServer.MServer("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"",
-            "http://127.0.0.1:5336", "admin", "acecom", 1000);
-
-        _serializer = new Utf8SerializerService();
     }
 
     public async void CreateOrderAsync(CreateOrderData createOrderData)
@@ -47,7 +50,7 @@ public class OrderService : IOrderService
 
         var str = _serializer.Serialize(order);
 
-        await _mServer.SendRequest(str);
+        await _server.SendRequest(str);
     }
 
     public bool Exist(string id)
