@@ -10,7 +10,13 @@
     <Folder Include="DTO\GenerateLabels\" />
     <Folder Include="DTO\CreateOrders\" />
     <Folder Include="Mappers\" />
+    <Folder Include="Builders\" />
+    <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>
