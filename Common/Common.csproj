@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\MailService\Templates\" />
     <Folder Include="Services\XMLFeed\" />
   </ItemGroup>
 
