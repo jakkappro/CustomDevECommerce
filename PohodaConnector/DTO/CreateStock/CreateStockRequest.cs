@@ -8,14 +8,12 @@ namespace PohodaConnector.DTO.CreateStock;
 
 public class CreateStockRequest
 {
-
     [Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
-
         private dataPackDataPackItem[] dataPackItemField;
 
         private string idField;
@@ -76,7 +74,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-
         private stock stockField;
 
         private string idField;
@@ -111,7 +108,6 @@ public class CreateStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd", IsNullable = false)]
     public class stock
     {
-
         private stockStockHeader stockHeaderField;
 
         private decimal versionField;
@@ -135,7 +131,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeader
     {
-
         private string stockTypeField;
 
         private uint codeField;
@@ -342,7 +337,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderStorage
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -358,7 +352,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderTypePrice
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -374,7 +367,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderSupplier
     {
-
         private byte idField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -390,7 +382,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderPictures
     {
-
         private stockStockHeaderPicturesPicture pictureField;
 
         public stockStockHeaderPicturesPicture picture
@@ -405,7 +396,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderPicturesPicture
     {
-
         private string filepathField;
 
         private string descriptionField;
@@ -437,7 +427,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderRelatedLinks
     {
-
         private stockStockHeaderRelatedLinksRelatedLink relatedLinkField;
 
         public stockStockHeaderRelatedLinksRelatedLink relatedLink
@@ -452,7 +441,6 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderRelatedLinksRelatedLink
     {
-
         private string addressURLField;
 
         private string descriptionField;
@@ -477,6 +465,4 @@ public class CreateStockRequest
             set => orderField = value;
         }
     }
-
-
 }

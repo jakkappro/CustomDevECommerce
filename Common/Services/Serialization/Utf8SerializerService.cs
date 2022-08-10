@@ -1,7 +1,6 @@
-﻿using System.Text;
+﻿using Common.Interfaces;
 using System.Xml;
 using System.Xml.Serialization;
-using Common.Interfaces;
 
 namespace Common.Services.Serialization;
 
@@ -21,11 +20,7 @@ public class Utf8SerializerService : ISerializer
 
     public T Deserialize<T>(string xml)
     {
-
-        if (string.IsNullOrEmpty(xml))
-        {
-            return default(T) ?? throw new InvalidOperationException();
-        }
+        if (string.IsNullOrEmpty(xml)) return default(T) ?? throw new InvalidOperationException();
 
         var serializer = new XmlSerializer(typeof(T));
 
@@ -36,4 +31,3 @@ public class Utf8SerializerService : ISerializer
         return (T)serializer.Deserialize(xmlReader) ?? throw new InvalidOperationException();
     }
 }
-

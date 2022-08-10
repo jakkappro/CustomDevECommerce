@@ -1,7 +1,6 @@
-﻿using System.Globalization;
+﻿using Common.Interfaces;
 using System.Net;
 using System.Net.Mail;
-using Common.Interfaces;
 
 namespace Common.Services.MailService;
 
@@ -29,38 +28,23 @@ public class MailSender : IMailSender
 
     public void LoadTemplatesFromFile(string messageTemplatePath, string rowTemplatePath, string itemTemplatePath)
     {
-        if (File.Exists(messageTemplatePath))
-        {
-            messageTemplate = File.ReadAllText(messageTemplatePath);
-        }
+        if (File.Exists(messageTemplatePath)) messageTemplate = File.ReadAllText(messageTemplatePath);
 
-        if (File.Exists(rowTemplatePath))
-        {
-            rowTemplate = File.ReadAllText(rowTemplatePath);
-        }
+        if (File.Exists(rowTemplatePath)) rowTemplate = File.ReadAllText(rowTemplatePath);
 
-        if (File.Exists(itemTemplatePath))
-        {
-            itemTemplate = File.ReadAllText(itemTemplatePath);
-        }
+        if (File.Exists(itemTemplatePath)) itemTemplate = File.ReadAllText(itemTemplatePath);
     }
 
     public void LoadTemplatesFromFile()
     {
         if (File.Exists("./Templates/messageTemplate.html"))
-        {
             messageTemplate = File.ReadAllText("./Templates/messageTemplate.html");
-        }
 
         if (File.Exists("./Templates/itemTemplate.html"))
-        {
             rowTemplate = File.ReadAllText("./Templates/itemTemplate.html");
-        }
 
         if (File.Exists("./Templates/rowTemplate.html"))
-        {
             itemTemplate = File.ReadAllText("./Templates/rowTemplate.html");
-        }
     }
 
     public void AddRowFromTemplate(Order order)
@@ -121,6 +105,6 @@ public class MailSender : IMailSender
 
     public void SendMail()
     {
-       SendMail(messageTemplate.Replace("[[items]]", emailRows));
+        SendMail(messageTemplate.Replace("[[items]]", emailRows));
     }
 }

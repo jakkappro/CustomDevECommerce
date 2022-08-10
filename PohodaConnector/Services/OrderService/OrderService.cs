@@ -1,8 +1,8 @@
-﻿using PohodaConnector.Builders.CreateOrder;
-using PohodaConnector.Interfaces;
-using Common.Services.Serialization;
+﻿using Common.Services.Serialization;
+using PohodaConnector.Builders.CreateOrder;
 using PohodaConnector.Builders.Orders;
 using PohodaConnector.DTO.GetOrdersByDate;
+using PohodaConnector.Interfaces;
 
 
 namespace PohodaConnector.Services.OrderService;
@@ -29,7 +29,7 @@ public class OrderService : IOrderService
             (_serializer.Deserialize<GetOrdersByDateResponse.responsePack>(
                     await service._mServer.SendRequest(_serializer.Serialize(getOrdersByDateRequest)))
                 .responsePackItem.listOrder.order ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
-        
+
         return service;
     }
 
@@ -37,7 +37,7 @@ public class OrderService : IOrderService
     {
         _mServer = new MServer.MServer("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"",
             "http://127.0.0.1:5336", "admin", "acecom", 1000);
-        
+
         _serializer = new Utf8SerializerService();
     }
 

@@ -46,7 +46,8 @@ public class GetOrdersByDateRequestBuilder
 
     public GetOrdersByDateRequestBuilder WithDate(short lookBackDays)
     {
-        _order.dataPackItem.listOrderRequest.requestOrder.filter.dateFrom = (DateTime.Today - TimeSpan.FromDays(lookBackDays)).ToString("yyyy-MM-dd");
+        _order.dataPackItem.listOrderRequest.requestOrder.filter.dateFrom =
+            (DateTime.Today - TimeSpan.FromDays(lookBackDays)).ToString("yyyy-MM-dd");
         _order.dataPackItem.listOrderRequest.requestOrder.filter.dateTill = DateTime.Now.ToString("yyyy-MM-dd");
         return this;
     }

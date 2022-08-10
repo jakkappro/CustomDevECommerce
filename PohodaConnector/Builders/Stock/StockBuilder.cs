@@ -1,5 +1,4 @@
-﻿using PohodaConnector.DTO.CreateOrder;
-using PohodaConnector.DTO.CreateStock;
+﻿using PohodaConnector.DTO.CreateStock;
 using PohodaConnector.Services.StockService;
 
 namespace PohodaConnector.Builders.Stock;
@@ -58,7 +57,7 @@ public class StockBuilder
                                 id = 1
                             },
 
-                            note = "Importovane z xml",
+                            note = "Importovane z xml"
                         }
                     }
                 }
@@ -129,7 +128,7 @@ public class StockBuilder
             {
                 filepath = picture,
                 @default = true,
-                description = "obrazok produktu",
+                description = "obrazok produktu"
             }
         };
         return this;

@@ -73,7 +73,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-
         private order orderField;
 
         private string idField;
@@ -108,7 +107,6 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/order.xsd", IsNullable = false)]
     public class order
     {
-
         private orderOrderHeader orderHeaderField;
 
         private orderOrderItem[] orderDetailField;
@@ -149,7 +147,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeader
     {
-
         private string orderTypeField;
 
         private string numberOrderField;
@@ -279,7 +276,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderPartnerIdentity
     {
-
         private address addressField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -296,7 +292,6 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class address
     {
-
         private string? companyField;
 
         private string divisionField;
@@ -391,7 +386,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
     public class addressCountry
     {
-
         private string idsField;
 
         public string ids
@@ -406,7 +400,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderPaymentType
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -422,7 +415,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderPriceLevel
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -438,7 +430,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderMOSS
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -454,7 +445,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderEvidentiaryResourcesMOSS
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -470,7 +460,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderNumber
     {
-
         private string numberRequestedField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -486,7 +475,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeaderCarrier
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -502,7 +490,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderItem
     {
-
         private string? textField;
 
         private byte quantityField;
@@ -573,7 +560,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderItemHomeCurrency
     {
-
         private decimal unitPriceField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -589,7 +575,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderItemStockItem
     {
-
         private stockItem? stockItemField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -606,7 +591,6 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class stockItem
     {
-
         private string? eANField;
 
         public string? EAN
@@ -621,7 +605,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderItemTypeServiceMOSS
     {
-
         private string idsField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
@@ -637,7 +620,6 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderSummary
     {
-
         private string roundingDocumentField;
 
         public string roundingDocument
@@ -646,7 +628,4 @@ public class CreateOrderRequest
             set => roundingDocumentField = value;
         }
     }
-
-
-
 }

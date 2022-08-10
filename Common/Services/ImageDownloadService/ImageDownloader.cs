@@ -16,9 +16,9 @@ public class ImageDownloader : IDownloader
         try
         {
             var fileBytes = await client.GetByteArrayAsync(url);
-            if (File.Exists(destination)) 
+            if (File.Exists(destination))
                 return;
-            
+
             await using var fs = File.Create(destination);
             await fs.WriteAsync(fileBytes);
             fs.Close();

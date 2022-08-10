@@ -4,17 +4,16 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ExpandoConnector.DTO.GetFeed;
+namespace ExpandoConnector.DTO.ExpandoFeed;
 
-public class GetFeedRequest
-{   
+public class GetExpandoFeedRequest
+{
     [Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class orders
     {
-
         private ordersOrder[] orderField;
 
 
@@ -31,7 +30,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrder
     {
-
         private string orderIdField;
 
         private string orderStatusField;
@@ -300,7 +298,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderCustomer
     {
-
         private string companyNameField;
 
         private string firstnameField;
@@ -379,7 +376,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderCustomerAddress
     {
-
         private string address1Field;
 
         private string address2Field;
@@ -449,7 +445,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItem
     {
-
         private uint itemIdField;
 
         private object externalIdField;
@@ -618,7 +613,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItemLineItemPrice
     {
-
         private string taxField;
 
         private string taxRatePercentField;
@@ -661,7 +655,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItemLineItemDiscount
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -704,7 +697,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItemDeliveryPrice
     {
-
         private string taxField;
 
         private object taxRatePercentField;
@@ -747,7 +739,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItemDeliveryDiscount
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -790,7 +781,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItemMarketplaceCommission
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -833,7 +823,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPrice
     {
-
         private ordersOrderPriceDelivery deliveryField;
 
         private ordersOrderPriceItems itemsField;
@@ -885,7 +874,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPriceDelivery
     {
-
         private string taxField;
 
         private object taxRatePercentField;
@@ -928,7 +916,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPriceItems
     {
-
         private string taxField;
 
         private object taxRatePercentField;
@@ -971,7 +958,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPricePayment
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -1014,7 +1000,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPriceTotal
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -1057,7 +1042,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPriceTotalDiscount
     {
-
         private object taxField;
 
         private object taxRatePercentField;
@@ -1100,7 +1084,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPayment
     {
-
         private string paymentMethodField;
 
         private ordersOrderPaymentCashOnDelivery cashOnDeliveryField;
@@ -1125,7 +1108,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPaymentCashOnDelivery
     {
-
         private object toPayField;
 
         private object servicePriceField;
@@ -1150,7 +1132,6 @@ public class GetFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderDelivery
     {
-
         private object shippingCarrierField;
 
         private object shippingCarrierServiceField;

@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using PohodaConnector.Interfaces;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Xml;
-using PohodaConnector.Interfaces;
 
 namespace PohodaConnector.Services.MServer;
 

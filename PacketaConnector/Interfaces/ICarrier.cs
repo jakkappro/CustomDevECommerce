@@ -9,6 +9,4 @@ public interface ICarrier
     void GetLabel();
 
     void GetPackageInfo();
-
-    
 }

@@ -9,7 +9,7 @@ public class PacketaCarrier : ICarrier
     private readonly ISerializer _serializer;
     private readonly PacketBuilder _builder;
     private readonly HttpClient _client;
-    
+
     public PacketaCarrier(PacketBuilder builder, HttpClient client, ISerializer serializer)
     {
         _serializer = serializer;
@@ -19,7 +19,8 @@ public class PacketaCarrier : ICarrier
 
     public void CreatePackage(Packet packet)
     {
-        _client.PostAsync("https://www.zasilkovna.cz/api/rest/", new StringContent(_serializer.Serialize(_builder.BuildFromCreteOrderData(packet))));
+        _client.PostAsync("https://www.zasilkovna.cz/api/rest/",
+            new StringContent(_serializer.Serialize(_builder.BuildFromCreteOrderData(packet))));
     }
 
     public void GetLabel()

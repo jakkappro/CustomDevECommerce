@@ -1,5 +1,4 @@
-﻿using ExpandoFeedTransformer;
-using PohodaConnector.DTO.GetStock;
+﻿using PohodaConnector.DTO.GetStock;
 
 namespace PohodaConnector.Builders.Stock;
 

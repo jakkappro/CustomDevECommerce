@@ -79,9 +79,7 @@ public class OrderBuilder
             .SetExecuted(true);
 
         foreach (var data in createOrderData.OrderItem)
-        {
             order.AddOrderDetailItem(data.Quantity, data.Ean, data.Price, data.Text);
-        }
 
         return order.Build();
     }
@@ -209,8 +207,7 @@ public class OrderBuilder
             {
                 ids = TypeServiceMoss
             },
-            payVAT = true,
-
+            payVAT = true
         };
 
         _items.Add(item);

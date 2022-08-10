@@ -14,7 +14,6 @@ public class GetStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
-
         private dataPackDataPackItem dataPackItemField;
 
         private string idField;
@@ -74,7 +73,6 @@ public class GetStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-
         private listStockRequest listStockRequestField;
 
         private string idField;
@@ -109,7 +107,6 @@ public class GetStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd", IsNullable = false)]
     public class listStockRequest
     {
-
         private listStockRequestRequestStock? requestStockField;
 
         private decimal versionField;
@@ -142,7 +139,6 @@ public class GetStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd")]
     public class listStockRequestRequestStock
     {
-
         private filter filterField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/filter.xsd")]
@@ -159,7 +155,6 @@ public class GetStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/filter.xsd", IsNullable = false)]
     public class filter
     {
-
         private string codeField;
 
         public string code
@@ -168,6 +163,4 @@ public class GetStockRequest
             set => codeField = value;
         }
     }
-
-
 }

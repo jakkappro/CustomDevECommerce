@@ -1,6 +1,4 @@
-﻿using PohodaConnector.DTO.CreateOrder;
-
-namespace PohodaConnector.Services.OrderService;
+﻿namespace PohodaConnector.Services.OrderService;
 
 public class CreateOrderData
 {

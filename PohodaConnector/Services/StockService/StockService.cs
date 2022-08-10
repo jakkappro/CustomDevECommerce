@@ -1,6 +1,5 @@
 ﻿using Common.Services.Serialization;
 using PohodaConnector.Builders.Stock;
-using PohodaConnector.DTO.CreateStock;
 using PohodaConnector.DTO.GetStock;
 using PohodaConnector.Interfaces;
 

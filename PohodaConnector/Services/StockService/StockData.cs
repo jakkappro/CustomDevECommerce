@@ -2,7 +2,8 @@
 
 public class StockData
 {
-    public StockData(string imgUrl, uint code, string ean, string productName, decimal price, string manufacturer, string description, string url, string name, string picture, string relatedLink)
+    public StockData(string imgUrl, uint code, string ean, string productName, decimal price, string manufacturer,
+        string description, string url, string name, string picture, string relatedLink)
     {
         ImgUrl = imgUrl;
         Code = code;
