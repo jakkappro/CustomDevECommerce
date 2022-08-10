@@ -68,9 +68,16 @@ public class StockBuilder
 
     public CreateStockRequest.dataPack BuildFromCreteOrderData(StockData createOrderData)
     {
-        var order = new StockBuilder();
-
-        return order.Build();
+        return new StockBuilder()
+            .WithCode(createOrderData.Code)
+            .WithName(createOrderData.Name)
+            .WithPrice(createOrderData.Price)
+            .WithEan(createOrderData.Ean)
+            .WithManufacturer(createOrderData.Manufacturer)
+            .WithDescription(createOrderData.Description)
+            .WithPicture(createOrderData.Picture)
+            .WithRelatedLink(createOrderData.RelatedLink)
+            .Build();
     }
 
     public CreateStockRequest.dataPack Build()

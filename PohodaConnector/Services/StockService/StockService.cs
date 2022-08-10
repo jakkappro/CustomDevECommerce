@@ -30,103 +30,10 @@ public class StockService : IStockService
         _serializer = new Utf8SerializerService();
     }
 
-    // Prepared for tomorrow :D
-    // Btw do we want to download images in builder or should it be another service?
-    public async void CreateStock(StockData stockData)
+    public void CreateStock(StockData stockData)
     {
-        var dataPack = new CreateStockRequest.dataPack
-        {
-            version = 2.0m,
-            ico = 53870441,
-            note = "Imported from xml",
-            id = "zas001",
-            application = "StwTest"
-        };
-
-        var pathToPicture = stockData.ImgUrl.Split('/').Last();
-        // Console.WriteLine($"Downloading picture{pathToPicture}");
-        // try
-        // {
-        //     var fileBytes = await client.GetByteArrayAsync(new Uri(i.IMGURL));
-        //     if (!File.Exists(path + pathToPicture))
-        //     {
-        //         await using var fs = File.Create(path + pathToPicture);
-        //         await fs.WriteAsync(fileBytes);
-        //         fs.Close();
-        //     }
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(
-        //         $"Failed to download image for {i.PRODUCTNAME}, path {path + pathToPicture}, message {e.Message}");
-        // }
-
-        var dataPackItem = new CreateStockRequest.dataPackDataPackItem
-        {
-            version = 2.0m,
-            id = "ZAS001",
-            stock = new CreateStockRequest.stock
-            {
-                version = 2.0m,
-                stockHeader = new CreateStockRequest.stockStockHeader
-                {
-                    stockType = "card",
-                    code = stockData.Code,
-                    EAN = stockData.Ean,
-                    PLU = 0,
-                    isSales = false,
-                    isInternet = true,
-                    isBatch = true,
-                    purchasingRateVAT = "high",
-                    sellingRateVAT = "high",
-                    name = stockData.ProductName,
-                    unit = "ks",
-                    storage = new CreateStockRequest.stockStockHeaderStorage
-                    {
-                        ids = "Amazon"
-                    },
-                    typePrice = new CreateStockRequest.stockStockHeaderTypePrice
-                    {
-                        ids = "SK"
-                    },
-                    purchasingPrice = 0,
-                    sellingPrice = stockData.Price,
-                    limitMin = 0,
-                    limitMax = 1000,
-                    mass = 0,
-                    supplier = new CreateStockRequest.stockStockHeaderSupplier
-                    {
-                        id = 1
-                    },
-                    producer = stockData.Manufacturer,
-                    description = stockData.Description,
-                    pictures = new CreateStockRequest.stockStockHeaderPictures
-                    {
-                        picture = new CreateStockRequest.stockStockHeaderPicturesPicture
-                        {
-                            @default = true,
-                            description = "obrazok produktu",
-                            filepath = pathToPicture
-                        }
-                    },
-                    note = "Importovane z xml",
-                    relatedLinks = new CreateStockRequest.stockStockHeaderRelatedLinks
-                    {
-                        relatedLink = new CreateStockRequest.stockStockHeaderRelatedLinksRelatedLink
-                        {
-                            addressURL = stockData.Url,
-                            description = "odkaz na produkt",
-                            order = 1
-                        }
-                    }
-                }
-            }
-        };
-
-        dataPack.dataPackItem = new[]
-        {
-            dataPackItem
-        };
+        // create stock using PohodaConnector.Builders.Stock.StockBuilder
+        var stock = new StockBuilder().BuildFromCreteOrderData(stockData);
     }
 
     public async Task<bool> Exists(string code)
