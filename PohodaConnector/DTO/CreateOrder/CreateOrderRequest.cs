@@ -607,7 +607,7 @@ public class CreateOrderRequest
     public class stockItem
     {
 
-        private string eANField;
+        private string? eANField;
 
         public string? EAN
         {

@@ -1,4 +1,4 @@
-﻿
+﻿using PohodaConnector.DTO.CreateOrder;
 using PohodaConnector.DTO.CreateStock;
 using PohodaConnector.Services.StockService;
 
@@ -57,23 +57,8 @@ public class StockBuilder
                             {
                                 id = 1
                             },
-                            pictures = new CreateStockRequest.stockStockHeaderPictures
-                            {
-                                picture = new CreateStockRequest.stockStockHeaderPicturesPicture
-                                {
-                                    @default = true,
-                                    description = "obrazok produktu",
-                                }
-                            },
+
                             note = "Importovane z xml",
-                            relatedLinks = new CreateStockRequest.stockStockHeaderRelatedLinks
-                            {
-                                relatedLink = new CreateStockRequest.stockStockHeaderRelatedLinksRelatedLink
-                                {
-                                    description = "odkaz na produkt",
-                                    order = 1
-                                }
-                            }
                         }
                     }
                 }
@@ -91,5 +76,67 @@ public class StockBuilder
     public CreateStockRequest.dataPack Build()
     {
         return _stock;
+    }
+
+    public StockBuilder WithCode(uint code)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.code = code;
+        return this;
+    }
+
+    public StockBuilder WithEan(string ean)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.EAN = ean;
+        return this;
+    }
+
+    public StockBuilder WithName(string name)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.name = name;
+        return this;
+    }
+
+    public StockBuilder WithPrice(decimal price)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.sellingPrice = price;
+        return this;
+    }
+
+    public StockBuilder WithManufacturer(string manufacturer)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.producer = manufacturer;
+        return this;
+    }
+
+    public StockBuilder WithDescription(string description)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.description = description;
+        return this;
+    }
+
+    public StockBuilder WithPicture(string picture)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.pictures = new CreateStockRequest.stockStockHeaderPictures
+        {
+            picture = new CreateStockRequest.stockStockHeaderPicturesPicture
+            {
+                filepath = picture,
+                @default = true,
+                description = "obrazok produktu",
+            }
+        };
+        return this;
+    }
+
+    public StockBuilder WithRelatedLink(string link)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.relatedLinks.relatedLink =
+            new CreateStockRequest.stockStockHeaderRelatedLinksRelatedLink
+            {
+                description = "odkaz na produkt",
+                order = 1,
+                addressURL = link
+            };
+        return this;
     }
 }
