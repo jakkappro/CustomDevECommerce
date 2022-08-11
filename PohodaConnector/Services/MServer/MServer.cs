@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Xml;
+#pragma warning disable CS8618
 
 namespace PohodaConnector.Services.MServer;
 

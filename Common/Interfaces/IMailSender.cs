@@ -6,7 +6,8 @@ public interface IMailSender
 {
     void SendMail(string body);
     void SendMail();
-    void AddRowFromTemplate(Order order);
+    void AddRowFromTemplate(OrderData orderData);
     void LoadTemplatesFromFile(string messageTemplatePath, string rowTemplatePath, string itemTemplatePath);
     void LoadTemplatesFromFile();
+    void Initialize(string from, string to, string cc, string password);
 }

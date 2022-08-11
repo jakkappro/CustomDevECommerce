@@ -74,7 +74,7 @@ public class StockBuilder : IStockBuilder
             .WithEan(createOrderData.Ean)
             .WithManufacturer(createOrderData.Manufacturer)
             .WithDescription(createOrderData.Description)
-            .WithPicture(createOrderData.Picture)
+            .WithPicture(createOrderData.ImgFilePath)
             .WithRelatedLink(createOrderData.RelatedLink)
             .Build();
     }

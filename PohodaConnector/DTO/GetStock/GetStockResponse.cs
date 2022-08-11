@@ -144,7 +144,7 @@ public class GetStockResponse
 
         private string stateField;
 
-        public listStockStock? stock
+        public listStockStock stock
         {
             get => stockField;
             set => stockField = value;

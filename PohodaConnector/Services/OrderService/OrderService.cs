@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using PohodaConnector.Builders.Orders;
 using PohodaConnector.DTO.GetOrdersByDate;
 using PohodaConnector.Interfaces;
+#pragma warning disable CS8618
 
 namespace PohodaConnector.Services.OrderService;
 
@@ -56,7 +57,7 @@ public class OrderService : IOrderService
         return _existingOrders.Any(x => x.orderHeader.numberOrder == id);
     }
 
-    public async void UpdateOrder(string id, bool executed = true)
+    public void UpdateOrder(string id, bool executed = true)
     {
         throw new NotImplementedException();
     }

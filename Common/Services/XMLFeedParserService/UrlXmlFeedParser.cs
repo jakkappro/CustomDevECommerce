@@ -21,20 +21,18 @@ public class UrlXmlFeedParser : IXmlFeedParser
 
     public T Parse<T>(string url)
     {
-        _client.BaseAddress = new Uri(url);
         _logger.LogInformation("Parsing xml feed from: {url}", url);
-        GetData().Wait();
+        GetData(url).Wait();
 
         return _serializer.Deserialize<T>(_data);
     }
 
-    private async Task GetData()
+    private async Task GetData(string url)
     {
         try
         {
-            var response = await _client.GetAsync("");
+            var response = await _client.GetAsync(url);
 
-            _logger.LogInformation("Got feed bitch");
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -45,12 +43,12 @@ public class UrlXmlFeedParser : IXmlFeedParser
             }
 
             response.Dispose();
-            _logger.LogError("Couldn't get xml feed from {url}. Response code {code}.", _client.BaseAddress?.ToString(), response.StatusCode);
+            _logger.LogError("Couldn't get xml feed from {url}. Response code {code}.", url, response.StatusCode);
             throw new ArgumentException();
         }
         catch
         {
-            _logger.LogError("Something went wrong.");
+            _logger.LogError("Couldn't get xml feed from {url}.", url);
             throw;
         }
     }

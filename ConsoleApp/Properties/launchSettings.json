@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MailOnly": {
+      "commandName": "Project",
+      "commandLineArgs": "-d 2 -m"
+    },
+    "FullMode": {
+      "commandName": "Project",
+      "commandLineArgs": "-d 2"
+    }
+  }
+}

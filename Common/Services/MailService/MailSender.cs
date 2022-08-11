@@ -32,7 +32,7 @@ public class MailSender : IMailSender
         _emailRows = "";
     }
 
-    public void SetInformation(string from, string to, string cc, string password)
+    public void Initialize(string from, string to, string cc, string password)
     {
         _from = from;
         _to = to;
@@ -52,33 +52,54 @@ public class MailSender : IMailSender
     public void LoadTemplatesFromFile()
     {
         if (File.Exists("./Templates/messageTemplate.html"))
+        {
             _messageTemplate = File.ReadAllText("./Templates/messageTemplate.html");
+        }
+        else
+        {
+            _logger.LogWarning("Couldn't load message template");
+
+        }
 
         if (File.Exists("./Templates/itemTemplate.html"))
-            _rowTemplate = File.ReadAllText("./Templates/itemTemplate.html");
+        {
+            _rowTemplate = File.ReadAllText("./Templates/rowTemplate.html");
+        }
+        else
+        {
+            _logger.LogWarning("Couldn't load item template");
+
+        }
 
         if (File.Exists("./Templates/rowTemplate.html"))
-            _itemTemplate = File.ReadAllText("./Templates/rowTemplate.html");
+        {
+            _itemTemplate = File.ReadAllText("./Templates/itemTemplate.html");
+        }
+        else
+        {
+            _logger.LogWarning("Couldn't load row template");
+
+        }
     }
 
-    public void AddRowFromTemplate(Order order)
+    public void AddRowFromTemplate(OrderData orderData)
     {
         _emailRows += _rowTemplate;
-        _emailRows = _emailRows.Replace("[[OrderId]]", order.OrderId);
-        _emailRows = _emailRows.Replace("[[purchaseDate]]", order.PurchaseDate);
-        _emailRows = _emailRows.Replace("[[latestShipDate]]", order.PurchaseDate);
-        _emailRows = _emailRows.Replace("[[totalPrice]]", order.TotalPrice);
-        _emailRows = _emailRows.Replace("[[companyName]]", order.CompanyName);
-        _emailRows = _emailRows.Replace("[[name]]", order.Name);
-        _emailRows = _emailRows.Replace("[[address]]", order.Address);
-        _emailRows = _emailRows.Replace("[[city]]", order.City);
-        _emailRows = _emailRows.Replace("[[zip]]", order.Zip);
-        _emailRows = _emailRows.Replace("[[country]]", order.Country);
-        _emailRows = _emailRows.Replace("[[PohodaId", order.PohodaId);
+        _emailRows = _emailRows.Replace("[[OrderId]]", orderData.OrderId);
+        _emailRows = _emailRows.Replace("[[purchaseDate]]", orderData.PurchaseDate);
+        _emailRows = _emailRows.Replace("[[latestShipDate]]", orderData.PurchaseDate);
+        _emailRows = _emailRows.Replace("[[totalPrice]]", orderData.TotalPrice);
+        _emailRows = _emailRows.Replace("[[companyName]]", orderData.CompanyName);
+        _emailRows = _emailRows.Replace("[[name]]", orderData.Name);
+        _emailRows = _emailRows.Replace("[[address]]", orderData.Address);
+        _emailRows = _emailRows.Replace("[[city]]", orderData.City);
+        _emailRows = _emailRows.Replace("[[zip]]", orderData.Zip);
+        _emailRows = _emailRows.Replace("[[country]]", orderData.Country);
+        _emailRows = _emailRows.Replace("[[PohodaId]]", orderData.PohodaId);
 
         var data = "";
 
-        foreach (var item in order.Items)
+        foreach (var item in orderData.Items)
         {
             var itemData = _itemTemplate;
             itemData = itemData.Replace("[[ID]]", item.ItemId);
@@ -120,6 +141,6 @@ public class MailSender : IMailSender
 
     public void SendMail()
     {
-        SendMail(_messageTemplate.Replace("[[items]]", _emailRows));
+        SendMail(_messageTemplate.Replace("[[data]]", _emailRows));
     }
 }

@@ -107,7 +107,7 @@ public class GetStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd", IsNullable = false)]
     public class listStockRequest
     {
-        private listStockRequestRequestStock? requestStockField;
+        private listStockRequestRequestStock requestStockField;
 
         private decimal versionField;
 

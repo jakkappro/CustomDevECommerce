@@ -3,7 +3,7 @@
 public class StockData
 {
     public StockData(string imgUrl, uint code, string ean, string productName, decimal price, string manufacturer,
-        string description, string url, string name, string picture, string relatedLink)
+        string description, string url, string name, string imgFilePath, string relatedLink)
     {
         ImgUrl = imgUrl;
         Code = code;
@@ -14,19 +14,19 @@ public class StockData
         Description = description;
         Url = url;
         Name = name;
-        Picture = picture;
+        ImgFilePath = imgFilePath;
         RelatedLink = relatedLink;
     }
 
-    public string ImgUrl { get; private set; }
-    public uint Code { get; private set; }
-    public string Ean { get; private set; }
-    public string ProductName { get; private set; }
-    public decimal Price { get; private set; }
-    public string Manufacturer { get; private set; }
-    public string Description { get; private set; }
-    public string Url { get; private set; }
+    public string ImgUrl { get; }
+    public uint Code { get; }
+    public string Ean { get; }
+    public string ProductName { get; }
+    public decimal Price { get; }
+    public string Manufacturer { get; }
+    public string Description { get; }
+    public string Url { get; }
     public string Name { get; }
-    public string Picture { get; }
+    public string ImgFilePath { get; }
     public string RelatedLink { get; }
 }

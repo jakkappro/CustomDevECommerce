@@ -1,5 +1,6 @@
 ﻿using Common.Interfaces;
 using ExpandoConnector.DTO.ExpandoFeed;
+using ExpandoConnector.DTO.PrehomeFeed;
 using ExpandoConnector.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -16,9 +17,14 @@ public class ExpandoOrderService : IExpandoOrder
         _logger = logger;
     }
 
-    public GetExpandoFeedRequest.orders GetOrders(int numberOfDays)
+    public GetExpandoFeedRequest.orders GetExpandoOrders(int numberOfDays)
     {
         return _parser.Parse<GetExpandoFeedRequest.orders>($"https://app.expan.do/api/v2/orderfeed?access_token=11w1QgSM7YR4tHyr4BR0BV&days={numberOfDays}");
+    }
+
+    public GetPrehomeFeed.SHOP GetPrehomeItems()
+    {
+        return _parser.Parse<GetPrehomeFeed.SHOP>($"https://www.prehome.sk/feed/amazon.xml");
     }
 
     public void UpdateOrder()

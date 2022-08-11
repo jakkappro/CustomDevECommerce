@@ -10,7 +10,16 @@ public class StockService : IStockService
 {
     private readonly ILogger<StockService> _logger;
     private readonly IAccountingSoftware _server;
+    private readonly IDownloader _imageDownloader;
     private readonly ISerializer _serializer;
+
+    public StockService(ISerializer serializer, ILogger<StockService> logger, IAccountingSoftware server, IDownloader imageDownloader)
+    {
+        _serializer = serializer;
+        _logger = logger;
+        _server = server;
+        _imageDownloader = imageDownloader;
+    }
 
     public async void Initialize()
     {
@@ -25,15 +34,9 @@ public class StockService : IStockService
 
     }
 
-    public StockService(ISerializer serializer, ILogger<StockService> logger, IAccountingSoftware server)
-    {
-        _serializer = serializer;
-        _logger = logger;
-        _server = server;
-    }
-
     public async void CreateStock(StockData stockData)
     {
+        _imageDownloader.Download(stockData.ImgUrl, stockData.ImgFilePath);
         var stock = new StockBuilder().BuildFromCreteOrderData(stockData);
         await _server.SendRequest(_serializer.Serialize(stock));
     }
