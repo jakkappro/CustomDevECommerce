@@ -3,7 +3,7 @@ using PacketaConnector.Services;
 
 namespace PacketaConnector.Builders;
 
-public class PacketBuilder
+public class PacketBuilder : IPacketBuilder
 {
     private CreateOrderRequest.createPacket packet;
 

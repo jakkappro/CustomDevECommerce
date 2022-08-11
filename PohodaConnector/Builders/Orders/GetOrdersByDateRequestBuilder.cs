@@ -1,8 +1,8 @@
 ﻿using ExpandoFeedTransformer;
 
-namespace PohodaConnector.Builders.CreateOrder;
+namespace PohodaConnector.Builders.Orders;
 
-public class GetOrdersByDateRequestBuilder
+public class GetOrdersByDateRequestBuilder : IGetOrdersByDateRequestBuilder
 {
     private const decimal Version = 2.0m;
     private const int Ico = 53870441;

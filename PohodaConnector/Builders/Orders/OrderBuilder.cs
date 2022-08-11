@@ -3,7 +3,7 @@ using PohodaConnector.Services.OrderService;
 
 namespace PohodaConnector.Builders.Orders;
 
-public class OrderBuilder
+public class OrderBuilder : IOrderBuilder
 {
     private CreateOrderRequest.dataPack _order;
     private readonly List<CreateOrderRequest.orderOrderItem> _items;

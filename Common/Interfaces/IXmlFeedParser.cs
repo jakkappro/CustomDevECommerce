@@ -2,5 +2,5 @@
 
 public interface IXmlFeedParser
 {
-    Task<T> Parse<T>(string url);
+    T Parse<T>(string url);
 }

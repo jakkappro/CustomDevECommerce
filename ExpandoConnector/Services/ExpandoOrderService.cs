@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ExpandoConnector.Services;
 
-public class ExpandoOrderService : IOrder
+public class ExpandoOrderService : IExpandoOrder
 {
     private readonly HttpClient _client;
     private readonly IXmlFeedParser _parser;
@@ -18,9 +18,9 @@ public class ExpandoOrderService : IOrder
         _logger = logger;
     }
 
-    public async Task<GetExpandoFeedRequest.orders> GetOrders(int numberOfDays)
+    public GetExpandoFeedRequest.orders GetOrders(int numberOfDays)
     {
-        return await _parser.Parse<GetExpandoFeedRequest.orders>($"https://app.expan.do/api/v2/orderfeed?access_token=11w1QgSM7YR4tHyr4BR0BV&days={numberOfDays}");
+        return _parser.Parse<GetExpandoFeedRequest.orders>($"https://app.expan.do/api/v2/orderfeed?access_token=11w1QgSM7YR4tHyr4BR0BV&days={numberOfDays}");
     }
 
     public void UpdateOrder()

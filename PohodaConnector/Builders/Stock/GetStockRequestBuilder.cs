@@ -2,7 +2,7 @@
 
 namespace PohodaConnector.Builders.Stock;
 
-public class GetStockRequestBuilder
+public class GetStockRequestBuilder : IGetStockRequestBuilder
 {
     private const decimal Version = 2.0m;
     private const int Ico = 53870441;

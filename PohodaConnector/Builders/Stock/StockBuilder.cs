@@ -3,7 +3,7 @@ using PohodaConnector.Services.StockService;
 
 namespace PohodaConnector.Builders.Stock;
 
-public class StockBuilder
+public class StockBuilder : IStockBuilder
 {
     private CreateStockRequest.dataPack _stock;
     private const decimal Version = 2.0m;

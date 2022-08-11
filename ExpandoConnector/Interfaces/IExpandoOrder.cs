@@ -2,8 +2,8 @@
 
 namespace ExpandoConnector.Interfaces;
 
-public interface IOrder
+public interface IExpandoOrder
 {
-    Task<GetExpandoFeedRequest.orders> GetOrders(int numberOfDays);
+    GetExpandoFeedRequest.orders GetOrders(int numberOfDays);
     void UpdateOrder();
 }
