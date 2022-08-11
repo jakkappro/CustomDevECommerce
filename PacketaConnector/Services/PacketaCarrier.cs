@@ -24,7 +24,7 @@ public class PacketaCarrier : ICarrier
     {
         try
         {
-            _client.PostAsync("https://www.zasilkovna.cz/api/rest/",
+            _client.PostAsync("",
                 new StringContent(_serializer.Serialize(_builder.BuildFromCreteOrderData(packet))));
         }
         catch

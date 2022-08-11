@@ -1,4 +1,7 @@
-﻿using Common.Interfaces;
+﻿using System.Text;
+using Common.Interfaces;
+using Common.Services.ImageDownloadService;
+using Common.Services.MailService;
 using Common.Services.Serialization;
 using Common.Services.XMLFeedParserService;
 using ExpandoConnector.Interfaces;
@@ -39,33 +42,36 @@ public class Startup
         return Host.CreateDefaultBuilder()
             .ConfigureServices(CreateServices)
             .UseSerilog()
-            .Build(); 
+            .Build();
     }
 
     private static void CreateServices(HostBuilderContext context, IServiceCollection services)
     {
         // Add common services
         services.AddSingleton<ISerializer, Utf8SerializerService>();
-        services.AddHttpClient<IXmlFeedParser, UrlXmlFeedParser>(client =>
-        {
-            // configuration here
-        });
+        services.AddHttpClient<IXmlFeedParser, UrlXmlFeedParser>();
+        services.AddHttpClient<IDownloader, ImageDownloader>();
+        services.AddTransient<IMailSender, MailSender>();
 
         // Add expando services
-        services.AddHttpClient<IExpandoOrder, ExpandoOrderService>(client =>
-        {
-            // configuration here
-        });
+        services.AddTransient<IExpandoOrder, ExpandoOrderService>();
 
         // Add packeta services
         services.AddTransient<IPacketBuilder, PacketBuilder>();
         services.AddHttpClient<ICarrier, PacketaCarrier>(client =>
         {
-            // configuration here
+            client.BaseAddress = new Uri("https://www.zasilkovna.cz/api/rest/");
         });
 
         // Add pohoda services
-        services.AddHttpClient<IAccountingSoftware, MServer>();
+        services.AddHttpClient<IAccountingSoftware, MServer>(client =>
+        {
+            client.BaseAddress = new Uri("http://127.0.0.1:5336");
+            client.DefaultRequestHeaders.Add("STW-Authorization",
+                "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(
+                    $"{context.Configuration["Pohoda:username"]}:{context.Configuration["Pohoda:password"]}")));
+            client.DefaultRequestHeaders.Add("Accept", "text/xml");
+        });
 
         services.AddTransient<IGetOrdersByDateRequestBuilder, GetOrdersByDateRequestBuilder>();
         services.AddTransient<IOrderBuilder, OrderBuilder>();
@@ -78,6 +84,5 @@ public class Startup
 
         // Add starter service
         services.AddTransient<IStarterService, StarterService>();
-
     }
 }

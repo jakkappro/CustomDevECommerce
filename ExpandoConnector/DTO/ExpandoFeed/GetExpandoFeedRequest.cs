@@ -298,7 +298,7 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderCustomer
     {
-        private string companyNameField;
+        private string? companyNameField;
 
         private string firstnameField;
 

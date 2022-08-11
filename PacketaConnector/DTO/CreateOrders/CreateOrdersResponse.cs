@@ -16,7 +16,7 @@ public class CreateOrderResponse
     {
         private string statusField;
 
-        private responseResult resultField;
+        private responseResult? resultField;
 
         public string status
         {

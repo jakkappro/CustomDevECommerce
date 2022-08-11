@@ -22,8 +22,7 @@ public class OrderService : IOrderService
 
     public async void Initialize(short lookBackDays)
     {
-        _server.Initialize("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"",
-            "http://127.0.0.1:5336", "admin", "acecom", 1000);
+        _server.Initialize("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"", 1000);
 
         _server.StartServer();
 

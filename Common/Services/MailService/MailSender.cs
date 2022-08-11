@@ -22,6 +22,14 @@ public class MailSender : IMailSender
     public MailSender(ILogger<MailSender> logger)
     {
         _logger = logger;
+        _cc = "";
+        _from = "";
+        _password = "";
+        _to = "";
+        _messageTemplate = "";
+        _rowTemplate = "";
+        _itemTemplate = "";
+        _emailRows = "";
     }
 
     public void SetInformation(string from, string to, string cc, string password)

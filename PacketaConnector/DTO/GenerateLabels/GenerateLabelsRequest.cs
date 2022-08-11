@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿#pragma warning disable CS8618
+// ReSharper disable InconsistentNaming
+
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace PacketaConnector.DTO.GenerateLabels;

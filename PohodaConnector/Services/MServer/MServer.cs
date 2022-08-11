@@ -13,8 +13,6 @@ public class MServer : IAccountingSoftware
     private readonly HttpClient _client;
     private string _serverName;
     private string _pathToServer;
-    private string _username;
-    private string _password;
     private short _retryDelay;
 
     public MServer(ILogger<MServer> logger, HttpClient client)
@@ -23,13 +21,10 @@ public class MServer : IAccountingSoftware
         _client = client;
     }
 
-    public void Initialize(string serverName, string pathToServer, string serverUrl, string username, string password,
-        short retryDelay)
+    public void Initialize(string serverName, string pathToServer, short retryDelay)
     {
         _serverName = serverName;
         _pathToServer = pathToServer;
-        _username = username;
-        _password = password;
         _retryDelay = retryDelay;
     }
 
@@ -45,9 +40,6 @@ public class MServer : IAccountingSoftware
 
     public async Task<bool> IsConnectionAvailable(int numberOfRetries)
     {
-        _client.DefaultRequestHeaders.Add("STW-Authorization", CreateAuthHeader());
-        _client.DefaultRequestHeaders.Add("Accept", "text/xml");
-
         var responseCode = HttpStatusCode.BadRequest;
 
         while (responseCode != HttpStatusCode.OK && numberOfRetries >= 0)
@@ -121,10 +113,5 @@ public class MServer : IAccountingSoftware
         cmd.StandardInput.Flush();
         cmd.StandardInput.Close();
         cmd.WaitForExit();
-    }
-
-    private string CreateAuthHeader()
-    {
-        return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_username}:{_password}"));
     }
 }

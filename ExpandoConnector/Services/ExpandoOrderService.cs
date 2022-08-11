@@ -7,13 +7,11 @@ namespace ExpandoConnector.Services;
 
 public class ExpandoOrderService : IExpandoOrder
 {
-    private readonly HttpClient _client;
     private readonly IXmlFeedParser _parser;
     private readonly ILogger<ExpandoOrderService> _logger;
 
-    public ExpandoOrderService(HttpClient client, IXmlFeedParser parser, ILogger<ExpandoOrderService> logger)
+    public ExpandoOrderService(IXmlFeedParser parser, ILogger<ExpandoOrderService> logger)
     {
-        _client = client;
         _parser = parser;
         _logger = logger;
     }

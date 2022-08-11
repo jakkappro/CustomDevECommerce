@@ -53,7 +53,7 @@ public class Utf8SerializerService : ISerializer
         T data;
         try
         {
-            data = (T)serializer.Deserialize(xmlReader) ?? throw new InvalidOperationException();
+            data = (T)serializer.Deserialize(xmlReader)! ?? throw new InvalidOperationException();
         }
         catch
         {
