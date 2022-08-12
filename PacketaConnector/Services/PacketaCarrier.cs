@@ -1,4 +1,5 @@
 ﻿using Common.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Builders;
 using PacketaConnector.Interfaces;
@@ -9,23 +10,29 @@ public class PacketaCarrier : ICarrier
 {
     private readonly ISerializer _serializer;
     private readonly ILogger<PacketaCarrier> _logger;
-    private readonly PacketBuilder _builder;
+    private readonly IConfiguration _configuration;
+    private readonly IPacketBuilder _builder;
     private readonly HttpClient _client;
 
-    public PacketaCarrier(PacketBuilder builder, HttpClient client, ISerializer serializer, ILogger<PacketaCarrier> logger)
+    public PacketaCarrier(IPacketBuilder builder, HttpClient client, ISerializer serializer, ILogger<PacketaCarrier> logger, IConfiguration configuration)
     {
         _serializer = serializer;
         _logger = logger;
+        _configuration = configuration;
         _builder = builder;
         _client = client;
     }
 
-    public void CreatePackage(Packet packet)
+    public async Task CreatePackage(Packet packet)
     {
         try
         {
-            _client.PostAsync("",
-                new StringContent(_serializer.Serialize(_builder.BuildFromCreteOrderData(packet))));
+            var fromCreteOrderData = _builder.BuildFromCreteOrderData(packet, _configuration["Packeta:ApiPassword"]);
+            var buildFromCreteOrderData = _serializer.Serialize(fromCreteOrderData);
+            var response = await _client.PostAsync("",
+                new StringContent(buildFromCreteOrderData));
+            // TODO: check response for errors 
+            // var readAsStringAsync = await response.Content.ReadAsStringAsync();
         }
         catch
         {

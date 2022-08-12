@@ -2,10 +2,9 @@
 
 public class Packet
 {
-    public Packet(string apiPassword, string number, string firstname, string surname, string email, uint addressId,
+    public Packet(string number, string firstname, string surname, string email, uint addressId,
         decimal totalPrice, string phone, string zip, string address, string houseNumber, string city)
     {
-        ApiPassword = apiPassword;
         Number = number;
         Firstname = firstname;
         Surname = surname;
@@ -19,7 +18,6 @@ public class Packet
         City = city;
     }
 
-    public string ApiPassword { get; }
     public string Number { get; }
     public string Firstname { get; }
     public string Surname { get; }

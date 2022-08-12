@@ -16,4 +16,10 @@
     <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Services\IdGenerator\lastId.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

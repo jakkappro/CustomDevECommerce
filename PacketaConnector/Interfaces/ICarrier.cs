@@ -4,7 +4,7 @@ namespace PacketaConnector.Interfaces;
 
 public interface ICarrier
 {
-    void CreatePackage(Packet packet);
+    Task CreatePackage(Packet packet);
 
     void GetLabel();
 

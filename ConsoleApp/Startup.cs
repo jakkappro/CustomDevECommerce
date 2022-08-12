@@ -22,6 +22,7 @@ using PohodaConnector.Services.OrderService;
 using PohodaConnector.Services.StockService;
 using Serilog;
 using System.Text;
+using Common.Services.IdGenerator;
 
 namespace ConsoleApp;
 
@@ -104,9 +105,17 @@ public class Startup
         services.AddSingleton<ISerializer, Utf8SerializerService>();
         services.AddHttpClient<IXmlFeedParser, UrlXmlFeedParser>();
         services.AddTransient<IMailSender, MailSender>();
+        services.AddSingleton<IIdGenerator, IdGenerator>();
 
         // Add expando services
         services.AddTransient<IExpandoOrder, ExpandoOrderService>();
+
+        // Add packeta services
+        services.AddTransient<IPacketBuilder, PacketBuilder>();
+        services.AddHttpClient<ICarrier, PacketaCarrier>(client =>
+        {
+            client.BaseAddress = new Uri("https://www.zasilkovna.cz/api/rest/");
+        });
 
         // Add starter service
         services.AddTransient<IStarterService, MailMode>();
@@ -122,13 +131,6 @@ public class Startup
 
         // Add expando services
         services.AddTransient<IExpandoOrder, ExpandoOrderService>();
-
-        // Add packeta services
-        services.AddTransient<IPacketBuilder, PacketBuilder>();
-        services.AddHttpClient<ICarrier, PacketaCarrier>(client =>
-        {
-            client.BaseAddress = new Uri("https://www.zasilkovna.cz/api/rest/");
-        });
 
         // Add pohoda services
         services.AddHttpClient<IAccountingSoftware, MServer>(client =>

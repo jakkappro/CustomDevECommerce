@@ -24,9 +24,9 @@ public class PacketBuilder : IPacketBuilder
         };
     }
 
-    public CreateOrderRequest.createPacket BuildFromCreteOrderData(Packet packetData)
+    public CreateOrderRequest.createPacket BuildFromCreteOrderData(Packet packetData, string apiPassword)
     {
-        return new PacketBuilder().WithApiPassword(packetData.ApiPassword)
+        return new PacketBuilder().WithApiPassword(apiPassword)
             .WithNumber(packetData.Number)
             .WithName(packetData.Firstname)
             .WithSurname(packetData.Surname)

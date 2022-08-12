@@ -18,10 +18,11 @@ public class Utf8SerializerService : ISerializer
     {
         var x = new XmlSerializer(data?.GetType() ?? throw new ArgumentNullException());
 
-        TextWriter writer = Utf8StringWriter.CreateInstance();
         string s;
         try
         {
+            using var writer = new Utf8StringWriter();
+
             x.Serialize(writer, data);
             s = writer.ToString() ?? throw new InvalidOperationException();
         }
@@ -31,8 +32,6 @@ public class Utf8SerializerService : ISerializer
             throw;
         }
 
-        writer.Flush();
-        writer.Close();
         return s;
     }
 

@@ -5,7 +5,7 @@ namespace PacketaConnector.Builders;
 
 public interface IPacketBuilder
 {
-    CreateOrderRequest.createPacket BuildFromCreteOrderData(Packet packetData);
+    CreateOrderRequest.createPacket BuildFromCreteOrderData(Packet packetData, string apiPassword);
     CreateOrderRequest.createPacket Build();
     PacketBuilder WithApiPassword(string apiPassword);
     PacketBuilder WithNumber(string number);
