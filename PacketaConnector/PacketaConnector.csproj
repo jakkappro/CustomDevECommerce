@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="DTO\GenerateLabels\" />
     <Folder Include="DTO\CreateOrders\" />
+    <Folder Include="DTO\GetPacketStatus\" />
     <Folder Include="Mappers\" />
     <Folder Include="Builders\" />
     <Folder Include="Interfaces\" />

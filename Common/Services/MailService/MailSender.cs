@@ -124,6 +124,11 @@ public class MailSender : IMailSender
             message.Subject = "Expando - Amazon objednavky za den [Today-1]";
             message.IsBodyHtml = true;
             message.Body = body;
+
+            // for sending attachments
+            // var attachment = new Attachment("c:/textfile.txt");
+            // message.Attachments.Add(attachment);
+
             smtp.Port = 587;
             smtp.Host = "mail.hostmaster.sk";
             smtp.EnableSsl = true;

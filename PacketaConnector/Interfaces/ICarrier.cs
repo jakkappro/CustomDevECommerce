@@ -1,4 +1,5 @@
-﻿using PacketaConnector.Services;
+﻿using PacketaConnector.DTO.GetPacketStatus;
+using PacketaConnector.Services;
 
 namespace PacketaConnector.Interfaces;
 
@@ -6,7 +7,7 @@ public interface ICarrier
 {
     Task CreatePackage(Packet packet);
 
-    void GetLabel();
+    Task<string> GetLabel(uint id);
 
-    void GetPackageInfo();
+    Task<GetPacketStatusResponse.response> GetPackageInfo(uint id);
 }

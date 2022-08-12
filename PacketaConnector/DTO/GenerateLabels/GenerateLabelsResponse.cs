@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace PacketaConnector.DTO.GenerateLabels;
 
-public class PacketaGenerateLabelResponse
+public class GenerateLabelResponse
 {
     [Serializable]
     [DesignerCategory("code")]
