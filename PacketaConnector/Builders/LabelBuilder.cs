@@ -15,7 +15,7 @@ public class LabelBuilder : ILabelBuilder
         };
     }
 
-    public GenerateLabelRequest.packetLabelPdf BuildFromCreteOrderData(uint id, string apiPassword)
+    public GenerateLabelRequest.packetLabelPdf BuildFromCreateOrderData(uint id, string apiPassword)
     {
         return new LabelBuilder().WithApiPassword(apiPassword)
             .WithId(id)

@@ -10,7 +10,7 @@ public class StatusBuilder : IStatusBuilder
         _status = new GetPacketStatusRequest.packetStatus();
     }
 
-    public GetPacketStatusRequest.packetStatus BuildFromCreteOrderData(uint packetId, string apiPassword)
+    public GetPacketStatusRequest.packetStatus BuildFromCreateOrderData(uint packetId, string apiPassword)
     {
         return new StatusBuilder().WithApiPassword(apiPassword)
             .WithId(packetId)

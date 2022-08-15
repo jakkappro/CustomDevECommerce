@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using PacketaConnector.Builders;
 using PacketaConnector.DTO.GetPacketStatus;
 using PacketaConnector.Interfaces;
-using System.Net.Sockets;
 using PacketaConnector.DTO.GenerateLabels;
 
 namespace PacketaConnector.Services;
@@ -34,10 +33,10 @@ public class PacketaCarrier : ICarrier
     {
         try
         {
-            var fromCreteOrderData = _builder.BuildFromCreteOrderData(packet, _configuration["Packeta:ApiPassword"]);
-            var buildFromCreteOrderData = _serializer.Serialize(fromCreteOrderData);
+            var fromCreateOrderData = _builder.BuildFromCreateOrderData(packet, _configuration["Packeta:ApiPassword"]);
+            var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var response = await _client.PostAsync("",
-                new StringContent(buildFromCreteOrderData));
+                new StringContent(buildFromCreateOrderData));
             // TODO: check response for errors 
             // var readAsStringAsync = await response.Content.ReadAsStringAsync();
         }
@@ -57,10 +56,10 @@ public class PacketaCarrier : ICarrier
         string label;
         try
         {
-            var fromCreteOrderData = _labelBuilder.BuildFromCreteOrderData(id, _configuration["Packeta:ApiPassword"]);
-            var buildFromCreteOrderData = _serializer.Serialize(fromCreteOrderData);
+            var fromCreateOrderData = _labelBuilder.BuildFromCreateOrderData(id, _configuration["Packeta:ApiPassword"]);
+            var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var r = await (await _client.PostAsync("",
-                new StringContent(buildFromCreteOrderData))).Content.ReadAsStringAsync();
+                new StringContent(buildFromCreateOrderData))).Content.ReadAsStringAsync();
             label = _serializer.Deserialize<GenerateLabelResponse.response>(r).result;
         }
         catch
@@ -81,10 +80,10 @@ public class PacketaCarrier : ICarrier
     {
         try
         {
-            var fromCreteOrderData = _statusBuilder.BuildFromCreteOrderData(id, _configuration["Packeta:ApiPassword"]);
-            var buildFromCreteOrderData = _serializer.Serialize(fromCreteOrderData);
+            var fromCreateOrderData = _statusBuilder.BuildFromCreateOrderData(id, _configuration["Packeta:ApiPassword"]);
+            var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var response = await (await _client.PostAsync("",
-                new StringContent(buildFromCreteOrderData))).Content.ReadAsStringAsync();
+                new StringContent(buildFromCreateOrderData))).Content.ReadAsStringAsync();
 
             return _serializer.Deserialize<GetPacketStatusResponse.response>(response);
         }

@@ -112,6 +112,8 @@ public class Startup
 
         // Add packeta services
         services.AddTransient<IPacketBuilder, PacketBuilder>();
+        services.AddTransient<IStatusBuilder, StatusBuilder>();
+        services.AddTransient<ILabelBuilder, LabelBuilder>();
         services.AddHttpClient<ICarrier, PacketaCarrier>(client =>
         {
             client.BaseAddress = new Uri("https://www.zasilkovna.cz/api/rest/");

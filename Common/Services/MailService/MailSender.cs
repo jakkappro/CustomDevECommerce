@@ -121,7 +121,7 @@ public class MailSender : IMailSender
             message.From = new MailAddress(_from);
             message.To.Add(new MailAddress(_to));
             message.CC.Add(new MailAddress(_cc));
-            message.Subject = "Expando - Amazon objednavky za den [Today-1]";
+            message.Subject = $"Expando - Amazon objednavky za den {DateTime.Now.AddDays(-1).ToShortDateString()}";
             message.IsBodyHtml = true;
             message.Body = body;
 

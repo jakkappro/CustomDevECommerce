@@ -4,7 +4,7 @@ namespace PacketaConnector.Builders;
 
 public interface ILabelBuilder
 {
-    GenerateLabelRequest.packetLabelPdf BuildFromCreteOrderData(uint id, string apiPassword);
+    GenerateLabelRequest.packetLabelPdf BuildFromCreateOrderData(uint id, string apiPassword);
     LabelBuilder WithApiPassword(string apiPassword);
     LabelBuilder WithId(uint id);
     GenerateLabelRequest.packetLabelPdf Build();

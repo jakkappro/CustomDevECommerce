@@ -40,13 +40,16 @@ namespace ConsoleApp.ApplicationModes
             var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
 
             _logger.LogInformation("Populating mail with orders.");
-            foreach (var order in orders)
+            foreach (var order in orders.OrderByDescending(o => o.orderStatus).OrderByDescending(o => o.purchaseDate))
             {
-               AddToMail(order, items);
-               var id = _generator.GetNextId();
-               _logger.LogInformation("Id for order: {id}", id);
-               // create pohoda order
-               CreateCarrierPackage(order, id);
+                if (order.orderStatus == "Unshipped")
+                {
+                    AddToMail(order, items);
+                    var id = _generator.GetNextId();
+                    _logger.LogInformation("Id for order: {id}", id);
+                    // create pohoda order
+                    //CreateCarrierPackage(order, id);
+                }
             }
 
             _logger.LogInformation("Sending mail");
