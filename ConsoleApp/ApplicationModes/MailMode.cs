@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using PacketaConnector.Interfaces;
 using PohodaConnector.Interfaces;
 using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ConsoleApp.ApplicationModes
 {
@@ -59,10 +60,10 @@ namespace ConsoleApp.ApplicationModes
             _logger.LogInformation("Stock service initialized.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
-            _logger.LogInformation("Expando orders sucessfully loaded.");
+            _logger.LogInformation("Expando orders successfully loaded.");
 
             var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
-            _logger.LogInformation("Prehome orders sucessfully loaded.");
+            _logger.LogInformation("Prehome orders successfully loaded.");
 
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
@@ -129,6 +130,7 @@ namespace ConsoleApp.ApplicationModes
             var packetData = ExpandoToPacketaPacket.Map(order, id);
             _logger.LogDebug($"Creating packet...{JsonSerializer.Serialize(packetData)}");
             var packetId = await _carrier.CreatePackage(packetData);
+            data.LabelId = packetId;
             _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
             Thread.Sleep(1000);
             try
