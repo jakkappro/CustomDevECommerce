@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Interfaces;
 using PohodaConnector.Interfaces;
+using System.Text.Json;
 
 namespace ConsoleApp.ApplicationModes
 {
@@ -47,21 +48,21 @@ namespace ConsoleApp.ApplicationModes
         {
             _mailService.Initialize(_configuration["Email:Login"], _configuration["Email:Recipient"],
                 _configuration["Email:Cc"], _configuration["Email:Password"]);
-            _logger.LogInformation("Initialized mail service.");
+            _logger.LogInformation("Mail service initialized.");
 
             _mailService.LoadTemplatesFromFile();
 
             _orderService.Initialize(_lookBackPohoda);
-            _logger.LogInformation("Initialize order service.");
-            
+            _logger.LogInformation("Order service initialized.");
+
             _stock.Initialize();
-            _logger.LogInformation("Initialized stock service.");
+            _logger.LogInformation("Stock service initialized.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
-            _logger.LogInformation("Loaded expando orders.");
+            _logger.LogInformation("Expando orders sucessfully loaded.");
 
             var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
-            _logger.LogInformation("Loaded prehome orders.");
+            _logger.LogInformation("Prehome orders sucessfully loaded.");
 
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
@@ -72,10 +73,11 @@ namespace ConsoleApp.ApplicationModes
                 if (_orderService.Exist(order.orderId))
                 {
                     _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
+                    continue;
                 }
 
                 var id = _generator.GetNextId();
-                _logger.LogInformation("Id for orderService: {id}", id);
+                _logger.LogInformation($"Id of new order: {id}");
 
                 data.PohodaOrderId = id;
                 data.AmazonOrderId = order.orderId;
@@ -112,18 +114,21 @@ namespace ConsoleApp.ApplicationModes
                     continue;
                 }
 
+                _logger.LogDebug($"Creating stock...{JsonSerializer.Serialize(stock)}");
                 _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
-                _logger.LogInformation("Created stock, id: {id}", stock.itemId);
+                _logger.LogInformation($"Stock with id {stock.itemId} sucessfully created");
             }
 
+            _logger.LogDebug($"Creating order.. {JsonSerializer.Serialize(order)}");
             await _orderService.CreateOrder(ExpandoToPohodaOrer.Map(order, id, items));
-            _logger.LogInformation("Created order, id: {id}", id);
+            _logger.LogInformation($"Order with {id} sucessfully created");
         }
 
         private async Task CreateCarrierPackage(GetExpandoFeedRequest.ordersOrder order, string id)
         {
-            var packetId = await _carrier.CreatePackage(ExpandoToPacketaPacket.Map(order, id));
-            data.InternalPackageId = packetId;
+            var packetData = ExpandoToPacketaPacket.Map(order, id);
+            _logger.LogDebug($"Creating packet...{JsonSerializer.Serialize(packetData)}");
+            var packetId = await _carrier.CreatePackage(packetData);
             _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
             Thread.Sleep(1000);
             try
