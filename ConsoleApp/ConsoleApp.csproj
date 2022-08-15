@@ -42,5 +42,8 @@
       <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Poco\" />
+  </ItemGroup>
 
 </Project>

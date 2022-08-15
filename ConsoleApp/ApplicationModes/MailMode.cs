@@ -1,8 +1,10 @@
 ﻿using Common.Interfaces;
 using ConsoleApp.Mappers;
+using ConsoleApp.Poco;
 using ExpandoConnector.DTO.ExpandoFeed;
 using ExpandoConnector.DTO.PrehomeFeed;
 using ExpandoConnector.Interfaces;
+using LiteDB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Interfaces;
@@ -24,6 +26,7 @@ namespace ConsoleApp.ApplicationModes
         private readonly IOrderService _orderService;
         private readonly IStockService _stock;
 
+        private Data data;
 
         public MailMode(int lookBackDays, IExpandoOrder expandoService, IMailSender mailService,
             IConfiguration configuration, ILogger<MailMode> logger, ICarrier carrier, IIdGenerator generator,
@@ -48,11 +51,11 @@ namespace ConsoleApp.ApplicationModes
 
             _mailService.LoadTemplatesFromFile();
 
-            _orderService.Initialize(_lookBackPohoda);
-            _logger.LogInformation("Initialize order service.");
-
-            _stock.Initialize();
-            _logger.LogInformation("Initialized stock service.");
+            // _orderService.Initialize(_lookBackPohoda);
+            // _logger.LogInformation("Initialize order service.");
+            //
+            // _stock.Initialize();
+            // _logger.LogInformation("Initialized stock service.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
             _logger.LogInformation("Loaded expando orders.");
@@ -62,26 +65,40 @@ namespace ConsoleApp.ApplicationModes
 
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
+                data = new Data();
                 if (order.orderStatus != "Unshipped")
                     continue;
 
-                if (_orderService.Exist(order.orderId))
-                {
-                    _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
-                }
+                // if (_orderService.Exist(order.orderId))
+                // {
+                //     _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
+                // }
 
                 var id = _generator.GetNextId();
                 _logger.LogInformation("Id for orderService: {id}", id);
 
-                CreatePohodaOrder(order, id, items).Wait();
+                data.PohodaOrderId = id;
+                data.AmazonOrderId = order.orderId;
+                data.Status = "Unshipped";
+
+                //CreatePohodaOrder(order, id, items).Wait();
 
                 CreateCarrierPackage(order, id).Wait();
 
                 AddToMail(order, items, id);
+
+                using var db = new LiteDatabase(_configuration["Database:Path"]);
+                var col = db.GetCollection<Data>("customers");
+
+                col.Insert(data);
+                    
+                col.EnsureIndex(x => x.AmazonOrderId);
+                col.EnsureIndex(x => x.PohodaOrderId);
+                col.EnsureIndex(x => x.InternalPackageId);
             }
 
             _logger.LogInformation("Sending mail");
-            _mailService.SendMail();
+            //_mailService.SendMail();
         }
 
         private async Task CreatePohodaOrder(GetExpandoFeedRequest.ordersOrder order, string id,
@@ -106,6 +123,7 @@ namespace ConsoleApp.ApplicationModes
         private async Task CreateCarrierPackage(GetExpandoFeedRequest.ordersOrder order, string id)
         {
             var packetId = await _carrier.CreatePackage(ExpandoToPacketaPacket.Map(order, id));
+            data.InternalPackageId = packetId;
             _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
             Thread.Sleep(1000);
             try
@@ -113,11 +131,19 @@ namespace ConsoleApp.ApplicationModes
                 var res = await _carrier.GetLabel(packetId);
                 _logger.LogInformation("Generated label, name: {name}", res);
                 _mailService.AddAttachment(res);
+                var i = res.Split(".").First();
+                using var db = new LiteDatabase(_configuration["Database:Path"]);
+                var storage = db.GetStorage<string>();
+                storage.Upload(i, $"{_configuration["Packeta:LabelsLocation"]}/{res}");
+                data.LabelId = data.PohodaOrderId;
             }
             catch (ArgumentException)
             {
                 _logger.LogWarning("Skipping package: {id}", id);
             }
+
+            data.CarrierInfo = "OtherExpressOne";
+            data.DateCreated = DateTime.Now;
         }
 
         private void AddToMail(GetExpandoFeedRequest.ordersOrder order, IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items,

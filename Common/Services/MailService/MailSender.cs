@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 
 namespace Common.Services.MailService;
 
@@ -11,6 +12,7 @@ public class MailSender : IMailSender
     private string _from;
     private string _password;
     private readonly ILogger<MailSender> _logger;
+    private readonly IConfiguration _configuration;
     private string _to;
 
     private string _messageTemplate;
@@ -21,9 +23,10 @@ public class MailSender : IMailSender
 
     private List<string> _attachments;
 
-    public MailSender(ILogger<MailSender> logger)
+    public MailSender(ILogger<MailSender> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
         _cc = "";
         _from = "";
         _password = "";
@@ -134,7 +137,7 @@ public class MailSender : IMailSender
             message.IsBodyHtml = true;
             message.Body = body;
 
-            foreach (var attachment in _attachments.Select(att => new Attachment($"labels/{att}")))
+            foreach (var attachment in _attachments.Select(att => new Attachment($"{_configuration["Packeta:LabelsLocation"]}/{att}")))
             {
                 message.Attachments.Add(attachment);
             }

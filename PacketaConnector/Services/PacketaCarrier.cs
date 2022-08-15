@@ -20,7 +20,9 @@ public class PacketaCarrier : ICarrier
     private readonly HttpClient _client;
     private int _retries;
 
-    public PacketaCarrier(IPacketBuilder builder, HttpClient client, ISerializer serializer, ILogger<PacketaCarrier> logger, IConfiguration configuration, IStatusBuilder statusBuilder, ILabelBuilder labelBuilder)
+    public PacketaCarrier(IPacketBuilder builder, HttpClient client, ISerializer serializer,
+        ILogger<PacketaCarrier> logger, IConfiguration configuration, IStatusBuilder statusBuilder,
+        ILabelBuilder labelBuilder)
     {
         _serializer = serializer;
         _logger = logger;
@@ -45,7 +47,7 @@ public class PacketaCarrier : ICarrier
             var id = _serializer.Deserialize<CreateOrderResponse.response>(responseString);
             if (id.status.Equals("ok"))
                 return id.result!.id;
-            
+
             _logger.LogError("Couldn't create packet.");
             throw new ArgumentException();
         }
@@ -101,7 +103,8 @@ public class PacketaCarrier : ICarrier
     {
         try
         {
-            var fromCreateOrderData = _statusBuilder.BuildFromCreateOrderData(id, _configuration["Packeta:ApiPassword"]);
+            var fromCreateOrderData =
+                _statusBuilder.BuildFromCreateOrderData(id, _configuration["Packeta:ApiPassword"]);
             var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var response = await (await _client.PostAsync("",
                 new StringContent(buildFromCreateOrderData))).Content.ReadAsStringAsync();
