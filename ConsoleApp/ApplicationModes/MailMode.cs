@@ -51,11 +51,11 @@ namespace ConsoleApp.ApplicationModes
 
             _mailService.LoadTemplatesFromFile();
 
-            // _orderService.Initialize(_lookBackPohoda);
-            // _logger.LogInformation("Initialize order service.");
-            //
-            // _stock.Initialize();
-            // _logger.LogInformation("Initialized stock service.");
+            _orderService.Initialize(_lookBackPohoda);
+            _logger.LogInformation("Initialize order service.");
+            
+            _stock.Initialize();
+            _logger.LogInformation("Initialized stock service.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
             _logger.LogInformation("Loaded expando orders.");
@@ -69,10 +69,10 @@ namespace ConsoleApp.ApplicationModes
                 if (order.orderStatus != "Unshipped")
                     continue;
 
-                // if (_orderService.Exist(order.orderId))
-                // {
-                //     _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
-                // }
+                if (_orderService.Exist(order.orderId))
+                {
+                    _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
+                }
 
                 var id = _generator.GetNextId();
                 _logger.LogInformation("Id for orderService: {id}", id);
@@ -81,7 +81,7 @@ namespace ConsoleApp.ApplicationModes
                 data.AmazonOrderId = order.orderId;
                 data.Status = "Unshipped";
 
-                //CreatePohodaOrder(order, id, items).Wait();
+                CreatePohodaOrder(order, id, items).Wait();
 
                 CreateCarrierPackage(order, id).Wait();
 
@@ -98,7 +98,7 @@ namespace ConsoleApp.ApplicationModes
             }
 
             _logger.LogInformation("Sending mail");
-            //_mailService.SendMail();
+            _mailService.SendMail();
         }
 
         private async Task CreatePohodaOrder(GetExpandoFeedRequest.ordersOrder order, string id,
