@@ -37,6 +37,7 @@ public class PacketaCarrier : ICarrier
         try
         {
             var fromCreateOrderData = _builder.BuildFromCreateOrderData(packet, _configuration["Packeta:ApiPassword"]);
+            _logger.LogDebug("Creating packet: {packet}", fromCreateOrderData);
             var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var response = await _client.PostAsync("",
                 new StringContent(buildFromCreateOrderData));
@@ -91,7 +92,7 @@ public class PacketaCarrier : ICarrier
         }
 
         var sPdfDecoded = Convert.FromBase64String(label);
-        await File.WriteAllBytesAsync($@"labels\{number}.pdf", sPdfDecoded);
+        await File.WriteAllBytesAsync($@"{_configuration["Packeta:LabelsLocation"]}\{number}.pdf", sPdfDecoded);
 
         return $"{number}.pdf";
     }

@@ -134,7 +134,7 @@ public class GetStockResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd", IsNullable = false)]
     public class listStock
     {
-        private listStockStock stockField;
+        private listStockStock? stockField;
 
         private decimal versionField;
 
@@ -144,7 +144,7 @@ public class GetStockResponse
 
         private string stateField;
 
-        public listStockStock stock
+        public listStockStock? stock
         {
             get => stockField;
             set => stockField = value;

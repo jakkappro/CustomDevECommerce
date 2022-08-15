@@ -1,5 +1,4 @@
-﻿using ExpandoConnector.DTO.ExpandoFeed;
-using ExpandoConnector.DTO.PrehomeFeed;
+﻿using ExpandoConnector.DTO.PrehomeFeed;
 using PohodaConnector.Services.StockService;
 
 namespace ConsoleApp.Mappers;
@@ -12,11 +11,11 @@ public static class ExpandoItemToPohodaStock
             item.IMGURL,
             item.ITEM_ID,
             item.EAN,
-            item.PRICE * 1.2m,
+            item.PRICE,
             item.MANUFACTURER,
             item.DESCRIPTION,
             item.PRODUCTNAME,
-            "Cesta ku suboru :D",
+            "\"\\\\\\\\AzetCool-Pohoda\\\\POHODA_SK_E1_DATA\\\\Dokumenty\\\\ACecom\\\\Obrázky\\\\\"",
             item.URL
         );
     } 

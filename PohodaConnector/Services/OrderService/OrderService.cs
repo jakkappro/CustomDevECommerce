@@ -46,10 +46,10 @@ public class OrderService : IOrderService
     public async Task CreateOrder(CreateOrderData createOrderData)
     {
         var order = new OrderBuilder().BuildFromCreteOrderData(createOrderData);
-
+        _logger.LogDebug("Creating order: {order}", order);
         var str = _serializer.Serialize(order);
-
         await _server.SendRequest(str);
+        // TODO: check if order was created successfully
     }
 
     public bool Exist(string id)

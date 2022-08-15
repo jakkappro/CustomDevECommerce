@@ -12,7 +12,8 @@ public class ExpandoToPohodaOrer
         var createOrderItemData = order.items.ToList().Select(e =>
             CreateOrderItemData.CreateEanInstance(e.itemQuantity, items.First(i => i.ITEM_ID == e.itemId).EAN,
                 e.itemPrice)).ToList();
-        createOrderItemData.Add(CreateOrderItemData.CreateSimpleInstance(1, order.shippingPrice, "Shipping"));
+
+        createOrderItemData.Add(CreateOrderItemData.CreateSimpleInstance(1, order.shippingPrice, "Doprava"));
         return new CreateOrderData(
             id,
             order.customer.firstname + " " + order.customer.surname,

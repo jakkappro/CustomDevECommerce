@@ -36,9 +36,14 @@ public class StockService : IStockService
 
     public async void CreateStock(StockData stockData)
     {
-        _imageDownloader.Download(stockData.ImgUrl, stockData.ImgFilePath);
+        var path = stockData.ImgFilePath + stockData.ImgUrl.Split("/").Last();
+        _imageDownloader.Download(stockData.ImgUrl, path);
+        _logger.LogInformation("Downloaded image, path: {path}", path);
+        
         var stock = new StockBuilder().BuildFromCreteOrderData(stockData);
-        await _server.SendRequest(_serializer.Serialize(stock));
+        var serialize = _serializer.Serialize(stock);
+        _logger.LogDebug("Creating stock: {stock}", stock);
+        await _server.SendRequest(serialize);
     }
 
     public async Task<bool> Exists(string code)

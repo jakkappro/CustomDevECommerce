@@ -21,11 +21,13 @@ namespace ConsoleApp.ApplicationModes
         private readonly ILogger<MailMode> _logger;
         private readonly ICarrier _carrier;
         private readonly IIdGenerator _generator;
-        private readonly IOrderService _order;
+        private readonly IOrderService _orderService;
         private readonly IStockService _stock;
 
 
-        public MailMode(int lookBackDays, IExpandoOrder expandoService, IMailSender mailService, IConfiguration configuration, ILogger<MailMode> logger, ICarrier carrier, IIdGenerator generator, IOrderService order, IStockService stock)
+        public MailMode(int lookBackDays, IExpandoOrder expandoService, IMailSender mailService,
+            IConfiguration configuration, ILogger<MailMode> logger, ICarrier carrier, IIdGenerator generator,
+            IOrderService orderService, IStockService stock)
         {
             _lookBackDays = lookBackDays;
             _expandoService = expandoService;
@@ -34,65 +36,82 @@ namespace ConsoleApp.ApplicationModes
             _logger = logger;
             _carrier = carrier;
             _generator = generator;
-            _order = order;
+            _orderService = orderService;
             _stock = stock;
         }
 
         public void Run()
         {
-            _logger.LogDebug("Initializing mail service.");
-            _mailService.Initialize(_configuration["Email:Login"], _configuration["Email:Recipient"], _configuration["Email:Cc"], _configuration["Email:Password"]);
-            _logger.LogDebug("Getting templates for mail.");
+            _mailService.Initialize(_configuration["Email:Login"], _configuration["Email:Recipient"],
+                _configuration["Email:Cc"], _configuration["Email:Password"]);
+            _logger.LogInformation("Initialized mail service.");
+
             _mailService.LoadTemplatesFromFile();
 
-            _order.Initialize(_lookBackPohoda);
+            _orderService.Initialize(_lookBackPohoda);
+            _logger.LogInformation("Initialize order service.");
+
             _stock.Initialize();
+            _logger.LogInformation("Initialized stock service.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
-            var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
+            _logger.LogInformation("Loaded expando orders.");
 
-            _logger.LogInformation("Populating mail with orders.");
+            var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
+            _logger.LogInformation("Loaded prehome orders.");
+
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
-                if (order.orderStatus != "Unshipped" || _order.Exist(order.orderId)) 
+                if (order.orderStatus != "Unshipped")
                     continue;
-                
+
+                if (_orderService.Exist(order.orderId))
+                {
+                    _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
+                }
+
                 var id = _generator.GetNextId();
-                
-                AddToMail(order, items, id);
-                _logger.LogInformation("Id for order: {id}", id);
+                _logger.LogInformation("Id for orderService: {id}", id);
 
                 CreatePohodaOrder(order, id, items).Wait();
 
                 CreateCarrierPackage(order, id).Wait();
+
+                AddToMail(order, items, id);
             }
 
             _logger.LogInformation("Sending mail");
             _mailService.SendMail();
         }
 
-        private async Task CreatePohodaOrder(GetExpandoFeedRequest.ordersOrder order, string id, IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
+        private async Task CreatePohodaOrder(GetExpandoFeedRequest.ordersOrder order, string id,
+            IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
         {
             foreach (var stock in order.items)
             {
                 if (await _stock.Exists(stock.itemId.ToString()))
                 {
+                    _logger.LogInformation("Found stock, id: {id}", stock.itemId);
                     continue;
                 }
 
                 _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
+                _logger.LogInformation("Created stock, id: {id}", stock.itemId);
             }
-            await _order.CreateOrder(ExpandoToPohodaOrer.Map(order, id, items));
+
+            await _orderService.CreateOrder(ExpandoToPohodaOrer.Map(order, id, items));
+            _logger.LogInformation("Created order, id: {id}", id);
         }
 
         private async Task CreateCarrierPackage(GetExpandoFeedRequest.ordersOrder order, string id)
         {
-            _logger.LogInformation("Creating packet: {id}", id);
             var packetId = await _carrier.CreatePackage(ExpandoToPacketaPacket.Map(order, id));
+            _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
             Thread.Sleep(1000);
             try
             {
                 var res = await _carrier.GetLabel(packetId);
+                _logger.LogInformation("Generated label, name: {name}", res);
                 _mailService.AddAttachment(res);
             }
             catch (ArgumentException)
@@ -101,10 +120,13 @@ namespace ConsoleApp.ApplicationModes
             }
         }
 
-        private void AddToMail(GetExpandoFeedRequest.ordersOrder order, IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items, string pohodaId)
+        private void AddToMail(GetExpandoFeedRequest.ordersOrder order, IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items,
+            string pohodaId)
         {
-            _logger.LogDebug("Adding order id: {orderId}, with items {items} to mail.", order.orderId, order.items);
-            _mailService.AddRowFromTemplate(ExpandoToMailOrder.Map(order, items.Where(item => order.items.Any(i => item.ITEM_ID == i.itemId)).ToList(), pohodaId));
+            _logger.LogDebug("Adding orderService id: {orderId}, with items {items} to mail.", order.orderId,
+                order.items);
+            _mailService.AddRowFromTemplate(ExpandoToMailOrder.Map(order,
+                items.Where(item => order.items.Any(i => item.ITEM_ID == i.itemId)).ToList(), pohodaId));
         }
     }
 }
