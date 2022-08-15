@@ -4,7 +4,7 @@ namespace PohodaConnector.Interfaces;
 
 public interface IOrderService
 {
-    void CreateOrderAsync(CreateOrderData createOrderData);
+    Task CreateOrder(CreateOrderData createOrderData);
 
     bool Exist(string id);
 

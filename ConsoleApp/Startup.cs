@@ -106,6 +106,7 @@ public class Startup
         services.AddHttpClient<IXmlFeedParser, UrlXmlFeedParser>();
         services.AddTransient<IMailSender, MailSender>();
         services.AddSingleton<IIdGenerator, IdGenerator>();
+        services.AddSingleton<IDownloader, ImageDownloader>();
 
         // Add expando services
         services.AddTransient<IExpandoOrder, ExpandoOrderService>();
@@ -118,21 +119,6 @@ public class Startup
         {
             client.BaseAddress = new Uri("https://www.zasilkovna.cz/api/rest/");
         });
-
-        // Add starter service
-        services.AddTransient<IStarterService, MailMode>();
-    }
-
-    private static void CreateAllServices(HostBuilderContext context, IServiceCollection services)
-    {
-        // Add common services
-        services.AddSingleton<ISerializer, Utf8SerializerService>();
-        services.AddHttpClient<IXmlFeedParser, UrlXmlFeedParser>();
-        services.AddHttpClient<IDownloader, ImageDownloader>();
-        services.AddTransient<IMailSender, MailSender>();
-
-        // Add expando services
-        services.AddTransient<IExpandoOrder, ExpandoOrderService>();
 
         // Add pohoda services
         services.AddHttpClient<IAccountingSoftware, MServer>(client =>
@@ -154,6 +140,11 @@ public class Startup
         services.AddTransient<IStockService, StockService>();
 
         // Add starter service
-        services.AddTransient<IStarterService, FullMode>();
+        services.AddTransient<IStarterService, MailMode>();
+    }
+
+    private static void CreateAllServices(HostBuilderContext context, IServiceCollection services)
+    {
+        // TODO: delete this 
     }
 }

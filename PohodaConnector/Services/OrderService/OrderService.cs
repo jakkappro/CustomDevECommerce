@@ -43,7 +43,7 @@ public class OrderService : IOrderService
                 .responsePackItem.listOrder.order ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
     }
 
-    public async void CreateOrderAsync(CreateOrderData createOrderData)
+    public async Task CreateOrder(CreateOrderData createOrderData)
     {
         var order = new OrderBuilder().BuildFromCreteOrderData(createOrderData);
 
