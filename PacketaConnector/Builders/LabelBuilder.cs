@@ -15,7 +15,7 @@ public class LabelBuilder : ILabelBuilder
         };
     }
 
-    public GenerateLabelRequest.packetLabelPdf BuildFromCreateOrderData(uint id, string apiPassword)
+    public GenerateLabelRequest.packetLabelPdf BuildFromCreateOrderData(string id, string apiPassword)
     {
         return new LabelBuilder().WithApiPassword(apiPassword)
             .WithId(id)
@@ -28,7 +28,7 @@ public class LabelBuilder : ILabelBuilder
         return this;
     }
 
-    public LabelBuilder WithId(uint id)
+    public LabelBuilder WithId(string  id)
     {
         _label.packetId = id;
         return this;

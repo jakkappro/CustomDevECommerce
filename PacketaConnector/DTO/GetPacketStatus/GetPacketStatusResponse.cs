@@ -14,117 +14,114 @@ public class GetPacketStatusResponse
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class response
     {
-
         private string statusField;
 
-        private responseResult resultField;
+        private responseResult? resultField;
 
-           public string status
+        public string status
         {
             get => statusField;
             set => statusField = value;
         }
 
-           public responseResult result
+        public responseResult? result
         {
             get => resultField;
             set => resultField = value;
         }
     }
+
     [Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class responseResult
     {
-
         private DateTime dateTimeField;
 
-        private byte statusCodeField;
+        private string statusCodeField;
 
         private string codeTextField;
 
         private string statusTextField;
 
-        private byte branchIdField;
+        private string branchIdField;
 
-        private byte destinationBranchIdField;
+        private string destinationBranchIdField;
 
-        private string externalTrackingCodeField;
+        private string? externalTrackingCodeField;
 
-        private byte isReturningField;
+        private string? isReturningField;
 
-        private string storedUntilField;
+        private string? storedUntilField;
 
         private ushort carrierIdField;
 
         private string carrierNameField;
 
-           public DateTime dateTime
+        public DateTime dateTime
         {
             get => dateTimeField;
             set => dateTimeField = value;
         }
 
-           public byte statusCode
+        public string statusCode
         {
             get => statusCodeField;
             set => statusCodeField = value;
         }
 
-           public string codeText
+        public string codeText
         {
             get => codeTextField;
             set => codeTextField = value;
         }
 
-           public string statusText
+        public string statusText
         {
             get => statusTextField;
             set => statusTextField = value;
         }
 
-           public byte branchId
+        public string branchId
         {
             get => branchIdField;
             set => branchIdField = value;
         }
 
-           public byte destinationBranchId
+        public string destinationBranchId
         {
             get => destinationBranchIdField;
             set => destinationBranchIdField = value;
         }
 
-           public string externalTrackingCode
+        public string? externalTrackingCode
         {
             get => externalTrackingCodeField;
             set => externalTrackingCodeField = value;
         }
 
-           public byte isReturning
+        public string isReturning
         {
             get => isReturningField;
             set => isReturningField = value;
         }
 
-           public string storedUntil
+        public string storedUntil
         {
             get => storedUntilField;
             set => storedUntilField = value;
         }
 
-           public ushort carrierId
+        public ushort carrierId
         {
             get => carrierIdField;
             set => carrierIdField = value;
         }
 
-           public string carrierName
+        public string carrierName
         {
             get => carrierNameField;
             set => carrierNameField = value;
         }
     }
-
-
 }

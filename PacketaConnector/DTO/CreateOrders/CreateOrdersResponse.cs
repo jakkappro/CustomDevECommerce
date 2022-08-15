@@ -36,13 +36,13 @@ public class CreateOrderResponse
     [XmlType(AnonymousType = true)]
     public class responseResult
     {
-        private long idField;
+        private string idField;
 
         private string barcodeField;
 
         private string barcodeTextField;
 
-        public long id
+        public string id
         {
             get => idField;
             set => idField = value;

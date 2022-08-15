@@ -16,7 +16,7 @@ public class GetPacketStatusRequest
     {
         private string apiPasswordField;
 
-        private uint packetIdField;
+        private string packetIdField;
 
         public string apiPassword
         {
@@ -24,7 +24,7 @@ public class GetPacketStatusRequest
             set => apiPasswordField = value;
         }
 
-        public uint packetId
+        public string packetId
         {
             get => packetIdField;
             set => packetIdField = value;

@@ -16,7 +16,7 @@ public class GenerateLabelRequest
     {
         private string apiPasswordField;
 
-        private long packetIdField;
+        private string packetIdField;
 
         private string formatField;
 
@@ -28,7 +28,7 @@ public class GenerateLabelRequest
             set => apiPasswordField = value;
         }
 
-        public long packetId
+        public string packetId
         {
             get => packetIdField;
             set => packetIdField = value;

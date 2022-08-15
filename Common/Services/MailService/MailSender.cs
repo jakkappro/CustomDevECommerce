@@ -19,6 +19,8 @@ public class MailSender : IMailSender
 
     private string _emailRows;
 
+    private List<string> _attachments;
+
     public MailSender(ILogger<MailSender> logger)
     {
         _logger = logger;
@@ -30,6 +32,8 @@ public class MailSender : IMailSender
         _rowTemplate = "";
         _itemTemplate = "";
         _emailRows = "";
+
+        _attachments = new List<string>();
     }
 
     public void Initialize(string from, string to, string cc, string password)
@@ -82,6 +86,11 @@ public class MailSender : IMailSender
         }
     }
 
+    public void AddAttachment(string attachment)
+    {
+        _attachments.Add(attachment);
+    }
+
     public void AddRowFromTemplate(OrderData orderData)
     {
         _emailRows += _rowTemplate;
@@ -125,9 +134,10 @@ public class MailSender : IMailSender
             message.IsBodyHtml = true;
             message.Body = body;
 
-            // for sending attachments
-            // var attachment = new Attachment("c:/textfile.txt");
-            // message.Attachments.Add(attachment);
+            foreach (var attachment in _attachments.Select(att => new Attachment($"labels/{att}")))
+            {
+                message.Attachments.Add(attachment);
+            }
 
             smtp.Port = 587;
             smtp.Host = "mail.hostmaster.sk";

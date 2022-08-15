@@ -5,9 +5,9 @@ namespace PacketaConnector.Interfaces;
 
 public interface ICarrier
 {
-    Task CreatePackage(Packet packet);
+    Task<string> CreatePackage(Packet packet);
 
-    Task<string> GetLabel(uint id);
+    Task<string> GetLabel(string id);
 
-    Task<GetPacketStatusResponse.response> GetPackageInfo(uint id);
+    Task<GetPacketStatusResponse.response> GetPackageInfo(string id);
 }

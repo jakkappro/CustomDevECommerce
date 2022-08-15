@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Builders;
+using PacketaConnector.DTO.CreateOrders;
 using PacketaConnector.DTO.GetPacketStatus;
 using PacketaConnector.Interfaces;
 using PacketaConnector.DTO.GenerateLabels;
@@ -17,6 +18,7 @@ public class PacketaCarrier : ICarrier
     private readonly ILabelBuilder _labelBuilder;
     private readonly IPacketBuilder _builder;
     private readonly HttpClient _client;
+    private int _retries;
 
     public PacketaCarrier(IPacketBuilder builder, HttpClient client, ISerializer serializer, ILogger<PacketaCarrier> logger, IConfiguration configuration, IStatusBuilder statusBuilder, ILabelBuilder labelBuilder)
     {
@@ -27,9 +29,10 @@ public class PacketaCarrier : ICarrier
         _labelBuilder = labelBuilder;
         _builder = builder;
         _client = client;
+        _retries = 3;
     }
 
-    public async Task CreatePackage(Packet packet)
+    public async Task<string> CreatePackage(Packet packet)
     {
         try
         {
@@ -37,8 +40,13 @@ public class PacketaCarrier : ICarrier
             var buildFromCreateOrderData = _serializer.Serialize(fromCreateOrderData);
             var response = await _client.PostAsync("",
                 new StringContent(buildFromCreateOrderData));
-            // TODO: check response for errors 
-            // var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var id = _serializer.Deserialize<CreateOrderResponse.response>(responseString);
+            if (id.status.Equals("ok"))
+                return id.result!.id;
+            
+            _logger.LogError("Couldn't create packet.");
+            throw new ArgumentException();
         }
         catch
         {
@@ -47,12 +55,26 @@ public class PacketaCarrier : ICarrier
         }
     }
 
-    public async Task<string> GetLabel(uint id)
+    public async Task<string> GetLabel(string id)
     {
-        // get tracking number
-        var number = (await GetPackageInfo(id)).result.externalTrackingCode;
-        
-        // get label
+        _retries = 3;
+        var response = await GetPackageInfo(id);
+
+        while (response.result is null && _retries > 0)
+        {
+            response = await GetPackageInfo(id);
+            Thread.Sleep(500);
+            _retries--;
+        }
+
+        if (_retries == 0)
+        {
+            _logger.LogError("Couldn't load data for package id: {id}", id);
+            throw new ArgumentException();
+        }
+
+        var number = response.result!.externalTrackingCode;
+
         string label;
         try
         {
@@ -68,15 +90,13 @@ public class PacketaCarrier : ICarrier
             throw;
         }
 
-        // create file
-
         var sPdfDecoded = Convert.FromBase64String(label);
         await File.WriteAllBytesAsync($@"labels\{number}.pdf", sPdfDecoded);
 
         return $"{number}.pdf";
     }
 
-    public async Task<GetPacketStatusResponse.response> GetPackageInfo(uint id)
+    public async Task<GetPacketStatusResponse.response> GetPackageInfo(string id)
     {
         try
         {
