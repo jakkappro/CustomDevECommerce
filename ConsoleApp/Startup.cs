@@ -51,9 +51,9 @@ public class Startup
         IStarterService app;
 
         if (options.IsMailOnly)
-            app = ActivatorUtilities.CreateInstance<MailMode>(host.Services, options.LookBackDays);
+            app = ActivatorUtilities.CreateInstance<MailMode>(host.Services, options.LookBackDays, true);
         else
-            app = ActivatorUtilities.CreateInstance<FullMode>(host.Services, options.LookBackDays);
+            app = ActivatorUtilities.CreateInstance<FullMode>(host.Services, options.LookBackDays, true);
 
         app.Run();
     }
@@ -86,7 +86,7 @@ public class Startup
 
         parser.Setup(arg => arg.IsMailOnly)
             .As('m', "mail")
-            .SetDefault(false)
+            .SetDefault(true)
             .WithDescription("If true sets application to mail only mode.");
 
         var result = parser.Parse(args);

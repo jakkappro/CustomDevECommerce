@@ -54,6 +54,6 @@ public class StockService : IStockService
 
         var stock = _serializer.Deserialize<GetStockResponse.responsePack>(response);
 
-        return stock.responsePackItem.listStock.stock is null;
+        return stock.responsePackItem.listStock.stock is not null;
     }
 }

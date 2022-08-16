@@ -37,10 +37,13 @@ public class OrderService : IOrderService
             .WithDate(lookBackDays)
             .Build();
 
-        _existingOrders =
-            (_serializer.Deserialize<GetOrdersByDateResponse.responsePack>(
-                    await _server.SendRequest(_serializer.Serialize(getOrdersByDateRequest)))
-                .responsePackItem.listOrder.order ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
+        var _existingOrdersResponse = await _server.SendRequest(_serializer.Serialize(getOrdersByDateRequest));
+        var _existingOrdersSerialized = _serializer.Deserialize<GetOrdersByDateResponse.responsePack>(_existingOrdersResponse);
+        
+        _existingOrders = (_existingOrdersSerialized.responsePackItem.listOrder.order 
+            ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
+
+        _logger.LogDebug("{existingOrdersCount} existing orders found in Pohoda", _existingOrders.Count());
     }
 
     public async Task CreateOrder(CreateOrderData createOrderData)
@@ -54,7 +57,7 @@ public class OrderService : IOrderService
 
     public bool Exist(string id)
     {
-        return _existingOrders.Any(x => x.orderHeader.numberOrder == id);
+        return _existingOrders == null || _existingOrders.Count == 0 || _existingOrders.Any(x => x.orderHeader.numberOrder == id);
     }
 
     public void UpdateOrder(string id, bool executed = true)

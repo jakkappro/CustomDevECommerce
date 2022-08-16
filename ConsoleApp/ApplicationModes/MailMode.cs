@@ -30,9 +30,11 @@ namespace ConsoleApp.ApplicationModes
 
         private Data data;
 
+        private bool readOnly;
+
         public MailMode(int lookBackDays, IExpandoOrder expandoService, IMailSender mailService,
             IConfiguration configuration, ILogger<MailMode> logger, ICarrier carrier, IIdGenerator generator,
-            IOrderService orderService, IStockService stock)
+            IOrderService orderService, IStockService stock, bool readOnly)
         {
             _lookBackDays = lookBackDays;
             _expandoService = expandoService;
@@ -43,10 +45,12 @@ namespace ConsoleApp.ApplicationModes
             _generator = generator;
             _orderService = orderService;
             _stock = stock;
+            this.readOnly = readOnly;
         }
 
         public void Run()
         {
+
             _mailService.Initialize(_configuration["Email:Login"], _configuration["Email:Recipient"],
                 _configuration["Email:Cc"], _configuration["Email:Password"]);
             _logger.LogInformation("Mail service initialized.");
@@ -60,10 +64,12 @@ namespace ConsoleApp.ApplicationModes
             _logger.LogInformation("Stock service initialized.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
-            _logger.LogInformation("Expando orders successfully loaded.");
+            _logger.LogInformation("Expando orders {ordersCount} successfully loaded.", orders.Count());
 
             var items = _expandoService.GetPrehomeItems().SHOPITEM.ToList();
-            _logger.LogInformation("Prehome orders successfully loaded.");
+            AddMissingItems(items);
+
+            _logger.LogInformation("Prehome items {itemsCount} successfully loaded.", items.Count);
 
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
@@ -71,6 +77,7 @@ namespace ConsoleApp.ApplicationModes
                 if (order.orderStatus != "Unshipped")
                     continue;
 
+                _logger.LogDebug("Checking order with id {id}", order.orderId);
                 if (_orderService.Exist(order.orderId))
                 {
                     _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
@@ -90,14 +97,17 @@ namespace ConsoleApp.ApplicationModes
 
                 AddToMail(order, items, id);
 
-                using var db = new LiteDatabase(_configuration["Database:Path"]);
-                var col = db.GetCollection<Data>("customers");
+                if (!readOnly)
+                {
+                    using var db = new LiteDatabase(_configuration["Database:Path"]);
+                    var col = db.GetCollection<Data>("customers");
 
-                col.Insert(data);
-                    
-                col.EnsureIndex(x => x.AmazonOrderId);
-                col.EnsureIndex(x => x.PohodaOrderId);
-                col.EnsureIndex(x => x.InternalPackageId);
+                    col.Insert(data);
+
+                    col.EnsureIndex(x => x.AmazonOrderId);
+                    col.EnsureIndex(x => x.PohodaOrderId);
+                    col.EnsureIndex(x => x.InternalPackageId);
+                }
             }
 
             _logger.LogInformation("Sending mail");
@@ -115,41 +125,62 @@ namespace ConsoleApp.ApplicationModes
                     continue;
                 }
 
-                _logger.LogDebug($"Creating stock...{JsonSerializer.Serialize(stock)}");
-                _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
+                var expandoItem = items.FirstOrDefault(e => e.ITEM_ID == stock.itemId);
+                if (expandoItem == null)
+                {
+                    _logger.LogError("Cannot found expando item with id: {id}", stock.itemId);
+                    continue;
+                }
+
+                _logger.LogDebug($"Creating stock {JsonSerializer.Serialize(ExpandoItemToPohodaStock.Map(expandoItem))}");
+                if (!readOnly)
+                {
+                    _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
+                }
                 _logger.LogInformation($"Stock with id {stock.itemId} sucessfully created");
             }
 
-            _logger.LogDebug($"Creating order.. {JsonSerializer.Serialize(order)}");
-            await _orderService.CreateOrder(ExpandoToPohodaOrer.Map(order, id, items));
+            _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
+            if (!readOnly)
+            {
+                await _orderService.CreateOrder(ExpandoToPohodaOrder.Map(order, id, items));
+            }
             _logger.LogInformation($"Order with {id} sucessfully created");
         }
 
         private async Task CreateCarrierPackage(GetExpandoFeedRequest.ordersOrder order, string id)
         {
             var packetData = ExpandoToPacketaPacket.Map(order, id);
-            _logger.LogDebug($"Creating packet...{JsonSerializer.Serialize(packetData)}");
-            var packetId = await _carrier.CreatePackage(packetData);
-            data.LabelId = packetId;
-            _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
-            Thread.Sleep(1000);
+            
             try
             {
-                var res = await _carrier.GetLabel(packetId);
-                _logger.LogInformation("Generated label, name: {name}", res);
-                _mailService.AddAttachment(res);
-                var i = res.Split(".").First();
-                using var db = new LiteDatabase(_configuration["Database:Path"]);
-                var storage = db.GetStorage<string>();
-                storage.Upload(i, $"{_configuration["Packeta:LabelsLocation"]}/{res}");
-                data.LabelId = data.PohodaOrderId;
+                if (!readOnly)
+                {
+                    var packetId = await _carrier.CreatePackage(packetData);
+                    data.LabelId = packetId;
+                    _logger.LogInformation("Created packet, pohodaId: {id}, packetId: {packetId}", id, packetId);
+                    Thread.Sleep(5000);
+                    var res = await _carrier.GetLabel(packetId);
+                    _logger.LogInformation("Generated label, name: {name}", res);
+                    _mailService.AddAttachment(res);
+                    var i = res.Split(".").First();
+                    using var db = new LiteDatabase(_configuration["Database:Path"]);
+                    var storage = db.GetStorage<string>();
+                    storage.Upload(i, $"{_configuration["Packeta:LabelsLocation"]}/{res}");
+                    data.LabelId = data.PohodaOrderId;
+                }
             }
             catch (ArgumentException)
             {
                 _logger.LogWarning("Skipping package: {id}", id);
             }
 
-            data.CarrierInfo = "OtherExpressOne";
+            data.CarrierInfo = order.customer.address.country switch
+            {
+                "DE" => "DPD",
+                "AT" => "ATPOST",
+                _ => $"Other"
+            };
             data.DateCreated = DateTime.Now;
         }
 
@@ -160,6 +191,46 @@ namespace ConsoleApp.ApplicationModes
                 order.items);
             _mailService.AddRowFromTemplate(ExpandoToMailOrder.Map(order,
                 items.Where(item => order.items.Any(i => item.ITEM_ID == i.itemId)).ToList(), pohodaId));
+        }
+
+        private static void AddMissingItems(List<GetPrehomeFeed.SHOPSHOPITEM> items)
+        {
+            if (!items.Exists(i => i.ITEM_ID == 294489))
+                items.Add(
+                    new GetPrehomeFeed.SHOPSHOPITEM
+                    {
+                        ITEM_ID = 294489,
+                        PRODUCTNAME = "Intex 69629 Skladacie vesla 218cm",
+                        EAN = "6941057417837",
+                        IMGURL = "",
+                        PRICE_VAT = 15.47m,
+                        VAT = 20
+                    });
+
+            if (!items.Exists(i => i.ITEM_ID == 261245))
+                items.Add(
+                    new GetPrehomeFeed.SHOPSHOPITEM
+                    {
+                        ITEM_ID = 261245,
+                        PRODUCTNAME = "Kvetináč Strend Pro Woodeff, 41,5x29x19cm, whiskey barel wagon",
+                        EAN = "8584163031795",
+                        IMGURL = "",
+                        PRICE_VAT = 36.60m,
+                        VAT = 20
+                    });
+            if (!items.Exists(i => i.ITEM_ID == 320751))
+                items.Add(
+                    new GetPrehomeFeed.SHOPSHOPITEM
+                    {
+                        ITEM_ID = 320751,
+                        PRODUCTNAME = "Doplnkový set obrázkov magic mags zelený traktor k aktovkám grade, space, cloud, 2v1",
+                        EAN = "4047443358301",
+                        DEALER = "JUNIOR",
+                        IMGURL = "",
+                        PRICE_VAT = 13.86m,
+                        VAT = 20
+                    });
+
         }
     }
 }
