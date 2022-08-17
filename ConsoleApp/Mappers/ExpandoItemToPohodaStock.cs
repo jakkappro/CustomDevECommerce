@@ -15,7 +15,7 @@ public static class ExpandoItemToPohodaStock
             item.MANUFACTURER,
             item.DESCRIPTION,
             item.PRODUCTNAME,
-            "\"\\\\\\\\AzetCool-Pohoda\\\\POHODA_SK_E1_DATA\\\\Dokumenty\\\\ACecom\\\\Obrázky\\\\\"",
+            @"\\AzetCool-Pohoda\POHODA_SK_E1_DATA\Dokumenty\ACecom\Obrázky\",
             item.URL
         );
     } 

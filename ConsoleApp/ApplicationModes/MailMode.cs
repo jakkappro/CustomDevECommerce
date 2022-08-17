@@ -57,10 +57,10 @@ namespace ConsoleApp.ApplicationModes
 
             _mailService.LoadTemplatesFromFile();
 
-            _orderService.Initialize(_lookBackPohoda);
+            _orderService.Initialize(_lookBackPohoda).Wait();
             _logger.LogInformation("Order service initialized.");
 
-            _stock.Initialize();
+            _stock.Initialize().Wait();
             _logger.LogInformation("Stock service initialized.");
 
             var orders = _expandoService.GetExpandoOrders(_lookBackDays).order;
@@ -74,39 +74,41 @@ namespace ConsoleApp.ApplicationModes
             foreach (var order in orders.OrderByDescending(o => o.orderStatus).ThenByDescending(o => o.purchaseDate))
             {
                 data = new Data();
-                if (order.orderStatus != "Unshipped")
-                    continue;
-
-                _logger.LogDebug("Checking order with id {id}", order.orderId);
-                if (_orderService.Exist(order.orderId))
+                if (order.orderStatus == "Unshipped")
                 {
-                    _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
-                    continue;
-                }
 
-                var id = _generator.GetNextId();
-                _logger.LogInformation($"Id of new order: {id}");
+                    _logger.LogDebug("Checking order with id {id}", order.orderId);
+                    if (_orderService.Exist(order.orderId))
+                    {
+                        EnsurePohodaOrderItemsExist(order, items).Wait();
+                        _logger.LogInformation("Found order in pohoda, code: {code}", order.orderId);
+                        continue;
+                    }
 
-                data.PohodaOrderId = id;
-                data.AmazonOrderId = order.orderId;
-                data.Status = "Unshipped";
+                    var id = _generator.GetNextId();
+                    _logger.LogInformation($"Id of new order: {id}");
 
-                CreatePohodaOrder(order, id, items).Wait();
+                    data.PohodaOrderId = id;
+                    data.AmazonOrderId = order.orderId;
+                    data.Status = "Unshipped";
 
-                CreateCarrierPackage(order, id).Wait();
+                    CreatePohodaOrder(order, id, items).Wait();
 
-                AddToMail(order, items, id);
+                    //CreateCarrierPackage(order, id).Wait();
 
-                if (!readOnly)
-                {
-                    using var db = new LiteDatabase(_configuration["Database:Path"]);
-                    var col = db.GetCollection<Data>("customers");
+                    AddToMail(order, items, id);
 
-                    col.Insert(data);
+                    if (!readOnly)
+                    {
+                        using var db = new LiteDatabase(_configuration["Database:Path"]);
+                        var col = db.GetCollection<Data>("customers");
 
-                    col.EnsureIndex(x => x.AmazonOrderId);
-                    col.EnsureIndex(x => x.PohodaOrderId);
-                    col.EnsureIndex(x => x.InternalPackageId);
+                        col.Insert(data);
+
+                        col.EnsureIndex(x => x.AmazonOrderId);
+                        col.EnsureIndex(x => x.PohodaOrderId);
+                        col.EnsureIndex(x => x.InternalPackageId);
+                    }
                 }
             }
 
@@ -115,6 +117,19 @@ namespace ConsoleApp.ApplicationModes
         }
 
         private async Task CreatePohodaOrder(GetExpandoFeedRequest.ordersOrder order, string id,
+            IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
+        {
+            EnsurePohodaOrderItemsExist(order, items).Wait();
+
+            _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
+            if (!readOnly)
+            {
+                await _orderService.CreateOrder(ExpandoToPohodaOrder.Map(order, id, items));
+            }
+            _logger.LogInformation($"Order with {id} sucessfully created");
+        }
+
+        private async Task EnsurePohodaOrderItemsExist(GetExpandoFeedRequest.ordersOrder order,
             IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
         {
             foreach (var stock in order.items)
@@ -139,13 +154,6 @@ namespace ConsoleApp.ApplicationModes
                 }
                 _logger.LogInformation($"Stock with id {stock.itemId} sucessfully created");
             }
-
-            _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
-            if (!readOnly)
-            {
-                await _orderService.CreateOrder(ExpandoToPohodaOrder.Map(order, id, items));
-            }
-            _logger.LogInformation($"Order with {id} sucessfully created");
         }
 
         private async Task CreateCarrierPackage(GetExpandoFeedRequest.ordersOrder order, string id)
@@ -228,6 +236,18 @@ namespace ConsoleApp.ApplicationModes
                         DEALER = "JUNIOR",
                         IMGURL = "",
                         PRICE_VAT = 13.86m,
+                        VAT = 20
+                    });
+            if (!items.Exists(i => i.ITEM_ID == 295379))
+                items.Add(
+                    new GetPrehomeFeed.SHOPSHOPITEM
+                    {
+                        ITEM_ID = 295379,
+                        PRODUCTNAME = "Úprava Peračník coocazoo pencildenzel, oceanemotion galaxy blue",
+                        EAN = "4047443423559",
+                        DEALER = "JUNIOR",
+                        IMGURL = "",
+                        PRICE_VAT = 23.7m,
                         VAT = 20
                     });
 

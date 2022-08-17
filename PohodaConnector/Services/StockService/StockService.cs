@@ -21,7 +21,7 @@ public class StockService : IStockService
         _imageDownloader = imageDownloader;
     }
 
-    public async void Initialize()
+    public async Task Initialize()
     {
         _server.Initialize("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"", 1000);
         _server.StartServer();
@@ -36,8 +36,11 @@ public class StockService : IStockService
 
     public async void CreateStock(StockData stockData)
     {
-        var path = stockData.ImgFilePath + stockData.ImgUrl.Split("/").Last();
-        _imageDownloader.Download(stockData.ImgUrl, path);
+        var imageFileName = stockData.ImgUrl.Split("/").Last();
+        var path = $"{stockData.ImgFilePath}{imageFileName}";
+
+        _logger.LogDebug("Downloading picture with url {url} and destination {destination}. StockData ImgFilePath is {ImgFilePath}", stockData.ImgUrl, path, stockData.ImgFilePath);
+        _imageDownloader.Download(stockData.ImgUrl, path).Wait();
         _logger.LogInformation("Downloaded image, path: {path}", path);
         
         var stock = new StockBuilder().BuildFromCreteOrderData(stockData);

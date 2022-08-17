@@ -2,7 +2,7 @@
   "profiles": {
     "MailOnly": {
       "commandName": "Project",
-      "commandLineArgs": "-d 1 -m"
+      "commandLineArgs": "-d 5 -m"
     },
     "FullMode": {
       "commandName": "Project",

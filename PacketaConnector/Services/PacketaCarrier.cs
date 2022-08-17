@@ -76,7 +76,7 @@ public class PacketaCarrier : ICarrier
             throw new ArgumentException();
         }
 
-        var number = response.result!.externalTrackingCode;
+        var number = response.result?.externalTrackingCode ?? id;
 
         string label;
         try

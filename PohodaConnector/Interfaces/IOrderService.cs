@@ -10,5 +10,5 @@ public interface IOrderService
 
     void UpdateOrder(string id, bool executed = false);
 
-    void Initialize(short lookBackDays);
+    Task Initialize(short lookBackDays);
 }

@@ -136,13 +136,16 @@ public class StockBuilder : IStockBuilder
 
     public StockBuilder WithRelatedLink(string link)
     {
-        _stock.dataPackItem[0].stock.stockHeader.relatedLinks.relatedLink =
-            new CreateStockRequest.stockStockHeaderRelatedLinksRelatedLink
+        _stock.dataPackItem[0].stock.stockHeader.relatedLinks = new CreateStockRequest.stockStockHeaderRelatedLinks
+        {
+            relatedLink = new CreateStockRequest.stockStockHeaderRelatedLinksRelatedLink
             {
                 description = "odkaz na produkt",
                 order = 1,
                 addressURL = link
-            };
+            }
+        };
+
         return this;
     }
 }

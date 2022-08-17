@@ -2,5 +2,5 @@
 
 public interface IDownloader
 {
-    void Download(string url, string destination);
+    Task Download(string url, string destination);
 }

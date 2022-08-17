@@ -14,10 +14,17 @@ public class ImageDownloader : IDownloader
         _logger = logger;
     }
 
-    public async void Download(string url, string destination)
+    public async Task Download(string url, string destination)
     {
+        if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(destination))
+        {
+            return;
+        }
+
         try
         {
+            _logger.LogDebug("Downloading picture with url {url} and destination {destination}", url, destination);
+
             var fileBytes = await _client.GetByteArrayAsync(url);
             if (File.Exists(destination))
                 return;

@@ -19,9 +19,11 @@ public class OrderService : IOrderService
         _logger = logger;
         _serializer = serializer;
         _server = server;
+
+        _existingOrders = new List<GetOrdersByDateResponse.listOrderOrder>();
     }
 
-    public async void Initialize(short lookBackDays)
+    public async Task Initialize(short lookBackDays)
     {
         _server.Initialize("test", "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"", 1000);
 
@@ -57,7 +59,7 @@ public class OrderService : IOrderService
 
     public bool Exist(string id)
     {
-        return _existingOrders == null || _existingOrders.Count == 0 || _existingOrders.Any(x => x.orderHeader.numberOrder == id);
+        return _existingOrders != null &&  _existingOrders.Any(x => x.orderHeader.numberOrder == id);
     }
 
     public void UpdateOrder(string id, bool executed = true)

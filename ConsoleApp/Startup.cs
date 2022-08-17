@@ -51,9 +51,9 @@ public class Startup
         IStarterService app;
 
         if (options.IsMailOnly)
-            app = ActivatorUtilities.CreateInstance<MailMode>(host.Services, options.LookBackDays, true);
+            app = ActivatorUtilities.CreateInstance<MailMode>(host.Services, options.LookBackDays, false);
         else
-            app = ActivatorUtilities.CreateInstance<FullMode>(host.Services, options.LookBackDays, true);
+            app = ActivatorUtilities.CreateInstance<FullMode>(host.Services, options.LookBackDays, false);
 
         app.Run();
     }

@@ -7,5 +7,5 @@ public interface IStockService
     void CreateStock(StockData stockData);
     Task<bool> Exists(string code);
 
-    void Initialize();
+    Task Initialize();
 }

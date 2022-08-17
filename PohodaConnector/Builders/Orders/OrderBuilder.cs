@@ -48,7 +48,17 @@ public class OrderBuilder : IOrderBuilder
                             {
                                 ids = EvidentiaryResourcesMoss
                             },
-                        isDelivered = false
+                        isDelivered = false,
+                        partnerIdentity = new CreateOrderRequest.orderOrderHeaderPartnerIdentity
+                        {
+                            address = new CreateOrderRequest.address
+                            { 
+                                country = new CreateOrderRequest.addressCountry()
+                            }
+                        },
+                        MOSS = new CreateOrderRequest.orderOrderHeaderMOSS(),
+                        carrier = new CreateOrderRequest.orderOrderHeaderCarrier(),
+                        number = new CreateOrderRequest.orderOrderHeaderNumber(),
                     },
                     orderSummary = new CreateOrderRequest.orderOrderSummary
                     {
@@ -76,7 +86,7 @@ public class OrderBuilder : IOrderBuilder
             .AddMoss(createOrderData.Moss)
             .AddNumber(createOrderData.OrderId)
             .AddCarrier(createOrderData.Carrier)
-            .SetExecuted(true);
+            .SetExecuted(false);
 
         foreach (var data in createOrderData.OrderItem)
             order.AddOrderDetailItem(data.Quantity, data.Ean, data.Price, data.Text);
@@ -191,7 +201,7 @@ public class OrderBuilder : IOrderBuilder
             text = text,
             quantity = quantity,
             delivered = 0,
-            rateVAT = "high",
+            rateVAT = "historyHigh",
             homeCurrency = new CreateOrderRequest.orderOrderItemHomeCurrency()
             {
                 unitPrice = price
