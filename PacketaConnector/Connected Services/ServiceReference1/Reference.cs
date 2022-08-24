@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Webship
+namespace ServiceReference1
 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://server.webship.solver.sk", ConfigurationName="Webship.WebshipWebService")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://server.webship.solver.sk", ConfigurationName="ServiceReference1.WebshipWebService")]
     public interface WebshipWebService
     {
         
@@ -24,69 +24,69 @@ namespace Webship
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createShipmentReturn")]
-        System.Threading.Tasks.Task<Webship.WebServiceShipmnetResult> createShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, int webServiceShipmentType);
+        System.Threading.Tasks.Task<ServiceReference1.WebServiceShipmnetResult> createShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, int webServiceShipmentType);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createCifShipmentReturn")]
-        System.Threading.Tasks.Task<Webship.CreateCifShipmentResult> createCifShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, int webServiceShipmentType);
+        System.Threading.Tasks.Task<ServiceReference1.CreateCifShipmentResult> createCifShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, int webServiceShipmentType);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createAndPrintCifShipmentReturn")]
-        System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment);
+        System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createAndPrintCifShipmentWithSettingsReturn")]
-        System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentWithSettingsResult> createAndPrintCifShipmentWithSettingsAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, Webship.PrintingSettings printingSettings);
+        System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentWithSettingsResult> createAndPrintCifShipmentWithSettingsAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, ServiceReference1.PrintingSettings printingSettings);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createAndPrintCifShipmentReturn")]
-        System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentWithSettings2Async(string name, string password, Webship.WebServiceShipment webServiceShipment, Webship.PrintingSettings printingSettings);
+        System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentWithSettings2Async(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, ServiceReference1.PrintingSettings printingSettings);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="createMipShipmentReturn")]
-        System.Threading.Tasks.Task<Webship.WebServiceShipmnetResult> createMipShipmentAsync(string name, string password, Webship.MipWebserviceShipment mipWebserviceShipment);
+        System.Threading.Tasks.Task<ServiceReference1.WebServiceShipmnetResult> createMipShipmentAsync(string name, string password, ServiceReference1.MipWebserviceShipment mipWebserviceShipment);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="uploadMipShipmentsReturn")]
-        System.Threading.Tasks.Task<Webship.MipWebserviceUploadResult> uploadMipShipmentsAsync(string name, string password);
+        System.Threading.Tasks.Task<ServiceReference1.MipWebserviceUploadResult> uploadMipShipmentsAsync(string name, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<Webship.finishAndPrintOrdersResponse> finishAndPrintOrdersAsync(Webship.finishAndPrintOrdersRequest request);
+        System.Threading.Tasks.Task<ServiceReference1.finishAndPrintOrdersResponse> finishAndPrintOrdersAsync(ServiceReference1.finishAndPrintOrdersRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="printSDDshipmentsReturn")]
-        System.Threading.Tasks.Task<Webship.WebServiceSddPrintResult> printSDDshipmentsAsync(string aUserName, string aPassword);
+        System.Threading.Tasks.Task<ServiceReference1.WebServiceSddPrintResult> printSDDshipmentsAsync(string aUserName, string aPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="printLabelsWithSettingsReturn")]
-        System.Threading.Tasks.Task<Webship.WebServicePrintResult> printLabelsWithSettingsAsync(string aUserName, string aPassword, Webship.PrintingSettings aPrintingSettings);
+        System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printLabelsWithSettingsAsync(string aUserName, string aPassword, ServiceReference1.PrintingSettings aPrintingSettings);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="printShipmentLabelsReturn")]
-        System.Threading.Tasks.Task<Webship.WebServicePrintResult> printShipmentLabelsAsync(string aUserName, string aPassword);
+        System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printShipmentLabelsAsync(string aUserName, string aPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="printEndOfDayReturn")]
-        System.Threading.Tasks.Task<Webship.WebServicePrintResult> printEndOfDayAsync(string aUserName, string aPassword);
+        System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printEndOfDayAsync(string aUserName, string aPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<Webship.createCifShipmentsResponse> createCifShipmentsAsync(Webship.createCifShipmentsRequest request);
+        System.Threading.Tasks.Task<ServiceReference1.createCifShipmentsResponse> createCifShipmentsAsync(ServiceReference1.createCifShipmentsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<Webship.createOrdersResponse> createOrdersAsync(Webship.createOrdersRequest request);
+        System.Threading.Tasks.Task<ServiceReference1.createOrdersResponse> createOrdersAsync(ServiceReference1.createOrdersRequest request);
     }
     
     /// <remarks/>
@@ -2397,13 +2397,13 @@ namespace Webship
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=0)]
-        public Webship.FinishAndPrintOrdersResult finishAndPrintOrdersReturn;
+        public ServiceReference1.FinishAndPrintOrdersResult finishAndPrintOrdersReturn;
         
         public finishAndPrintOrdersResponse()
         {
         }
         
-        public finishAndPrintOrdersResponse(Webship.FinishAndPrintOrdersResult finishAndPrintOrdersReturn)
+        public finishAndPrintOrdersResponse(ServiceReference1.FinishAndPrintOrdersResult finishAndPrintOrdersReturn)
         {
             this.finishAndPrintOrdersReturn = finishAndPrintOrdersReturn;
         }
@@ -2424,7 +2424,7 @@ namespace Webship
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute("webServiceShipments")]
-        public Webship.WebServiceShipment[] webServiceShipments;
+        public ServiceReference1.WebServiceShipment[] webServiceShipments;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=3)]
         public int webServiceShipmentType;
@@ -2433,7 +2433,7 @@ namespace Webship
         {
         }
         
-        public createCifShipmentsRequest(string name, string password, Webship.WebServiceShipment[] webServiceShipments, int webServiceShipmentType)
+        public createCifShipmentsRequest(string name, string password, ServiceReference1.WebServiceShipment[] webServiceShipments, int webServiceShipmentType)
         {
             this.name = name;
             this.password = password;
@@ -2451,13 +2451,13 @@ namespace Webship
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("createCifShipmentsReturn")]
-        public Webship.CreateCifShipmentResult[] createCifShipmentsReturn;
+        public ServiceReference1.CreateCifShipmentResult[] createCifShipmentsReturn;
         
         public createCifShipmentsResponse()
         {
         }
         
-        public createCifShipmentsResponse(Webship.CreateCifShipmentResult[] createCifShipmentsReturn)
+        public createCifShipmentsResponse(ServiceReference1.CreateCifShipmentResult[] createCifShipmentsReturn)
         {
             this.createCifShipmentsReturn = createCifShipmentsReturn;
         }
@@ -2478,13 +2478,13 @@ namespace Webship
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute("webServiceShipments")]
-        public Webship.WebServiceShipment[] webServiceShipments;
+        public ServiceReference1.WebServiceShipment[] webServiceShipments;
         
         public createOrdersRequest()
         {
         }
         
-        public createOrdersRequest(string name, string password, Webship.WebServiceShipment[] webServiceShipments)
+        public createOrdersRequest(string name, string password, ServiceReference1.WebServiceShipment[] webServiceShipments)
         {
             this.name = name;
             this.password = password;
@@ -2501,26 +2501,26 @@ namespace Webship
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://server.webship.solver.sk", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("createOrdersReturn")]
-        public Webship.CreateOrderResult[] createOrdersReturn;
+        public ServiceReference1.CreateOrderResult[] createOrdersReturn;
         
         public createOrdersResponse()
         {
         }
         
-        public createOrdersResponse(Webship.CreateOrderResult[] createOrdersReturn)
+        public createOrdersResponse(ServiceReference1.CreateOrderResult[] createOrdersReturn)
         {
             this.createOrdersReturn = createOrdersReturn;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public interface WebshipWebServiceChannel : Webship.WebshipWebService, System.ServiceModel.IClientChannel
+    public interface WebshipWebServiceChannel : ServiceReference1.WebshipWebService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public partial class WebshipWebServiceClient : System.ServiceModel.ClientBase<Webship.WebshipWebService>, Webship.WebshipWebService
+    public partial class WebshipWebServiceClient : System.ServiceModel.ClientBase<ServiceReference1.WebshipWebService>, ServiceReference1.WebshipWebService
     {
         
         /// <summary>
@@ -2568,105 +2568,105 @@ namespace Webship
             return base.Channel.testAsync(test);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServiceShipmnetResult> createShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, int webServiceShipmentType)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServiceShipmnetResult> createShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, int webServiceShipmentType)
         {
             return base.Channel.createShipmentAsync(name, password, webServiceShipment, webServiceShipmentType);
         }
         
-        public System.Threading.Tasks.Task<Webship.CreateCifShipmentResult> createCifShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, int webServiceShipmentType)
+        public System.Threading.Tasks.Task<ServiceReference1.CreateCifShipmentResult> createCifShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, int webServiceShipmentType)
         {
             return base.Channel.createCifShipmentAsync(name, password, webServiceShipment, webServiceShipmentType);
         }
         
-        public System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentAsync(string name, string password, Webship.WebServiceShipment webServiceShipment)
+        public System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment)
         {
             return base.Channel.createAndPrintCifShipmentAsync(name, password, webServiceShipment);
         }
         
-        public System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentWithSettingsResult> createAndPrintCifShipmentWithSettingsAsync(string name, string password, Webship.WebServiceShipment webServiceShipment, Webship.PrintingSettings printingSettings)
+        public System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentWithSettingsResult> createAndPrintCifShipmentWithSettingsAsync(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, ServiceReference1.PrintingSettings printingSettings)
         {
             return base.Channel.createAndPrintCifShipmentWithSettingsAsync(name, password, webServiceShipment, printingSettings);
         }
         
-        public System.Threading.Tasks.Task<Webship.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentWithSettings2Async(string name, string password, Webship.WebServiceShipment webServiceShipment, Webship.PrintingSettings printingSettings)
+        public System.Threading.Tasks.Task<ServiceReference1.CreateAndPrintCifShipmentResult> createAndPrintCifShipmentWithSettings2Async(string name, string password, ServiceReference1.WebServiceShipment webServiceShipment, ServiceReference1.PrintingSettings printingSettings)
         {
             return base.Channel.createAndPrintCifShipmentWithSettings2Async(name, password, webServiceShipment, printingSettings);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServiceShipmnetResult> createMipShipmentAsync(string name, string password, Webship.MipWebserviceShipment mipWebserviceShipment)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServiceShipmnetResult> createMipShipmentAsync(string name, string password, ServiceReference1.MipWebserviceShipment mipWebserviceShipment)
         {
             return base.Channel.createMipShipmentAsync(name, password, mipWebserviceShipment);
         }
         
-        public System.Threading.Tasks.Task<Webship.MipWebserviceUploadResult> uploadMipShipmentsAsync(string name, string password)
+        public System.Threading.Tasks.Task<ServiceReference1.MipWebserviceUploadResult> uploadMipShipmentsAsync(string name, string password)
         {
             return base.Channel.uploadMipShipmentsAsync(name, password);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Webship.finishAndPrintOrdersResponse> Webship.WebshipWebService.finishAndPrintOrdersAsync(Webship.finishAndPrintOrdersRequest request)
+        System.Threading.Tasks.Task<ServiceReference1.finishAndPrintOrdersResponse> ServiceReference1.WebshipWebService.finishAndPrintOrdersAsync(ServiceReference1.finishAndPrintOrdersRequest request)
         {
             return base.Channel.finishAndPrintOrdersAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Webship.finishAndPrintOrdersResponse> finishAndPrintOrdersAsync(string name, string password, string[] refNumbers)
+        public System.Threading.Tasks.Task<ServiceReference1.finishAndPrintOrdersResponse> finishAndPrintOrdersAsync(string name, string password, string[] refNumbers)
         {
-            Webship.finishAndPrintOrdersRequest inValue = new Webship.finishAndPrintOrdersRequest();
+            ServiceReference1.finishAndPrintOrdersRequest inValue = new ServiceReference1.finishAndPrintOrdersRequest();
             inValue.name = name;
             inValue.password = password;
             inValue.refNumbers = refNumbers;
-            return ((Webship.WebshipWebService)(this)).finishAndPrintOrdersAsync(inValue);
+            return ((ServiceReference1.WebshipWebService)(this)).finishAndPrintOrdersAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServiceSddPrintResult> printSDDshipmentsAsync(string aUserName, string aPassword)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServiceSddPrintResult> printSDDshipmentsAsync(string aUserName, string aPassword)
         {
             return base.Channel.printSDDshipmentsAsync(aUserName, aPassword);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServicePrintResult> printLabelsWithSettingsAsync(string aUserName, string aPassword, Webship.PrintingSettings aPrintingSettings)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printLabelsWithSettingsAsync(string aUserName, string aPassword, ServiceReference1.PrintingSettings aPrintingSettings)
         {
             return base.Channel.printLabelsWithSettingsAsync(aUserName, aPassword, aPrintingSettings);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServicePrintResult> printShipmentLabelsAsync(string aUserName, string aPassword)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printShipmentLabelsAsync(string aUserName, string aPassword)
         {
             return base.Channel.printShipmentLabelsAsync(aUserName, aPassword);
         }
         
-        public System.Threading.Tasks.Task<Webship.WebServicePrintResult> printEndOfDayAsync(string aUserName, string aPassword)
+        public System.Threading.Tasks.Task<ServiceReference1.WebServicePrintResult> printEndOfDayAsync(string aUserName, string aPassword)
         {
             return base.Channel.printEndOfDayAsync(aUserName, aPassword);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Webship.createCifShipmentsResponse> Webship.WebshipWebService.createCifShipmentsAsync(Webship.createCifShipmentsRequest request)
+        System.Threading.Tasks.Task<ServiceReference1.createCifShipmentsResponse> ServiceReference1.WebshipWebService.createCifShipmentsAsync(ServiceReference1.createCifShipmentsRequest request)
         {
             return base.Channel.createCifShipmentsAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Webship.createCifShipmentsResponse> createCifShipmentsAsync(string name, string password, Webship.WebServiceShipment[] webServiceShipments, int webServiceShipmentType)
+        public System.Threading.Tasks.Task<ServiceReference1.createCifShipmentsResponse> createCifShipmentsAsync(string name, string password, ServiceReference1.WebServiceShipment[] webServiceShipments, int webServiceShipmentType)
         {
-            Webship.createCifShipmentsRequest inValue = new Webship.createCifShipmentsRequest();
+            ServiceReference1.createCifShipmentsRequest inValue = new ServiceReference1.createCifShipmentsRequest();
             inValue.name = name;
             inValue.password = password;
             inValue.webServiceShipments = webServiceShipments;
             inValue.webServiceShipmentType = webServiceShipmentType;
-            return ((Webship.WebshipWebService)(this)).createCifShipmentsAsync(inValue);
+            return ((ServiceReference1.WebshipWebService)(this)).createCifShipmentsAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Webship.createOrdersResponse> Webship.WebshipWebService.createOrdersAsync(Webship.createOrdersRequest request)
+        System.Threading.Tasks.Task<ServiceReference1.createOrdersResponse> ServiceReference1.WebshipWebService.createOrdersAsync(ServiceReference1.createOrdersRequest request)
         {
             return base.Channel.createOrdersAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Webship.createOrdersResponse> createOrdersAsync(string name, string password, Webship.WebServiceShipment[] webServiceShipments)
+        public System.Threading.Tasks.Task<ServiceReference1.createOrdersResponse> createOrdersAsync(string name, string password, ServiceReference1.WebServiceShipment[] webServiceShipments)
         {
-            Webship.createOrdersRequest inValue = new Webship.createOrdersRequest();
+            ServiceReference1.createOrdersRequest inValue = new ServiceReference1.createOrdersRequest();
             inValue.name = name;
             inValue.password = password;
             inValue.webServiceShipments = webServiceShipments;
-            return ((Webship.WebshipWebService)(this)).createOrdersAsync(inValue);
+            return ((ServiceReference1.WebshipWebService)(this)).createOrdersAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
