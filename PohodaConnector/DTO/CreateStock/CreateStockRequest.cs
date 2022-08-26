@@ -129,7 +129,7 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeader
     {
-        private uint codeField;
+        private string codeField;
 
         private string descriptionField;
 
@@ -184,7 +184,7 @@ public class CreateStockRequest
             set => stockTypeField = value;
         }
 
-        public uint code
+        public string code
         {
             get => codeField;
             set => codeField = value;

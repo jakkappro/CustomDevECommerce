@@ -49,7 +49,7 @@ public class StockService : IStockService
         {
             foreach (var image in stockData.AlternativeImages)
             {
-                var imageFileNameAlt = stockData.ImgUrl.Split("/").Last();
+                var imageFileNameAlt = image.Split("/").Last();
                 var pathAlt = $"{stockData.ImgFilePath}{imageFileNameAlt}";
 
                 _logger.LogDebug(
@@ -62,7 +62,7 @@ public class StockService : IStockService
         
         var stock = new StockBuilder().BuildFromCreteOrderData(stockData);
         var serialize = _serializer.Serialize(stock);
-        _logger.LogDebug("Creating stock: {stock}", stock);
+        _logger.LogDebug("Creating stock: {stock} \n {serialized}", stock, serialize);
         await _server.SendRequest(serialize);
     }
 

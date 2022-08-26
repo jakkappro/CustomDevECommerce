@@ -28,9 +28,17 @@ public class Starter : IStarterService
 
         await _stockService.Initialize();
         _logger.LogInformation("Initialized stock service");
+
+        var times = 4;
         
         foreach (var shopItem in feed.SHOPITEM)
         {
+            if (times <= 0)
+            {
+                break;
+            }
+
+            times--;
             if (! await _stockService.Exists(shopItem.ITEMID))
             {
                 // create stock

@@ -1,4 +1,5 @@
-﻿using PohodaConnector.Services.StockService;
+﻿using PohodaConnector.Enums;
+using PohodaConnector.Services.StockService;
 using XMLFeedSynchronizer.XMLFeeds;
 
 namespace XMLFeedSynchronizer.Mappers;
@@ -9,7 +10,7 @@ public class SkHrackyToPohodaStock
     {
         return new StockData(
             item.IMGURL,
-            uint.Parse(item.ITEMID),
+            item.ITEMID,
             item.EAN,
             item.PRICE,
             item.MANUFACTURER,
@@ -17,7 +18,8 @@ public class SkHrackyToPohodaStock
             item.PRODUCT,
             @"\\AzetCool-Pohoda\POHODA_SK_E1_DATA\Dokumenty\ACecom\Obrázky\",
             item.URL,
-            item.IMGURL_ALTERNATIVE
+            item.IMGURL_ALTERNATIVE,
+            (byte)Suppliers.Hrackys
         );
     }
 }

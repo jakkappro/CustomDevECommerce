@@ -34,29 +34,24 @@ public class StockBuilder : IStockBuilder
                         {
                             stockType = "card",
                             PLU = 0,
-                            isSales = false,
-                            isInternet = true,
+                            isSales = true,
+                            isInternet = false,
                             isBatch = true,
                             purchasingRateVAT = "high",
                             sellingRateVAT = "high",
                             unit = "ks",
                             storage = new CreateStockRequest.stockStockHeaderStorage
                             {
-                                ids = "Amazon"
+                                ids = "Hrackys"
                             },
                             typePrice = new CreateStockRequest.stockStockHeaderTypePrice
                             {
                                 ids = "SK"
                             },
-                            purchasingPrice = 0,
                             limitMin = 0,
                             limitMax = 1000,
                             mass = 0,
-                            supplier = new CreateStockRequest.stockStockHeaderSupplier
-                            {
-                                id = 1
-                            },
-
+                            supplier = new CreateStockRequest.stockStockHeaderSupplier(),
                             note = "Importovane z xml"
                         }
                     }
@@ -67,16 +62,27 @@ public class StockBuilder : IStockBuilder
 
     public CreateStockRequest.dataPack BuildFromCreteOrderData(StockData createOrderData)
     {
-        return new StockBuilder()
+        var stock = new StockBuilder()
             .WithCode(createOrderData.Code)
             .WithName(createOrderData.Name)
             .WithPrice(createOrderData.Price)
             .WithEan(createOrderData.Ean)
             .WithManufacturer(createOrderData.Manufacturer)
             .WithDescription(createOrderData.Description)
-            .WithPicture(createOrderData.ImgFilePath)
-            .WithRelatedLink(createOrderData.RelatedLink)
-            .Build();
+            .WithPicture(createOrderData.ImgFilePath, createOrderData.ImgUrl)
+            .WithRelatedLink(createOrderData.RelatedLink);
+
+        if (createOrderData.AlternativeImages is not null)
+        {
+            stock = stock.WithAlternativePictures(createOrderData.AlternativeImages, createOrderData.ImgFilePath);
+        }
+
+        if (createOrderData.Supplier is not null)
+        {
+            stock = stock.WithSupplier(createOrderData.Supplier.Value);
+        }
+
+        return stock.Build();
     }
 
     public CreateStockRequest.dataPack Build()
@@ -84,7 +90,7 @@ public class StockBuilder : IStockBuilder
         return _stock;
     }
 
-    public StockBuilder WithCode(uint code)
+    public StockBuilder WithCode(string code)
     {
         _stock.dataPackItem[0].stock.stockHeader.code = code;
         return this;
@@ -104,7 +110,7 @@ public class StockBuilder : IStockBuilder
 
     public StockBuilder WithPrice(decimal price)
     {
-        _stock.dataPackItem[0].stock.stockHeader.sellingPrice = price;
+        _stock.dataPackItem[0].stock.stockHeader.purchasingPrice = price;
         return this;
     }
 
@@ -120,7 +126,7 @@ public class StockBuilder : IStockBuilder
         return this;
     }
 
-    public StockBuilder WithPicture(string picture)
+    public StockBuilder WithPicture(string picturePath, string pictureName)
     {
         _stock.dataPackItem[0].stock.stockHeader.pictures = new CreateStockRequest.stockStockHeaderPictures
         {
@@ -128,7 +134,7 @@ public class StockBuilder : IStockBuilder
             {
                 new()
                 {
-                    filepath = picture,
+                    filepath = picturePath + pictureName.Split("/").Last(),
                     @default = true,
                     description = "obrazok produktu"
                 }
@@ -137,11 +143,11 @@ public class StockBuilder : IStockBuilder
         return this;
     }
 
-    public StockBuilder WithAlternativePictures(IEnumerable<string> pictures)
+    public StockBuilder WithAlternativePictures(IEnumerable<string> pictures, string picturePath)
     {
         var pics = _stock.dataPackItem[0].stock.stockHeader.pictures.picture.ToList();
         pics.AddRange(pictures.Select(picture => new CreateStockRequest.stockStockHeaderPicturesPicture
-            { filepath = picture, @default = false, description = "obrazok produktu" }));
+            { filepath = picturePath + picture.Split("/").Last(), @default = false, description = "obrazok produktu" }));
         _stock.dataPackItem[0].stock.stockHeader.pictures.picture = pics.ToArray();
         return this;
     }
@@ -158,6 +164,12 @@ public class StockBuilder : IStockBuilder
             }
         };
 
+        return this;
+    }
+
+    public StockBuilder WithSupplier(byte id)
+    {
+        _stock.dataPackItem[0].stock.stockHeader.supplier.id = id;
         return this;
     }
 }
