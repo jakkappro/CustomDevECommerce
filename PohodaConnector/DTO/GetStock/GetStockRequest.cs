@@ -14,17 +14,16 @@ public class GetStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
+        private string applicationField;
         private dataPackDataPackItem dataPackItemField;
-
-        private string idField;
 
         private uint icoField;
 
-        private string applicationField;
-
-        private decimal versionField;
+        private string idField;
 
         private string noteField;
+
+        private decimal versionField;
 
         public dataPackDataPackItem dataPackItem
         {
@@ -73,9 +72,8 @@ public class GetStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-        private listStockRequest listStockRequestField;
-
         private string idField;
+        private listStockRequest listStockRequestField;
 
         private decimal versionField;
 
@@ -109,9 +107,9 @@ public class GetStockRequest
     {
         private listStockRequestRequestStock requestStockField;
 
-        private decimal versionField;
-
         private decimal stockVersionField;
+
+        private decimal versionField;
 
         public listStockRequestRequestStock requestStock
         {

@@ -14,9 +14,8 @@ public class GenerateLabelResponse
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class response
     {
-        private string statusField;
-
         private string resultField;
+        private string statusField;
 
         public string status
         {

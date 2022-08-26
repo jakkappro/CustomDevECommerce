@@ -5,6 +5,7 @@ namespace PacketaConnector.Builders;
 public class StatusBuilder : IStatusBuilder
 {
     private readonly GetPacketStatusRequest.packetStatus _status;
+
     public StatusBuilder()
     {
         _status = new GetPacketStatusRequest.packetStatus();

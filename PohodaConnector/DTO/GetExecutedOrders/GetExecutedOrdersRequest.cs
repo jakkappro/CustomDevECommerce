@@ -14,17 +14,16 @@ public class GetExecutedOrdersRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
+        private string applicationField;
         private dataPackDataPackItem dataPackItemField;
-
-        private byte idField;
 
         private uint icoField;
 
-        private string applicationField;
-
-        private decimal versionField;
+        private byte idField;
 
         private string noteField;
+
+        private decimal versionField;
 
         public dataPackDataPackItem dataPackItem
         {
@@ -73,9 +72,8 @@ public class GetExecutedOrdersRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-        private listOrderRequest listOrderRequestField;
-
         private string idField;
+        private listOrderRequest listOrderRequestField;
 
         private decimal versionField;
 
@@ -107,13 +105,12 @@ public class GetExecutedOrdersRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list.xsd", IsNullable = false)]
     public class listOrderRequest
     {
-        private listOrderRequestRequestOrder requestOrderField;
-
-        private decimal versionField;
-
         private string orderTypeField;
 
         private decimal orderVersionField;
+        private listOrderRequestRequestOrder requestOrderField;
+
+        private decimal versionField;
 
         public listOrderRequestRequestOrder requestOrder
         {

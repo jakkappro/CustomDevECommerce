@@ -8,7 +8,7 @@ public class LabelBuilder : ILabelBuilder
 
     public LabelBuilder()
     {
-        _label = new GenerateLabelRequest.packetLabelPdf()
+        _label = new GenerateLabelRequest.packetLabelPdf
         {
             format = "A6 on A4",
             offset = 0
@@ -28,7 +28,7 @@ public class LabelBuilder : ILabelBuilder
         return this;
     }
 
-    public LabelBuilder WithId(string  id)
+    public LabelBuilder WithId(string id)
     {
         _label.packetId = id;
         return this;

@@ -29,45 +29,44 @@ public class GetPrehomeFeed
     [XmlType(AnonymousType = true)]
     public class SHOPSHOPITEM
     {
-        private uint iTEM_IDField;
-
-        private string pRODUCTNAMEField;
-
-        private string pRODUCTField;
-
-        private string pRODUCT_CODEField;
-
-        private string dESCRIPTIONField;
-
-        private string uRLField;
-
-        private string iMGURLField;
-
-        private decimal pRICEField;
-
-        private decimal pRICE_VATField;
-
-        private byte vATField;
-
-        private string mANUFACTURERField;
-
-        private string dEALERField;
-
         private string cATEGORYTEXTField;
 
-        private string eANField;
-
-        private uint pRODUCTNOField;
+        private string dEALERField;
 
         private byte dELIVERY_DATEField;
 
         private SHOPSHOPITEMDELIVERY dELIVERYField;
 
-        private decimal wEIGHTField;
+        private string dESCRIPTIONField;
+
+        private string eANField;
+
+        private string iMGURLField;
+        private uint iTEM_IDField;
+
+        private string mANUFACTURERField;
+
+        private decimal pRICE_VATField;
+
+        private decimal pRICEField;
+
+        private string pRODUCT_CODEField;
+
+        private string pRODUCTField;
+
+        private string pRODUCTNAMEField;
+
+        private uint pRODUCTNOField;
+
+        private byte sTOCKField;
+
+        private string uRLField;
+
+        private byte vATField;
 
         private string wEIGHT_UNITSField;
 
-        private byte sTOCKField;
+        private decimal wEIGHTField;
 
         public uint ITEM_ID
         {
@@ -197,9 +196,9 @@ public class GetPrehomeFeed
     {
         private string dELIVERY_IDField;
 
-        private decimal dELIVERY_PRICEField;
-
         private decimal dELIVERY_PRICE_CODField;
+
+        private decimal dELIVERY_PRICEField;
 
         public string DELIVERY_ID
         {

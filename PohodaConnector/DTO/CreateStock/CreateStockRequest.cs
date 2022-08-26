@@ -14,17 +14,16 @@ public class CreateStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
+        private string applicationField;
         private dataPackDataPackItem[] dataPackItemField;
-
-        private string idField;
 
         private uint icoField;
 
-        private string applicationField;
-
-        private decimal versionField;
+        private string idField;
 
         private string noteField;
+
+        private decimal versionField;
 
         [XmlElement("dataPackItem")]
         public dataPackDataPackItem[] dataPackItem
@@ -74,9 +73,8 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-        private stock stockField;
-
         private string idField;
+        private stock stockField;
 
         private decimal versionField;
 
@@ -131,55 +129,54 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeader
     {
-        private string stockTypeField;
-
         private uint codeField;
-
-        private string eANField;
-
-        private byte pLUField;
-
-        private bool isSalesField;
-
-        private bool isInternetField;
-
-        private bool isBatchField;
-
-        private string purchasingRateVATField;
-
-        private string sellingRateVATField;
-
-        private string nameField;
-
-        private string nameComplementField;
-
-        private string unitField;
-
-        private stockStockHeaderStorage storageField;
-
-        private stockStockHeaderTypePrice typePriceField;
-
-        private decimal purchasingPriceField;
-
-        private decimal sellingPriceField;
-
-        private byte limitMinField;
-
-        private int limitMaxField;
-
-        private decimal massField;
-
-        private stockStockHeaderSupplier supplierField;
-
-        private string producerField;
 
         private string descriptionField;
 
-        private stockStockHeaderPictures picturesField;
+        private string eANField;
+
+        private bool isBatchField;
+
+        private bool isInternetField;
+
+        private bool isSalesField;
+
+        private int limitMaxField;
+
+        private byte limitMinField;
+
+        private decimal massField;
+
+        private string nameComplementField;
+
+        private string nameField;
 
         private string noteField;
 
+        private stockStockHeaderPictures picturesField;
+
+        private byte pLUField;
+
+        private string producerField;
+
+        private decimal purchasingPriceField;
+
+        private string purchasingRateVATField;
+
         private stockStockHeaderRelatedLinks relatedLinksField;
+
+        private decimal sellingPriceField;
+
+        private string sellingRateVATField;
+        private string stockTypeField;
+
+        private stockStockHeaderStorage storageField;
+
+        private stockStockHeaderSupplier supplierField;
+
+        private stockStockHeaderTypePrice typePriceField;
+
+        private string unitField;
 
         public string stockType
         {
@@ -382,9 +379,10 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderPictures
     {
-        private stockStockHeaderPicturesPicture pictureField;
+        private stockStockHeaderPicturesPicture[] pictureField;
 
-        public stockStockHeaderPicturesPicture picture
+        [XmlElement("picture")]
+        public stockStockHeaderPicturesPicture[] picture
         {
             get => pictureField;
             set => pictureField = value;
@@ -396,11 +394,10 @@ public class CreateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderPicturesPicture
     {
-        private string filepathField;
+        private bool defaultField;
 
         private string descriptionField;
-
-        private bool defaultField;
+        private string filepathField;
 
         public string filepath
         {

@@ -14,17 +14,16 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
+        private string applicationField;
         private dataPackDataPackItem dataPackItemField;
-
-        private string idField;
 
         private uint icoField;
 
-        private string applicationField;
-
-        private decimal versionField;
+        private string idField;
 
         private string noteField;
+
+        private decimal versionField;
 
         public dataPackDataPackItem dataPackItem
         {
@@ -73,9 +72,8 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-        private order orderField;
-
         private string idField;
+        private order orderField;
 
         private decimal versionField;
 
@@ -107,9 +105,8 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/order.xsd", IsNullable = false)]
     public class order
     {
-        private orderOrderHeader orderHeaderField;
-
         private orderOrderItem[] orderDetailField;
+        private orderOrderHeader orderHeaderField;
 
         private orderOrderSummary orderSummaryField;
 
@@ -147,9 +144,7 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderHeader
     {
-        private string orderTypeField;
-
-        private string numberOrderField;
+        private orderOrderHeaderCarrier carrierField;
 
         private DateTime dateField;
 
@@ -157,7 +152,18 @@ public class CreateOrderRequest
 
         private DateTime dateToField;
 
-        private string textField;
+        private orderOrderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
+
+        private bool isDeliveredField;
+
+        private bool isExecutedField;
+
+        private orderOrderHeaderMOSS mOSSField;
+
+        private orderOrderHeaderNumber numberField;
+
+        private string numberOrderField;
+        private string orderTypeField;
 
         private orderOrderHeaderPartnerIdentity partnerIdentityField;
 
@@ -165,17 +171,7 @@ public class CreateOrderRequest
 
         private orderOrderHeaderPriceLevel priceLevelField;
 
-        private orderOrderHeaderMOSS mOSSField;
-
-        private orderOrderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
-
-        private bool isExecutedField;
-
-        private orderOrderHeaderNumber numberField;
-
-        private bool isDeliveredField;
-
-        private orderOrderHeaderCarrier carrierField;
+        private string textField;
 
         public string orderType
         {
@@ -292,27 +288,26 @@ public class CreateOrderRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class address
     {
+        private string cityField;
         private string? companyField;
+
+        private addressCountry countryField;
+
+        private string dicField;
 
         private string divisionField;
 
-        private string nameField;
+        private string emailField;
 
-        private string cityField;
+        private uint icoField;
+
+        private string mobilPhoneField;
+
+        private string nameField;
 
         private string streetField;
 
         private string zipField;
-
-        private uint icoField;
-
-        private string dicField;
-
-        private string emailField;
-
-        private addressCountry countryField;
-
-        private string mobilPhoneField;
 
         public string? company
         {
@@ -490,21 +485,20 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderOrderItem
     {
-        private string? textField;
-
-        private byte quantityField;
-
         private byte deliveredField;
-
-        private string rateVATField;
 
         private orderOrderItemHomeCurrency homeCurrencyField;
 
+        private bool payVATField;
+
+        private byte quantityField;
+
+        private string rateVATField;
+
         private orderOrderItemStockItem stockItemField;
+        private string? textField;
 
         private orderOrderItemTypeServiceMOSS typeServiceMOSSField;
-
-        private bool payVATField;
 
         public string? text
         {

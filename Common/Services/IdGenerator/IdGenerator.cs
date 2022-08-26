@@ -7,9 +7,9 @@ namespace Common.Services.IdGenerator;
 
 public class IdGenerator : IIdGenerator
 {
-    private readonly ILogger<IdGenerator> _logger;
-    private readonly IConfiguration _configuration;
     private const string Prefix = "3";
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<IdGenerator> _logger;
 
     public IdGenerator(ILogger<IdGenerator> logger, IConfiguration configuration)
     {
@@ -21,7 +21,7 @@ public class IdGenerator : IIdGenerator
     {
         var id = Prefix;
         var validformats = new[] { "yyMMdd" };
- 
+
         var provider = new CultureInfo("en-US");
 
         try
@@ -40,13 +40,13 @@ public class IdGenerator : IIdGenerator
             if (currentDate.Date > fileDate.Date)
             {
                 id += "001";
-                File.WriteAllLines(_configuration["IdStorageFile"], new []{currentDate.ToString("yyMMdd"), "001"});
+                File.WriteAllLines(_configuration["IdStorageFile"], new[] { currentDate.ToString("yyMMdd"), "001" });
                 return id;
             }
 
             var i = (int.Parse(file[1]) + 1).ToString("000");
             id += i;
-            File.WriteAllLines(_configuration["IdStorageFile"], new []{currentDate.ToString("yyMMdd"), i});
+            File.WriteAllLines(_configuration["IdStorageFile"], new[] { currentDate.ToString("yyMMdd"), i });
             return id;
         }
         catch

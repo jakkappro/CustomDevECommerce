@@ -10,16 +10,13 @@ public class ImageDownloader : IDownloader
 
     public ImageDownloader(HttpClient client, ILogger<ImageDownloader> logger)
     {
-        this._client = client;
+        _client = client;
         _logger = logger;
     }
 
     public async Task Download(string url, string destination)
     {
-        if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(destination))
-        {
-            return;
-        }
+        if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(destination)) return;
 
         try
         {

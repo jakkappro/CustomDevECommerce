@@ -3,16 +3,17 @@ using Microsoft.Extensions.Logging;
 using PohodaConnector.Builders.Orders;
 using PohodaConnector.DTO.GetOrdersByDate;
 using PohodaConnector.Interfaces;
+
 #pragma warning disable CS8618
 
 namespace PohodaConnector.Services.OrderService;
 
 public class OrderService : IOrderService
 {
-    private readonly IAccountingSoftware _server;
-    private List<GetOrdersByDateResponse.listOrderOrder> _existingOrders;
     private readonly ILogger<OrderService> _logger;
     private readonly ISerializer _serializer;
+    private readonly IAccountingSoftware _server;
+    private List<GetOrdersByDateResponse.listOrderOrder> _existingOrders;
 
     public OrderService(ILogger<OrderService> logger, ISerializer serializer, IAccountingSoftware server)
     {
@@ -40,10 +41,11 @@ public class OrderService : IOrderService
             .Build();
 
         var _existingOrdersResponse = await _server.SendRequest(_serializer.Serialize(getOrdersByDateRequest));
-        var _existingOrdersSerialized = _serializer.Deserialize<GetOrdersByDateResponse.responsePack>(_existingOrdersResponse);
-        
-        _existingOrders = (_existingOrdersSerialized.responsePackItem.listOrder.order 
-            ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
+        var _existingOrdersSerialized =
+            _serializer.Deserialize<GetOrdersByDateResponse.responsePack>(_existingOrdersResponse);
+
+        _existingOrders = (_existingOrdersSerialized.responsePackItem.listOrder.order
+                           ?? Array.Empty<GetOrdersByDateResponse.listOrderOrder>()).ToList();
 
         _logger.LogDebug("{existingOrdersCount} existing orders found in Pohoda", _existingOrders.Count());
     }
@@ -59,7 +61,7 @@ public class OrderService : IOrderService
 
     public bool Exist(string id)
     {
-        return _existingOrders != null &&  _existingOrders.Any(x => x.orderHeader.numberOrder == id);
+        return _existingOrders != null && _existingOrders.Any(x => x.orderHeader.numberOrder == id);
     }
 
     public void UpdateOrder(string id, bool executed = true)

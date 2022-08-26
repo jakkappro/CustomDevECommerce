@@ -3,21 +3,21 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Builders;
 using PacketaConnector.DTO.CreateOrders;
+using PacketaConnector.DTO.GenerateLabels;
 using PacketaConnector.DTO.GetPacketStatus;
 using PacketaConnector.Interfaces;
-using PacketaConnector.DTO.GenerateLabels;
 
 namespace PacketaConnector.Services;
 
 public class PacketaCarrier : ICarrier
 {
-    private readonly ISerializer _serializer;
-    private readonly ILogger<PacketaCarrier> _logger;
-    private readonly IConfiguration _configuration;
-    private readonly IStatusBuilder _statusBuilder;
-    private readonly ILabelBuilder _labelBuilder;
     private readonly IPacketBuilder _builder;
     private readonly HttpClient _client;
+    private readonly IConfiguration _configuration;
+    private readonly ILabelBuilder _labelBuilder;
+    private readonly ILogger<PacketaCarrier> _logger;
+    private readonly ISerializer _serializer;
+    private readonly IStatusBuilder _statusBuilder;
     private int _retries;
 
     public PacketaCarrier(IPacketBuilder builder, HttpClient client, ISerializer serializer,

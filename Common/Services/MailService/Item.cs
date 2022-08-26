@@ -13,7 +13,6 @@ public class Item
 
     public Item()
     {
-
     }
 
     public string ItemId { get; set; }

@@ -9,14 +9,14 @@ public class PacketBuilder : IPacketBuilder
 
     public PacketBuilder()
     {
-        _packet = new CreateOrderRequest.createPacket()
+        _packet = new CreateOrderRequest.createPacket
         {
             packetAttributes = new CreateOrderRequest.createPacketPacketAttributes
             {
                 eshop = "AzetCool",
                 weight = 0.99m,
                 sender_id = 331585,
-                security = new CreateOrderRequest.createPacketPacketAttributesSecurity()
+                security = new CreateOrderRequest.createPacketPacketAttributesSecurity
                 {
                     allowPublicTracking = 1
                 }

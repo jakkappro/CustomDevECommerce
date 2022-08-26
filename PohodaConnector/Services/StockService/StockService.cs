@@ -8,12 +8,13 @@ namespace PohodaConnector.Services.StockService;
 
 public class StockService : IStockService
 {
-    private readonly ILogger<StockService> _logger;
-    private readonly IAccountingSoftware _server;
     private readonly IDownloader _imageDownloader;
+    private readonly ILogger<StockService> _logger;
     private readonly ISerializer _serializer;
+    private readonly IAccountingSoftware _server;
 
-    public StockService(ISerializer serializer, ILogger<StockService> logger, IAccountingSoftware server, IDownloader imageDownloader)
+    public StockService(ISerializer serializer, ILogger<StockService> logger, IAccountingSoftware server,
+        IDownloader imageDownloader)
     {
         _serializer = serializer;
         _logger = logger;
@@ -31,7 +32,6 @@ public class StockService : IStockService
 
         _logger.LogError("Error, can't connect to accounting software.");
         throw new ArgumentNullException("No _server :(");
-
     }
 
     public async void CreateStock(StockData stockData)
@@ -39,9 +39,26 @@ public class StockService : IStockService
         var imageFileName = stockData.ImgUrl.Split("/").Last();
         var path = $"{stockData.ImgFilePath}{imageFileName}";
 
-        _logger.LogDebug("Downloading picture with url {url} and destination {destination}. StockData ImgFilePath is {ImgFilePath}", stockData.ImgUrl, path, stockData.ImgFilePath);
+        _logger.LogDebug(
+            "Downloading picture with url {url} and destination {destination}. StockData ImgFilePath is {ImgFilePath}",
+            stockData.ImgUrl, path, stockData.ImgFilePath);
         _imageDownloader.Download(stockData.ImgUrl, path).Wait();
         _logger.LogInformation("Downloaded image, path: {path}", path);
+
+        if (stockData.AlternativeImages is not null)
+        {
+            foreach (var image in stockData.AlternativeImages)
+            {
+                var imageFileNameAlt = stockData.ImgUrl.Split("/").Last();
+                var pathAlt = $"{stockData.ImgFilePath}{imageFileNameAlt}";
+
+                _logger.LogDebug(
+                    "Downloading picture with url {url} and destination {destination}. StockData ImgFilePath is {ImgFilePath}",
+                    stockData.ImgUrl, path, stockData.ImgFilePath);
+                _imageDownloader.Download(image, pathAlt).Wait();
+                _logger.LogInformation("Downloaded image, path: {path}", pathAlt);
+            }
+        }
         
         var stock = new StockBuilder().BuildFromCreteOrderData(stockData);
         var serialize = _serializer.Serialize(stock);

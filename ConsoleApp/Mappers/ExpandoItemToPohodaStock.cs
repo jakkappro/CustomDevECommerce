@@ -18,5 +18,5 @@ public static class ExpandoItemToPohodaStock
             @"\\AzetCool-Pohoda\POHODA_SK_E1_DATA\Dokumenty\ACecom\Obrázky\",
             item.URL
         );
-    } 
+    }
 }

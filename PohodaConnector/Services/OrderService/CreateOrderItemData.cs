@@ -2,11 +2,6 @@
 
 public class CreateOrderItemData
 {
-    public byte Quantity { get; }
-    public string? Ean { get; }
-    public decimal Price { get; }
-    public string? Text { get; }
-
     private CreateOrderItemData(byte quantity, string? ean, decimal price, string? text)
     {
         Quantity = quantity;
@@ -14,6 +9,11 @@ public class CreateOrderItemData
         Price = price;
         Text = text;
     }
+
+    public byte Quantity { get; }
+    public string? Ean { get; }
+    public decimal Price { get; }
+    public string? Text { get; }
 
     public static CreateOrderItemData CreateEanInstance(byte quantity, string? ean, decimal price)
     {

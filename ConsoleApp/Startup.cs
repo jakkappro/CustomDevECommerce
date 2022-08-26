@@ -1,4 +1,6 @@
-﻿using Common.Interfaces;
+﻿using System.Text;
+using Common.Interfaces;
+using Common.Services.IdGenerator;
 using Common.Services.ImageDownloadService;
 using Common.Services.MailService;
 using Common.Services.Serialization;
@@ -21,19 +23,11 @@ using PohodaConnector.Services.MServer;
 using PohodaConnector.Services.OrderService;
 using PohodaConnector.Services.StockService;
 using Serilog;
-using System.Text;
-using Common.Services.IdGenerator;
 
 namespace ConsoleApp;
 
 public class Startup
 {
-    public class ApplicationArguments
-    {
-        public int LookBackDays { get; set; }
-        public bool IsMailOnly { get; set; }
-    }
-
     public static void Initialize(string[] args)
     {
         InitializeLogger();
@@ -62,7 +56,7 @@ public class Startup
     {
         var builder = new ConfigurationBuilder();
 
-        builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        builder.AddJsonFile("appsettings.json", false, true);
         builder.AddEnvironmentVariables();
 
         Log.Logger = new LoggerConfiguration()
@@ -91,10 +85,7 @@ public class Startup
 
         var result = parser.Parse(args);
 
-        if (!result.Errors.IsNullOrEmpty())
-        {
-            throw new ArgumentNullException();
-        }
+        if (!result.Errors.IsNullOrEmpty()) throw new ArgumentNullException();
 
         return parser.Object;
     }
@@ -146,5 +137,11 @@ public class Startup
     private static void CreateAllServices(HostBuilderContext context, IServiceCollection services)
     {
         // TODO: delete this 
+    }
+
+    public class ApplicationArguments
+    {
+        public int LookBackDays { get; set; }
+        public bool IsMailOnly { get; set; }
     }
 }

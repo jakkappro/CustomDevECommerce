@@ -14,21 +14,20 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/response.xsd", IsNullable = false)]
     public class responsePack
     {
-        private responsePackResponsePackItem responsePackItemField;
-
-        private decimal versionField;
+        private uint icoField;
 
         private byte idField;
-
-        private string stateField;
-
-        private string programVersionField;
-
-        private uint icoField;
 
         private string keyField;
 
         private string noteField;
+
+        private string programVersionField;
+        private responsePackResponsePackItem responsePackItemField;
+
+        private string stateField;
+
+        private decimal versionField;
 
         public responsePackResponsePackItem responsePackItem
         {
@@ -91,13 +90,12 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/response.xsd")]
     public class responsePackResponsePackItem
     {
+        private string idField;
         private listOrder listOrderField;
 
-        private decimal versionField;
-
-        private string idField;
-
         private string stateField;
+
+        private decimal versionField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/list.xsd")]
         public listOrder listOrder
@@ -134,15 +132,14 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list.xsd", IsNullable = false)]
     public class listOrder
     {
-        private listOrderOrder[] orderField;
-
-        private decimal versionField;
-
         private DateTime dateTimeStampField;
 
         private DateTime dateValidFromField;
+        private listOrderOrder[] orderField;
 
         private string stateField;
+
+        private decimal versionField;
 
         [XmlElement("order")]
         public listOrderOrder[] order
@@ -185,9 +182,8 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/list.xsd")]
     public class listOrderOrder
     {
-        private orderHeader orderHeaderField;
-
         private orderDetailOrderItem[] orderDetailField;
+        private orderHeader orderHeaderField;
 
         private orderSummary orderSummaryField;
 
@@ -229,13 +225,7 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/order.xsd", IsNullable = false)]
     public class orderHeader
     {
-        private ushort idField;
-
-        private string orderTypeField;
-
-        private orderHeaderNumber numberField;
-
-        private string numberOrderField;
+        private orderHeaderCarrier carrierField;
 
         private DateTime dateField;
 
@@ -243,33 +233,38 @@ public class GetExecutedOrdersResponse
 
         private DateTime dateToField;
 
-        private string textField;
+        private orderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
 
-        private orderHeaderPartnerIdentity partnerIdentityField;
-
-        private orderHeaderMyIdentity myIdentityField;
-
-        private orderHeaderPaymentType paymentTypeField;
-
-        private orderHeaderPriceLevel priceLevelField;
-
-        private bool isExecutedField;
+        private bool histRateField;
+        private ushort idField;
 
         private bool isDeliveredField;
 
+        private bool isExecutedField;
+
         private bool isReservedField;
+
+        private bool markRecordField;
 
         private orderHeaderMOSS mOSSField;
 
-        private orderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
+        private orderHeaderMyIdentity myIdentityField;
 
-        private orderHeaderCarrier carrierField;
+        private orderHeaderNumber numberField;
+
+        private string numberOrderField;
+
+        private string orderTypeField;
+
+        private orderHeaderPartnerIdentity partnerIdentityField;
+
+        private orderHeaderPaymentType paymentTypeField;
 
         private bool permanentDocumentField;
 
-        private bool histRateField;
+        private orderHeaderPriceLevel priceLevelField;
 
-        private bool markRecordField;
+        private string textField;
 
         public ushort id
         {
@@ -446,31 +441,30 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class address
     {
+        private string cityField;
         private string companyField;
 
-        private string nameField;
-
-        private string cityField;
-
-        private string streetField;
-
-        private string numberField;
-
-        private string zipField;
-
-        private uint icoField;
+        private addressCountry countryField;
 
         private uint dicField;
 
         private bool dicFieldSpecified;
 
+        private string emailField;
+
         private string icDphField;
 
-        private addressCountry countryField;
+        private uint icoField;
 
         private string mobilPhoneField;
 
-        private string emailField;
+        private string nameField;
+
+        private string numberField;
+
+        private string streetField;
+
+        private string zipField;
 
         public string company
         {
@@ -580,15 +574,14 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class shipToAddress
     {
+        private object cityField;
         private object companyField;
+
+        private object emailField;
 
         private object nameField;
 
-        private object cityField;
-
         private object streetField;
-
-        private object emailField;
 
         public object company
         {
@@ -752,39 +745,38 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItem
     {
-        private ushort idField;
+        private uint codeField;
 
-        private string textField;
-
-        private decimal quantityField;
-
-        private decimal deliveredField;
-
-        private string unitField;
+        private bool codeFieldSpecified;
 
         private decimal coefficientField;
 
+        private decimal deliveredField;
+
+        private decimal discountPercentageField;
+
+        private orderDetailOrderItemHomeCurrency homeCurrencyField;
+        private ushort idField;
+
         private bool payVATField;
 
-        private string rateVATField;
+        private bool pDPField;
 
         private decimal percentVATField;
 
         private bool percentVATFieldSpecified;
 
-        private decimal discountPercentageField;
+        private decimal quantityField;
 
-        private orderDetailOrderItemHomeCurrency homeCurrencyField;
-
-        private orderDetailOrderItemTypeServiceMOSS typeServiceMOSSField;
-
-        private uint codeField;
-
-        private bool codeFieldSpecified;
+        private string rateVATField;
 
         private orderDetailOrderItemStockItem stockItemField;
 
-        private bool pDPField;
+        private string textField;
+
+        private orderDetailOrderItemTypeServiceMOSS typeServiceMOSSField;
+
+        private string unitField;
 
         public ushort id
         {
@@ -896,13 +888,12 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItemHomeCurrency
     {
-        private decimal unitPriceField;
-
         private decimal priceField;
 
-        private decimal priceVATField;
-
         private decimal priceSumField;
+
+        private decimal priceVATField;
+        private decimal unitPriceField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
         public decimal unitPrice
@@ -953,9 +944,8 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItemStockItem
     {
-        private store storeField;
-
         private stockItem stockItemField;
+        private store storeField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
         public store store
@@ -1001,11 +991,10 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd", IsNullable = false)]
     public class stockItem
     {
+        private ulong eANField;
         private ushort idField;
 
         private uint idsField;
-
-        private ulong eANField;
 
         public ushort id
         {
@@ -1032,11 +1021,10 @@ public class GetExecutedOrdersResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/order.xsd", IsNullable = false)]
     public class orderSummary
     {
+        private orderSummaryHomeCurrency homeCurrencyField;
         private string roundingDocumentField;
 
         private string roundingVATField;
-
-        private orderSummaryHomeCurrency homeCurrencyField;
 
         public string roundingDocument
         {
@@ -1062,25 +1050,24 @@ public class GetExecutedOrdersResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderSummaryHomeCurrency
     {
-        private byte priceNoneField;
-
-        private byte priceLowField;
-
-        private byte priceLowVATField;
-
-        private byte priceLowSumField;
-
-        private decimal priceHighField;
-
-        private decimal priceHighVATField;
-
-        private decimal priceHighSumField;
-
         private byte price3Field;
+
+        private byte price3SumField;
 
         private byte price3VATField;
 
-        private byte price3SumField;
+        private decimal priceHighField;
+
+        private decimal priceHighSumField;
+
+        private decimal priceHighVATField;
+
+        private byte priceLowField;
+
+        private byte priceLowSumField;
+
+        private byte priceLowVATField;
+        private byte priceNoneField;
 
         private round roundField;
 

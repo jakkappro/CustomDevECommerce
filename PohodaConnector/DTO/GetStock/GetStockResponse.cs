@@ -14,21 +14,20 @@ public class GetStockResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/response.xsd", IsNullable = false)]
     public class responsePack
     {
-        private responsePackResponsePackItem responsePackItemField;
-
-        private decimal versionField;
+        private uint icoField;
 
         private string idField;
-
-        private string stateField;
-
-        private string programVersionField;
-
-        private uint icoField;
 
         private string keyField;
 
         private string noteField;
+
+        private string programVersionField;
+        private responsePackResponsePackItem responsePackItemField;
+
+        private string stateField;
+
+        private decimal versionField;
 
         public responsePackResponsePackItem responsePackItem
         {
@@ -91,13 +90,12 @@ public class GetStockResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/response.xsd")]
     public class responsePackResponsePackItem
     {
+        private string idField;
         private listStock listStockField;
 
-        private decimal versionField;
-
-        private string idField;
-
         private string stateField;
+
+        private decimal versionField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd")]
         public listStock listStock
@@ -134,15 +132,14 @@ public class GetStockResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/list_stock.xsd", IsNullable = false)]
     public class listStock
     {
-        private listStockStock? stockField;
-
-        private decimal versionField;
-
         private DateTime dateTimeStampField;
 
         private DateTime dateValidFromField;
 
         private string stateField;
+        private listStockStock? stockField;
+
+        private decimal versionField;
 
         public listStockStock? stock
         {
@@ -219,79 +216,78 @@ public class GetStockResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd", IsNullable = false)]
     public class stockHeader
     {
-        private decimal idField;
-
-        private string stockTypeField;
+        private bool clearanceSaleField;
 
         private decimal codeField;
 
-        private ulong eANField;
-
-        private bool isSalesField;
-
-        private bool isInternetField;
-
-        private string purchasingRateVATField;
-
-        private string sellingRateVATField;
-
-        private string nameField;
-
-        private string nameComplementField;
-
-        private string unitField;
-
-        private stockHeaderStorage storageField;
-
-        private stockHeaderTypePrice typePriceField;
-
-        private byte weightedPurchasePriceField;
-
-        private stockHeaderSellingPrice sellingPriceField;
-
-        private decimal massField;
-
         private decimal countField;
-
-        private decimal countReceivedOrdersField;
-
-        private decimal reservationField;
-
-        private decimal reclamationField;
-
-        private decimal serviceField;
-
-        private stockHeaderSupplier supplierField;
-
-        private decimal orderQuantityField;
 
         private decimal countIssuedOrdersField;
 
-        private string shortNameField;
-
-        private bool newsField;
-
-        private bool clearanceSaleField;
-
-        private bool saleField;
-
-        private bool recommendedField;
-
-        private bool discountField;
-
-        private bool prepareField;
-
-        private bool pDPField;
+        private decimal countReceivedOrdersField;
 
         private string descriptionField;
 
-        private stockHeaderPictures picturesField;
+        private bool discountField;
 
-        private string noteField;
+        private ulong eANField;
+        private decimal idField;
+
+        private bool isInternetField;
+
+        private bool isSalesField;
 
         private bool markRecordField;
 
+        private decimal massField;
+
+        private string nameComplementField;
+
+        private string nameField;
+
+        private bool newsField;
+
+        private string noteField;
+
+        private decimal orderQuantityField;
+
         private object parametersField;
+
+        private bool pDPField;
+
+        private stockHeaderPictures picturesField;
+
+        private bool prepareField;
+
+        private string purchasingRateVATField;
+
+        private decimal reclamationField;
+
+        private bool recommendedField;
+
+        private decimal reservationField;
+
+        private bool saleField;
+
+        private stockHeaderSellingPrice sellingPriceField;
+
+        private string sellingRateVATField;
+
+        private decimal serviceField;
+
+        private string shortNameField;
+
+        private string stockTypeField;
+
+        private stockHeaderStorage storageField;
+
+        private stockHeaderSupplier supplierField;
+
+        private stockHeaderTypePrice typePriceField;
+
+        private string unitField;
+
+        private byte weightedPurchasePriceField;
 
         public decimal id
         {
@@ -622,15 +618,14 @@ public class GetStockResponse
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockHeaderPicturesPicture
     {
-        private ushort idField;
-
-        private object filepathField;
+        private bool defaultField;
 
         private string descriptionField;
 
-        private decimal orderField;
+        private object filepathField;
+        private ushort idField;
 
-        private bool defaultField;
+        private decimal orderField;
 
         public ushort id
         {

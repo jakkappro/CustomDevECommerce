@@ -14,17 +14,16 @@ public class UpdateStockRequest
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/data.xsd", IsNullable = false)]
     public class dataPack
     {
+        private string _applicationField;
         private dataPackDataPackItem _dataPackItemField;
-
-        private string _idField;
 
         private uint _icoField;
 
-        private string _applicationField;
-
-        private decimal _versionField;
+        private string _idField;
 
         private string _noteField;
+
+        private decimal _versionField;
 
         public dataPackDataPackItem dataPackItem
         {
@@ -73,9 +72,8 @@ public class UpdateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/data.xsd")]
     public class dataPackDataPackItem
     {
-        private stock _stockField;
-
         private string _idField;
+        private stock _stockField;
 
         private decimal _versionField;
 
@@ -182,57 +180,56 @@ public class UpdateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeader
     {
-        private string _stockTypeField;
-
         private ushort _codeField;
-
-        private ulong _eAnField;
-
-        private byte _pLuField;
-
-        private bool _isSalesField;
-
-        private bool _isInternetField;
-
-        private bool _isBatchField;
-
-        private string _purchasingRateVatField;
-
-        private string _sellingRateVatField;
-
-        private string _nameField;
-
-        private string _nameComplementField;
-
-        private string _unitField;
-
-        private stockStockHeaderStorage _storageField;
-
-        private StockStockHeaderTypePrice _typePriceField;
-
-        private decimal _purchasingPriceField;
-
-        private decimal _sellingPriceField;
-
-        private byte _limitMinField;
-
-        private byte _limitMaxField;
-
-        private decimal _massField;
-
-        private stockStockHeaderSupplier _supplierField;
-
-        private string _producerField;
 
         private string _descriptionField;
 
-        private stockStockHeaderPictures _picturesField;
+        private ulong _eAnField;
+
+        private ushort _idField;
+
+        private bool _isBatchField;
+
+        private bool _isInternetField;
+
+        private bool _isSalesField;
+
+        private byte _limitMaxField;
+
+        private byte _limitMinField;
+
+        private decimal _massField;
+
+        private string _nameComplementField;
+
+        private string _nameField;
 
         private string _noteField;
 
+        private stockStockHeaderPictures _picturesField;
+
+        private byte _pLuField;
+
+        private string _producerField;
+
+        private decimal _purchasingPriceField;
+
+        private string _purchasingRateVatField;
+
         private stockStockHeaderRelatedLinks _relatedLinksField;
 
-        private ushort _idField;
+        private decimal _sellingPriceField;
+
+        private string _sellingRateVatField;
+        private string _stockTypeField;
+
+        private stockStockHeaderStorage _storageField;
+
+        private stockStockHeaderSupplier _supplierField;
+
+        private StockStockHeaderTypePrice _typePriceField;
+
+        private string _unitField;
 
         public string stockType
         {
@@ -455,11 +452,10 @@ public class UpdateStockRequest
     [XmlType(AnonymousType = true, Namespace = "http://www.stormware.cz/schema/version_2/stock.xsd")]
     public class stockStockHeaderPicturesPicture
     {
-        private string _filepathField;
+        private bool _defaultField;
 
         private string _descriptionField;
-
-        private bool _defaultField;
+        private string _filepathField;
 
         public string filepath
         {

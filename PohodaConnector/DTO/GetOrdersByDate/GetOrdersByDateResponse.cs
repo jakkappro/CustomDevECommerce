@@ -14,21 +14,20 @@ public class GetOrdersByDateResponse
     [XmlRoot(Namespace = "http://www.stormware.cz/schema/version_2/response.xsd", IsNullable = false)]
     public class responsePack
     {
-        private responsePackResponsePackItem responsePackItemField;
-
-        private decimal versionField;
+        private ulong icoField;
 
         private decimal idField;
-
-        private string stateField;
-
-        private string programVersionField;
-
-        private ulong icoField;
 
         private string keyField;
 
         private string noteField;
+
+        private string programVersionField;
+        private responsePackResponsePackItem responsePackItemField;
+
+        private string stateField;
+
+        private decimal versionField;
 
         public responsePackResponsePackItem responsePackItem
         {
@@ -92,13 +91,12 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/response.xsd")]
     public class responsePackResponsePackItem
     {
+        private string idField;
         private listOrder listOrderField;
 
-        private decimal versionField;
-
-        private string idField;
-
         private string stateField;
+
+        private decimal versionField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/list.xsd")]
         public listOrder listOrder
@@ -137,15 +135,14 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class listOrder
     {
-        private listOrderOrder[]? orderField;
-
-        private decimal versionField;
-
         private DateTime dateTimeStampField;
 
         private DateTime dateValidFromField;
+        private listOrderOrder[]? orderField;
 
         private string stateField;
+
+        private decimal versionField;
 
         [XmlElement("order")]
         public listOrderOrder[]? order
@@ -189,9 +186,8 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/list.xsd")]
     public class listOrderOrder
     {
-        private orderHeader orderHeaderField;
-
         private orderDetailOrderItem[] orderDetailField;
+        private orderHeader orderHeaderField;
 
         private orderSummary orderSummaryField;
 
@@ -235,13 +231,7 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class orderHeader
     {
-        private ulong idField;
-
-        private string orderTypeField;
-
-        private orderHeaderNumber numberField;
-
-        private string numberOrderField;
+        private orderHeaderCarrier carrierField;
 
         private DateTime dateField;
 
@@ -249,31 +239,36 @@ public class GetOrdersByDateResponse
 
         private DateTime dateToField;
 
-        private string textField;
-
-        private orderHeaderPartnerIdentity partnerIdentityField;
-
-        private orderHeaderMyIdentity myIdentityField;
-
-        private orderHeaderPaymentType paymentTypeField;
-
-        private orderHeaderPriceLevel priceLevelField;
-
-        private bool isExecutedField;
+        private orderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
+        private ulong idField;
 
         private bool isDeliveredField;
 
+        private bool isExecutedField;
+
         private bool isReservedField;
+
+        private bool markRecordField;
 
         private orderHeaderMOSS mOSSField;
 
-        private orderHeaderEvidentiaryResourcesMOSS evidentiaryResourcesMOSSField;
+        private orderHeaderMyIdentity myIdentityField;
 
-        private orderHeaderCarrier carrierField;
+        private orderHeaderNumber numberField;
+
+        private string numberOrderField;
+
+        private string orderTypeField;
+
+        private orderHeaderPartnerIdentity partnerIdentityField;
+
+        private orderHeaderPaymentType paymentTypeField;
 
         private bool permanentDocumentField;
 
-        private bool markRecordField;
+        private orderHeaderPriceLevel priceLevelField;
+
+        private string textField;
 
         public ulong id
         {
@@ -448,33 +443,32 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class address
     {
+        private string cityField;
         private string companyField;
 
-        private string nameField;
-
-        private string cityField;
-
-        private string streetField;
-
-        private string numberField;
-
-        private string zipField;
-
-        private ulong icoField;
+        private addressCountry countryField;
 
         private ulong dicField;
 
         private bool dicFieldSpecified;
 
+        private string emailField;
+
         private string icDphField;
 
-        private addressCountry countryField;
+        private ulong icoField;
 
         private string mobilPhoneField;
 
         private bool mobilPhoneFieldSpecified;
 
-        private string emailField;
+        private string nameField;
+
+        private string numberField;
+
+        private string streetField;
+
+        private string zipField;
 
         public string company
         {
@@ -594,15 +588,14 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class shipToAddress
     {
+        private object cityField;
         private object companyField;
+
+        private object emailField;
 
         private object nameField;
 
-        private object cityField;
-
         private object streetField;
-
-        private object emailField;
 
         public object company
         {
@@ -773,35 +766,34 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItem
     {
-        private ulong idField;
-
-        private string textField;
-
-        private decimal quantityField;
-
-        private decimal deliveredField;
-
-        private string unitField;
-
-        private decimal coefficientField;
-
-        private bool payVATField;
-
-        private string rateVATField;
-
-        private decimal discountPercentageField;
-
-        private orderDetailOrderItemHomeCurrency homeCurrencyField;
-
-        private orderDetailOrderItemTypeServiceMOSS typeServiceMOSSField;
-
         private string codeField;
 
         private bool codeFieldSpecified;
 
-        private orderDetailOrderItemStockItem stockItemField;
+        private decimal coefficientField;
+
+        private decimal deliveredField;
+
+        private decimal discountPercentageField;
+
+        private orderDetailOrderItemHomeCurrency homeCurrencyField;
+        private ulong idField;
+
+        private bool payVATField;
 
         private bool pDPField;
+
+        private decimal quantityField;
+
+        private string rateVATField;
+
+        private orderDetailOrderItemStockItem stockItemField;
+
+        private string textField;
+
+        private orderDetailOrderItemTypeServiceMOSS typeServiceMOSSField;
+
+        private string unitField;
 
         public ulong id
         {
@@ -901,13 +893,12 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItemHomeCurrency
     {
-        private decimal unitPriceField;
-
         private decimal priceField;
 
-        private decimal priceVATField;
-
         private decimal priceSumField;
+
+        private decimal priceVATField;
+        private decimal unitPriceField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
         public decimal unitPrice
@@ -960,9 +951,8 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderDetailOrderItemStockItem
     {
-        private store storeField;
-
         private stockItem stockItemField;
+        private store storeField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
         public store store
@@ -1012,11 +1002,10 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class stockItem
     {
+        private ulong eANField;
         private ulong idField;
 
         private string idsField;
-
-        private ulong eANField;
 
         public ulong id
         {
@@ -1045,11 +1034,10 @@ public class GetOrdersByDateResponse
         IsNullable = false)]
     public class orderSummary
     {
+        private orderSummaryHomeCurrency homeCurrencyField;
         private string roundingDocumentField;
 
         private string roundingVATField;
-
-        private orderSummaryHomeCurrency homeCurrencyField;
 
         public string roundingDocument
         {
@@ -1076,25 +1064,24 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderSummaryHomeCurrency
     {
-        private decimal priceNoneField;
-
-        private decimal priceLowField;
-
-        private decimal priceLowVATField;
-
-        private decimal priceLowSumField;
-
-        private decimal priceHighField;
-
-        private decimal priceHighVATField;
-
-        private decimal priceHighSumField;
-
         private decimal price3Field;
+
+        private decimal price3SumField;
 
         private decimal price3VATField;
 
-        private decimal price3SumField;
+        private decimal priceHighField;
+
+        private decimal priceHighSumField;
+
+        private decimal priceHighVATField;
+
+        private decimal priceLowField;
+
+        private decimal priceLowSumField;
+
+        private decimal priceLowVATField;
+        private decimal priceNoneField;
 
         private round roundField;
 

@@ -1,27 +1,27 @@
-﻿using Common.Interfaces;
-using Microsoft.Extensions.Logging;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
+using Common.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Services.MailService;
 
 public class MailSender : IMailSender
 {
-    private string _cc;
-    private string _from;
-    private string _password;
-    private readonly ILogger<MailSender> _logger;
     private readonly IConfiguration _configuration;
-    private string _to;
+    private readonly ILogger<MailSender> _logger;
 
-    private string _messageTemplate;
-    private string _rowTemplate;
-    private string _itemTemplate;
+    private readonly List<string> _attachments;
+    private string _cc;
 
     private string _emailRows;
+    private string _from;
+    private string _itemTemplate;
 
-    private List<string> _attachments;
+    private string _messageTemplate;
+    private string _password;
+    private string _rowTemplate;
+    private string _to;
 
     public MailSender(ILogger<MailSender> logger, IConfiguration configuration)
     {
@@ -59,34 +59,19 @@ public class MailSender : IMailSender
     public void LoadTemplatesFromFile()
     {
         if (File.Exists("./Templates/messageTemplate.html"))
-        {
             _messageTemplate = File.ReadAllText("./Templates/messageTemplate.html");
-        }
         else
-        {
             _logger.LogWarning("Couldn't load message template");
 
-        }
-
         if (File.Exists("./Templates/itemTemplate.html"))
-        {
             _rowTemplate = File.ReadAllText("./Templates/rowTemplate.html");
-        }
         else
-        {
             _logger.LogWarning("Couldn't load item template");
 
-        }
-
         if (File.Exists("./Templates/rowTemplate.html"))
-        {
             _itemTemplate = File.ReadAllText("./Templates/itemTemplate.html");
-        }
         else
-        {
             _logger.LogWarning("Couldn't load row template");
-
-        }
     }
 
     public void AddAttachment(string attachment)
@@ -137,10 +122,9 @@ public class MailSender : IMailSender
             message.IsBodyHtml = true;
             message.Body = body;
 
-            foreach (var attachment in _attachments.Select(att => new Attachment($"{_configuration["Packeta:LabelsLocation"]}/{att}")))
-            {
+            foreach (var attachment in _attachments.Select(att =>
+                         new Attachment($"{_configuration["Packeta:LabelsLocation"]}/{att}")))
                 message.Attachments.Add(attachment);
-            }
 
             smtp.Port = 587;
             smtp.Host = "mail.hostmaster.sk";

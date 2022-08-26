@@ -15,4 +15,5 @@ public interface IStockBuilder
     StockBuilder WithDescription(string description);
     StockBuilder WithPicture(string picture);
     StockBuilder WithRelatedLink(string link);
+    StockBuilder WithAlternativePictures(IEnumerable<string> pictures);
 }

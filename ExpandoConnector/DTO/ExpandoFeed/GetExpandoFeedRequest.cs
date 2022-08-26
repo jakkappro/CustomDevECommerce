@@ -30,63 +30,62 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrder
     {
-        private string orderIdField;
-
-        private string orderStatusField;
-
-        private string purchaseDateField;
-
-        private string marketplaceField;
-
-        private string venueField;
-
-        private string fulfillmentChannelField;
-
         private bool businessOrderField;
-
-        private decimal totalPriceField;
-
-        private decimal totalItemTaxField;
 
         private string currencyCodeField;
 
-        private string languageField;
-
-        private string paymentMethodField;
-
-        private string shippingMethodField;
-
-        private string shipServiceLevelField;
+        private ordersOrderCustomer customerField;
 
         private object deliveryBranchIdField;
 
-        private decimal shippingPriceField;
+        private ordersOrderDelivery deliveryField;
 
-        private string latestShipDateField;
+        private string fulfillmentChannelField;
 
-        private string latestDeliveryDateField;
+        private object invoicesField;
+
+        private object invoiceUrlsField;
+
+        private bool isCompleteField;
 
         private bool isPremiumOrderField;
 
         private bool isPrimeField;
 
-        private bool isCompleteField;
-
         private bool isRefundedField;
-
-        private object invoiceUrlsField;
-
-        private object invoicesField;
-
-        private ordersOrderCustomer customerField;
 
         private ordersOrderItem[] itemsField;
 
-        private ordersOrderPrice priceField;
+        private string languageField;
+
+        private string latestDeliveryDateField;
+
+        private string latestShipDateField;
+
+        private string marketplaceField;
+        private string orderIdField;
+
+        private string orderStatusField;
 
         private ordersOrderPayment paymentField;
 
-        private ordersOrderDelivery deliveryField;
+        private string paymentMethodField;
+
+        private ordersOrderPrice priceField;
+
+        private string purchaseDateField;
+
+        private string shippingMethodField;
+
+        private decimal shippingPriceField;
+
+        private string shipServiceLevelField;
+
+        private decimal totalItemTaxField;
+
+        private decimal totalPriceField;
+
+        private string venueField;
 
 
         public string orderId
@@ -298,21 +297,20 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderCustomer
     {
+        private ordersOrderCustomerAddress addressField;
         private string? companyNameField;
-
-        private string firstnameField;
-
-        private string surnameField;
 
         private string emailField;
 
+        private string firstnameField;
+
         private string phoneField;
 
-        private object taxIdField;
+        private string surnameField;
 
         private object taxCountryField;
 
-        private ordersOrderCustomerAddress addressField;
+        private object taxIdField;
 
 
         public string? companyName
@@ -384,11 +382,11 @@ public class GetExpandoFeedRequest
 
         private string cityField;
 
-        private string zipField;
+        private string countryField;
 
         private string stateOrRegionField;
 
-        private string countryField;
+        private string zipField;
 
 
         public string address1
@@ -445,41 +443,40 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderItem
     {
-        private uint itemIdField;
+        private ordersOrderItemDeliveryDiscount deliveryDiscountField;
+
+        private ordersOrderItemDeliveryPrice deliveryPriceField;
 
         private object externalIdField;
+        private uint itemIdField;
+
+        private string itemNameField;
 
         private decimal itemPriceField;
 
         private byte itemQuantityField;
 
-        private string itemNameField;
-
-        private ulong orderItemIdField;
-
         private decimal itemTaxField;
 
-        private byte shippingDiscountField;
+        private ordersOrderItemLineItemDiscount lineItemDiscountField;
 
-        private byte shippingDiscountTaxField;
+        private ordersOrderItemLineItemPrice lineItemPriceField;
+
+        private ordersOrderItemMarketplaceCommission marketplaceCommissionField;
+
+        private ulong orderItemIdField;
 
         private byte promotionDiscountField;
 
         private byte promotionDiscountTaxField;
 
+        private byte shippingDiscountField;
+
+        private byte shippingDiscountTaxField;
+
         private decimal shippingPriceField;
 
         private decimal shippingTaxField;
-
-        private ordersOrderItemLineItemPrice lineItemPriceField;
-
-        private ordersOrderItemLineItemDiscount lineItemDiscountField;
-
-        private ordersOrderItemDeliveryPrice deliveryPriceField;
-
-        private ordersOrderItemDeliveryDiscount deliveryDiscountField;
-
-        private ordersOrderItemMarketplaceCommission marketplaceCommissionField;
 
 
         public uint itemId
@@ -829,9 +826,9 @@ public class GetExpandoFeedRequest
 
         private ordersOrderPricePayment paymentField;
 
-        private ordersOrderPriceTotal totalField;
-
         private ordersOrderPriceTotalDiscount totalDiscountField;
+
+        private ordersOrderPriceTotal totalField;
 
 
         public ordersOrderPriceDelivery delivery
@@ -1084,9 +1081,8 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPayment
     {
-        private string paymentMethodField;
-
         private ordersOrderPaymentCashOnDelivery cashOnDeliveryField;
+        private string paymentMethodField;
 
 
         public string paymentMethod
@@ -1108,9 +1104,8 @@ public class GetExpandoFeedRequest
     [XmlType(AnonymousType = true)]
     public class ordersOrderPaymentCashOnDelivery
     {
-        private object toPayField;
-
         private object servicePriceField;
+        private object toPayField;
 
 
         public object toPay

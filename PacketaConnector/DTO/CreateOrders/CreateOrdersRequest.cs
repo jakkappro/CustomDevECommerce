@@ -36,37 +36,36 @@ public class CreateOrderRequest
     [XmlType(AnonymousType = true)]
     public class createPacketPacketAttributes
     {
-        private string numberField;
-
-        private string nameField;
-
-        private string surnameField;
-
-        private string emailField;
-
         private uint addressIdField;
-
-        private decimal valueField;
-
-        private string eshopField;
-
-        private decimal weightField;
-
-        private uint sender_idField;
-
-        private string phoneField;
-
-        private string zipField;
-
-        private string streetField;
-
-        private string houseNumberField;
 
         private string cityField;
 
+        private string currencyField;
+
+        private string emailField;
+
+        private string eshopField;
+
+        private string houseNumberField;
+
+        private string nameField;
+        private string numberField;
+
+        private string phoneField;
+
         private createPacketPacketAttributesSecurity securityField;
 
-        private string currencyField;
+        private uint sender_idField;
+
+        private string streetField;
+
+        private string surnameField;
+
+        private decimal valueField;
+
+        private decimal weightField;
+
+        private string zipField;
 
         public string number
         {

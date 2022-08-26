@@ -8,8 +8,8 @@ public class FullMode : IStarterService
 {
     private readonly IExpandoOrder _expando;
     private readonly ILogger<FullMode> _logger;
-    private readonly IMailSender _mailSender;
     private readonly int _lookBackDays;
+    private readonly IMailSender _mailSender;
 
     public FullMode(IExpandoOrder expando, ILogger<FullMode> logger, IMailSender mailSender, int lookBackDays)
     {

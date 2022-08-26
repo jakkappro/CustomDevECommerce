@@ -1,14 +1,14 @@
-﻿using Common.Interfaces;
+﻿using System.Net;
+using Common.Interfaces;
 using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace Common.Services.XMLFeedParserService;
 
 public class UrlXmlFeedParser : IXmlFeedParser
 {
     private readonly HttpClient _client;
-    private readonly ISerializer _serializer;
     private readonly ILogger<UrlXmlFeedParser> _logger;
+    private readonly ISerializer _serializer;
     private string _data;
 
     public UrlXmlFeedParser(HttpClient client, ISerializer serializer, ILogger<UrlXmlFeedParser> logger)

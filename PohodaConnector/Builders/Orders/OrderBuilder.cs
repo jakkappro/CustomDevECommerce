@@ -5,8 +5,6 @@ namespace PohodaConnector.Builders.Orders;
 
 public class OrderBuilder : IOrderBuilder
 {
-    private CreateOrderRequest.dataPack _order;
-    private readonly List<CreateOrderRequest.orderOrderItem> _items;
     private const decimal Version = 2.0m;
     private const int Ico = 53870441;
     private const string Id = "zas001";
@@ -18,11 +16,13 @@ public class OrderBuilder : IOrderBuilder
     private const string EvidentiaryResourcesMoss = "A";
     private const string TypeServiceMoss = "GD";
     private const string OrderText = "Amazon objednavka c. ";
+    private readonly List<CreateOrderRequest.orderOrderItem> _items;
+    private readonly CreateOrderRequest.dataPack _order;
 
     public OrderBuilder()
     {
         _items = new List<CreateOrderRequest.orderOrderItem>();
-        _order = new CreateOrderRequest.dataPack()
+        _order = new CreateOrderRequest.dataPack
         {
             version = Version,
             ico = Ico,
@@ -52,13 +52,13 @@ public class OrderBuilder : IOrderBuilder
                         partnerIdentity = new CreateOrderRequest.orderOrderHeaderPartnerIdentity
                         {
                             address = new CreateOrderRequest.address
-                            { 
+                            {
                                 country = new CreateOrderRequest.addressCountry()
                             }
                         },
                         MOSS = new CreateOrderRequest.orderOrderHeaderMOSS(),
                         carrier = new CreateOrderRequest.orderOrderHeaderCarrier(),
-                        number = new CreateOrderRequest.orderOrderHeaderNumber(),
+                        number = new CreateOrderRequest.orderOrderHeaderNumber()
                     },
                     orderSummary = new CreateOrderRequest.orderOrderSummary
                     {
@@ -202,18 +202,18 @@ public class OrderBuilder : IOrderBuilder
             quantity = quantity,
             delivered = 0,
             rateVAT = "historyHigh",
-            homeCurrency = new CreateOrderRequest.orderOrderItemHomeCurrency()
+            homeCurrency = new CreateOrderRequest.orderOrderItemHomeCurrency
             {
                 unitPrice = price
             },
-            stockItem = new CreateOrderRequest.orderOrderItemStockItem()
+            stockItem = new CreateOrderRequest.orderOrderItemStockItem
             {
-                stockItem = new CreateOrderRequest.stockItem()
+                stockItem = new CreateOrderRequest.stockItem
                 {
                     EAN = ean
                 }
             },
-            typeServiceMOSS = new CreateOrderRequest.orderOrderItemTypeServiceMOSS()
+            typeServiceMOSS = new CreateOrderRequest.orderOrderItemTypeServiceMOSS
             {
                 ids = TypeServiceMoss
             },

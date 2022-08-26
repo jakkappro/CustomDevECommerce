@@ -9,20 +9,20 @@ public class ExpandoToPohodaOrder
     public static CreateOrderData Map(GetExpandoFeedRequest.ordersOrder order, string id,
         IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
     {
-
-        var createOrderItemData = order.items.ToList().Select(e => (items.Contains(items.FirstOrDefault(i => i.ITEM_ID == e.itemId)))
-        ?
-         CreateOrderItemData.CreateEanInstance(e.itemQuantity, items.FirstOrDefault(i => i.ITEM_ID == e.itemId)?.EAN ?? String.Empty,
-                e.itemPrice)
-        :
-        CreateOrderItemData.CreateSimpleInstance(e.itemQuantity, e.itemPrice, string.Empty)).ToList();
+        var createOrderItemData = order.items.ToList().Select(e =>
+            items.Contains(items.FirstOrDefault(i => i.ITEM_ID == e.itemId))
+                ? CreateOrderItemData.CreateEanInstance(e.itemQuantity,
+                    items.FirstOrDefault(i => i.ITEM_ID == e.itemId)?.EAN ?? string.Empty,
+                    e.itemPrice)
+                : CreateOrderItemData.CreateSimpleInstance(e.itemQuantity, e.itemPrice, string.Empty)).ToList();
 
         createOrderItemData.Add(CreateOrderItemData.CreateSimpleInstance(1, order.shippingPrice, "Doprava"));
         return new CreateOrderData(
             id,
             order.customer.firstname + " " + order.customer.surname,
             order.customer.address.city,
-            order.customer.address.address1 + " " + order.customer.address.address2 ?? "" + " " + order.customer.address.address3 ?? "",
+            order.customer.address.address1 + " " + order.customer.address.address2 ??
+            "" + " " + order.customer.address.address3 ?? "",
             order.customer.address.zip,
             order.customer.address.country,
             order.customer.companyName is "-" ? "" : order.customer.companyName,

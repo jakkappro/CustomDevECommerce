@@ -1,7 +1,7 @@
-﻿using Common.Interfaces;
-using Microsoft.Extensions.Logging;
-using System.Xml;
+﻿using System.Xml;
 using System.Xml.Serialization;
+using Common.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Services.Serialization;
 
@@ -41,7 +41,9 @@ public class Utf8SerializerService : ISerializer
         {
             _logger.LogError("Error, can't deserialize empty value.");
             return default(T) ?? throw new ArgumentException();
-        };
+        }
+
+        ;
 
         var serializer = new XmlSerializer(typeof(T));
 
@@ -59,6 +61,7 @@ public class Utf8SerializerService : ISerializer
             _logger.LogError("Error while deserializing {data} data type.", typeof(T));
             throw;
         }
+
         return data;
     }
 }

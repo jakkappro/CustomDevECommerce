@@ -5,16 +5,16 @@ namespace PohodaConnector.Builders.Stock;
 
 public class StockBuilder : IStockBuilder
 {
-    private CreateStockRequest.dataPack _stock;
     private const decimal Version = 2.0m;
     private const int Ico = 53870441;
     private const string Id = "zas001";
     private const string Note = "Export";
     private const string Application = "StwTest";
+    private readonly CreateStockRequest.dataPack _stock;
 
     public StockBuilder()
     {
-        _stock = new CreateStockRequest.dataPack()
+        _stock = new CreateStockRequest.dataPack
         {
             version = Version,
             ico = Ico,
@@ -23,11 +23,11 @@ public class StockBuilder : IStockBuilder
             application = Application,
             dataPackItem = new[]
             {
-                new CreateStockRequest.dataPackDataPackItem()
+                new CreateStockRequest.dataPackDataPackItem
                 {
                     id = Id,
                     version = Version,
-                    stock = new CreateStockRequest.stock()
+                    stock = new CreateStockRequest.stock
                     {
                         version = Version,
                         stockHeader = new CreateStockRequest.stockStockHeader
@@ -124,13 +124,25 @@ public class StockBuilder : IStockBuilder
     {
         _stock.dataPackItem[0].stock.stockHeader.pictures = new CreateStockRequest.stockStockHeaderPictures
         {
-            picture = new CreateStockRequest.stockStockHeaderPicturesPicture
+            picture = new CreateStockRequest.stockStockHeaderPicturesPicture[]
             {
-                filepath = picture,
-                @default = true,
-                description = "obrazok produktu"
+                new()
+                {
+                    filepath = picture,
+                    @default = true,
+                    description = "obrazok produktu"
+                }
             }
         };
+        return this;
+    }
+
+    public StockBuilder WithAlternativePictures(IEnumerable<string> pictures)
+    {
+        var pics = _stock.dataPackItem[0].stock.stockHeader.pictures.picture.ToList();
+        pics.AddRange(pictures.Select(picture => new CreateStockRequest.stockStockHeaderPicturesPicture
+            { filepath = picture, @default = false, description = "obrazok produktu" }));
+        _stock.dataPackItem[0].stock.stockHeader.pictures.picture = pics.ToArray();
         return this;
     }
 

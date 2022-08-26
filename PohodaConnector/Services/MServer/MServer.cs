@@ -1,20 +1,21 @@
-﻿using Microsoft.Extensions.Logging;
-using PohodaConnector.Interfaces;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Xml;
+using Microsoft.Extensions.Logging;
+using PohodaConnector.Interfaces;
+
 #pragma warning disable CS8618
 
 namespace PohodaConnector.Services.MServer;
 
 public class MServer : IAccountingSoftware
 {
-    private readonly ILogger<MServer> _logger;
     private readonly HttpClient _client;
-    private string _serverName;
+    private readonly ILogger<MServer> _logger;
     private string _pathToServer;
     private short _retryDelay;
+    private string _serverName;
 
     public MServer(ILogger<MServer> logger, HttpClient client)
     {

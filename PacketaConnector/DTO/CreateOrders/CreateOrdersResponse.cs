@@ -14,9 +14,8 @@ public class CreateOrderResponse
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class response
     {
-        private string statusField;
-
         private responseResult? resultField;
+        private string statusField;
 
         public string status
         {
@@ -36,11 +35,10 @@ public class CreateOrderResponse
     [XmlType(AnonymousType = true)]
     public class responseResult
     {
-        private string idField;
-
         private string barcodeField;
 
         private string barcodeTextField;
+        private string idField;
 
         public string id
         {

@@ -14,9 +14,8 @@ public class GetPacketStatusResponse
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class response
     {
-        private string statusField;
-
         private responseResult? resultField;
+        private string statusField;
 
         public string status
         {
@@ -36,15 +35,14 @@ public class GetPacketStatusResponse
     [XmlType(AnonymousType = true)]
     public class responseResult
     {
-        private DateTime dateTimeField;
+        private string branchIdField;
 
-        private string statusCodeField;
+        private ushort carrierIdField;
+
+        private string carrierNameField;
 
         private string codeTextField;
-
-        private string statusTextField;
-
-        private string branchIdField;
+        private DateTime dateTimeField;
 
         private string destinationBranchIdField;
 
@@ -52,11 +50,11 @@ public class GetPacketStatusResponse
 
         private string? isReturningField;
 
+        private string statusCodeField;
+
+        private string statusTextField;
+
         private string? storedUntilField;
-
-        private ushort carrierIdField;
-
-        private string carrierNameField;
 
         public DateTime dateTime
         {

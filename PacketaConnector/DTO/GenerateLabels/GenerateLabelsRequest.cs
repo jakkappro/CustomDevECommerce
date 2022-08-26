@@ -16,11 +16,11 @@ public class GenerateLabelRequest
     {
         private string apiPasswordField;
 
-        private string packetIdField;
-
         private string formatField;
 
         private byte offsetField;
+
+        private string packetIdField;
 
         public string apiPassword
         {
