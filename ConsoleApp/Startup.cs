@@ -46,6 +46,8 @@ public class Startup
 
         if (options.IsMailOnly)
             app = ActivatorUtilities.CreateInstance<MailMode>(host.Services, options.LookBackDays, false);
+        else if (options.IsExpandoSynch)
+            app = ActivatorUtilities.CreateInstance<ExpandoSynchronizeMode>(host.Services);
         else
             app = ActivatorUtilities.CreateInstance<FullMode>(host.Services, options.LookBackDays, false);
 
@@ -82,6 +84,11 @@ public class Startup
             .As('m', "mail")
             .SetDefault(true)
             .WithDescription("If true sets application to mail only mode.");
+
+        parser.Setup(arg => arg.IsExpandoSynch)
+            .As('e', "expando-synch")
+            .SetDefault(false)
+            .WithDescription("If true sets application to expando synch mode.");
 
         var result = parser.Parse(args);
 
@@ -143,5 +150,6 @@ public class Startup
     {
         public int LookBackDays { get; set; }
         public bool IsMailOnly { get; set; }
+        public bool IsExpandoSynch { get; set; }
     }
 }

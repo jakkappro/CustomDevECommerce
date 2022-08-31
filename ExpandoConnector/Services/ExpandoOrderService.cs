@@ -1,6 +1,7 @@
 ﻿using Common.Interfaces;
 using ExpandoConnector.DTO.ExpandoFeed;
 using ExpandoConnector.DTO.PrehomeFeed;
+using ExpandoConnector.DTO.UpdateFufillment;
 using ExpandoConnector.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -9,12 +10,14 @@ namespace ExpandoConnector.Services;
 public class ExpandoOrderService : IExpandoOrder
 {
     private readonly ILogger<ExpandoOrderService> _logger;
+    private readonly HttpClient _client;
     private readonly IXmlFeedParser _parser;
 
-    public ExpandoOrderService(IXmlFeedParser parser, ILogger<ExpandoOrderService> logger)
+    public ExpandoOrderService(IXmlFeedParser parser, ILogger<ExpandoOrderService> logger, HttpClient client)
     {
         _parser = parser;
         _logger = logger;
+        _client = client;
     }
 
     public GetExpandoFeedRequest.orders GetExpandoOrders(int numberOfDays)
@@ -28,8 +31,8 @@ public class ExpandoOrderService : IExpandoOrder
         return _parser.Parse<GetPrehomeFeed.SHOP>("https://www.prehome.sk/feed/amazon.xml");
     }
 
-    public void UpdateOrder()
+    public void UpdateOrder(UpdateFufillmentRequest data)
     {
-        throw new NotImplementedException();
+        _client.PostAsync("/fulfillment", new StringContent(data.ToJson()));
     }
 }

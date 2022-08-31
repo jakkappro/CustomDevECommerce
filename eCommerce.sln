@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpandoConnector", "Expando
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacketaConnector", "PacketaConnector\PacketaConnector.csproj", "{C7B99574-3118-421D-97A9-D31C60FAABD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{7893303E-63E5-4D3F-80B1-5587EFA8ED23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{7893303E-63E5-4D3F-80B1-5587EFA8ED23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLFeedSynchronizer", "XMLFeedSynchronizer\XMLFeedSynchronizer.csproj", "{6D878E89-D350-48F8-80A1-D299F814C14E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLFeedSynchronizer", "XMLFeedSynchronizer\XMLFeedSynchronizer.csproj", "{6D878E89-D350-48F8-80A1-D299F814C14E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,7 +51,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32327CAA-FDAE-4015-83BA-1B9059F49AA3}
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
