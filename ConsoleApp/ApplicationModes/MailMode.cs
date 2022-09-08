@@ -88,6 +88,7 @@ public class MailMode : IStarterService
                 data.PohodaOrderId = id;
                 data.AmazonOrderId = order.orderId;
                 data.Status = "Unshipped";
+                data.MarketPlace = order.marketplace;
 
                 CreatePohodaOrder(order, id, items).Wait();
 

@@ -7,6 +7,6 @@ namespace ExpandoConnector.Interfaces;
 public interface IExpandoOrder
 {
     GetExpandoFeedRequest.orders GetExpandoOrders(int numberOfDays);
-    void UpdateOrder(UpdateFufillmentRequest data);
+    Task<string> UpdateOrder(UpdateFufillmentRequest data);
     GetPrehomeFeed.SHOP GetPrehomeItems();
 }

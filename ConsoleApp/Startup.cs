@@ -37,7 +37,7 @@ public class Startup
         Log.Information("Initializing application.");
 
         var host = Host.CreateDefaultBuilder()
-            .ConfigureServices(options.IsMailOnly ? CreateMailServices : CreateAllServices)
+            .ConfigureServices(CreateMailServices)
             .UseSerilog()
             .Build();
 
@@ -82,7 +82,7 @@ public class Startup
 
         parser.Setup(arg => arg.IsMailOnly)
             .As('m', "mail")
-            .SetDefault(true)
+            .SetDefault(false)
             .WithDescription("If true sets application to mail only mode.");
 
         parser.Setup(arg => arg.IsExpandoSynch)
@@ -107,7 +107,11 @@ public class Startup
         services.AddSingleton<IDownloader, ImageDownloader>();
 
         // Add expando services
-        services.AddTransient<IExpandoOrder, ExpandoOrderService>();
+        services.AddHttpClient<IExpandoOrder, ExpandoOrderService>(client =>
+        {
+            client.BaseAddress = new Uri("https://app.expan.do/api/v2/");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {context.Configuration["ExpandoKey"]}");
+        });
 
         // Add packeta services
         services.AddTransient<IPacketBuilder, PacketBuilder>();
@@ -139,11 +143,6 @@ public class Startup
 
         // Add starter service
         services.AddTransient<IStarterService, MailMode>();
-    }
-
-    private static void CreateAllServices(HostBuilderContext context, IServiceCollection services)
-    {
-        // TODO: delete this 
     }
 
     public class ApplicationArguments

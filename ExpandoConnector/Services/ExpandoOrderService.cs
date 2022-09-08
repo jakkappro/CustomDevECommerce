@@ -1,4 +1,6 @@
-﻿using Common.Interfaces;
+﻿using System.Text;
+using System.Text.Unicode;
+using Common.Interfaces;
 using ExpandoConnector.DTO.ExpandoFeed;
 using ExpandoConnector.DTO.PrehomeFeed;
 using ExpandoConnector.DTO.UpdateFufillment;
@@ -31,8 +33,9 @@ public class ExpandoOrderService : IExpandoOrder
         return _parser.Parse<GetPrehomeFeed.SHOP>("https://www.prehome.sk/feed/amazon.xml");
     }
 
-    public void UpdateOrder(UpdateFufillmentRequest data)
+    public async Task<string> UpdateOrder(UpdateFufillmentRequest data)
     {
-        _client.PostAsync("/fulfillment", new StringContent(data.ToJson()));
+        var content = data.ToJson();
+        return await (await _client.PostAsync("fulfillment", new StringContent(content, Encoding.UTF8, "application/json"))).Content.ReadAsStringAsync();
     }
 }

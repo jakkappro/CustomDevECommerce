@@ -12,4 +12,6 @@ public class Data
     public DateTime DateCreated { get; set; }
     public string Status { get; set; }
     public string LabelId { get; set; }
+
+    public string MarketPlace { get; set; }
 }

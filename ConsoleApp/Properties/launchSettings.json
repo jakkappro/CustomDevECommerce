@@ -7,6 +7,10 @@
     "FullMode": {
       "commandName": "Project",
       "commandLineArgs": "-d 2"
+    },
+    "ExpandoSynch": {
+      "commandName": "Project",
+      "commandLineArgs": "-e -m-"
     }
   }
 }
