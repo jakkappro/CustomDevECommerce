@@ -250,6 +250,18 @@ namespace ConsoleApp.ApplicationModes
                         PRICE_VAT = 23.7m,
                         VAT = 20
                     });
+            if (!items.Exists(i => i.ITEM_ID == 161412))
+                items.Add(
+                    new GetPrehomeFeed.SHOPSHOPITEM
+                    {
+                        ITEM_ID = 161412,
+                        PRODUCTNAME = "Rebrík Strend Pro DP 3x06, Alu, EN 131 max. 3.71 m, BASIC",
+                        EAN = "5904680990772",
+                        DEALER = "-",
+                        IMGURL = "",
+                        PRICE_VAT = 94.86m,
+                        VAT = 20
+                    });
 
         }
     }
