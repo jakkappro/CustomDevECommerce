@@ -20,4 +20,5 @@ public class Item
     public string Ean { get; set; }
     public string Url { get; set; }
     public string Dealer { get; set; }
+    public int Quantity { get; set; }
 }

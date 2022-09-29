@@ -118,6 +118,7 @@ public class MailSender : IMailSender
             itemData = itemData.Replace("[[EAN]]", item.Ean);
             itemData = itemData.Replace("[[URL]]", item.Url);
             itemData = itemData.Replace("[[DEALER]]", item.Dealer);
+            itemData = itemData.Replace("[[QUANTITY]]", item.Quantity.ToString());
             data += itemData;
         }
 

@@ -26,7 +26,8 @@ namespace ConsoleApp.Mappers
                     ItemId = i.ITEM_ID.ToString(),
                     Ean = i.EAN,
                     Url = i.URL,
-                    Dealer = i.DEALER
+                    Dealer = i.DEALER,
+                    Quantity = data.items.FirstOrDefault(x => x.itemId == i.ITEM_ID)?.itemQuantity ?? 0
                 }).ToList()
             };
         }

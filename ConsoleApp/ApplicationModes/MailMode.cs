@@ -124,7 +124,23 @@ namespace ConsoleApp.ApplicationModes
             _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
             if (!readOnly)
             {
-                await _orderService.CreateOrder(ExpandoToPohodaOrder.Map(order, id, items));
+                try
+                {
+                    var mapOrder = ExpandoToPohodaOrder.Map(order, id, items);
+                    if (mapOrder != null)
+                    {
+                        await _orderService.CreateOrder(mapOrder);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"Mapping of order returns null");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Error while creating an order {order.orderId} in Pohoda. Country is {order.customer.address.country}");
+                    return;
+                }                
             }
             _logger.LogInformation($"Order with {id} sucessfully created");
         }
