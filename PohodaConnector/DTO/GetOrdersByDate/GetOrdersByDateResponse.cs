@@ -405,10 +405,10 @@ public class GetOrdersByDateResponse
         Namespace = "http://www.stormware.cz/schema/version_2/order.xsd")]
     public class orderHeaderNumber
     {
-        private ulong numberRequestedField;
+        private string numberRequestedField;
 
         [XmlElement(Namespace = "http://www.stormware.cz/schema/version_2/type.xsd")]
-        public ulong numberRequested
+        public string numberRequested
         {
             get => numberRequestedField;
             set => numberRequestedField = value;
@@ -785,7 +785,7 @@ public class GetOrdersByDateResponse
 
         private decimal coefficientField;
 
-        private bool payVATField;
+        private bool? payVATField;
 
         private string rateVATField;
 
@@ -801,7 +801,7 @@ public class GetOrdersByDateResponse
 
         private orderDetailOrderItemStockItem stockItemField;
 
-        private bool pDPField;
+        private bool? pDPField;
 
         public ulong id
         {
@@ -839,7 +839,7 @@ public class GetOrdersByDateResponse
             set => coefficientField = value;
         }
 
-        public bool payVAT
+        public bool? payVAT
         {
             get => payVATField;
             set => payVATField = value;
@@ -888,7 +888,7 @@ public class GetOrdersByDateResponse
             set => stockItemField = value;
         }
 
-        public bool PDP
+        public bool? PDP
         {
             get => pDPField;
             set => pDPField = value;
