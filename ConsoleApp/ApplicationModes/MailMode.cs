@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PacketaConnector.Interfaces;
 using PohodaConnector.Interfaces;
+using System.Reflection.Metadata;
 using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -121,54 +122,68 @@ namespace ConsoleApp.ApplicationModes
         {
             EnsurePohodaOrderItemsExist(order, items).Wait();
 
-            _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
-            if (!readOnly)
+            try
             {
-                try
+                _logger.LogDebug($"Creating order {JsonSerializer.Serialize(ExpandoToPohodaOrder.Map(order, id, items))}");
+                if (!readOnly)
                 {
-                    var mapOrder = ExpandoToPohodaOrder.Map(order, id, items);
-                    if (mapOrder != null)
+                    try
                     {
-                        await _orderService.CreateOrder(mapOrder);
+                        var mapOrder = ExpandoToPohodaOrder.Map(order, id, items);
+                        if (mapOrder != null)
+                        {
+                            await _orderService.CreateOrder(mapOrder);
+                        }
+                        else
+                        {
+                            _logger.LogWarning($"Mapping of order returns null");
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        _logger.LogWarning($"Mapping of order returns null");
+                        _logger.LogError(ex, $"Error while creating an order {order.orderId} in Pohoda. Country is {order.customer.address.country}");
+                        return;
                     }
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, $"Error while creating an order {order.orderId} in Pohoda. Country is {order.customer.address.country}");
-                    return;
-                }                
+                _logger.LogInformation($"Order with {id} sucessfully created");
             }
-            _logger.LogInformation($"Order with {id} sucessfully created");
+            catch (Exception ex)
+            {
+                _logger.LogError($"CreatePohodaOrder failed with error {ex.Message}");
+            }
         }
 
         private async Task EnsurePohodaOrderItemsExist(GetExpandoFeedRequest.ordersOrder order,
             IEnumerable<GetPrehomeFeed.SHOPSHOPITEM> items)
         {
-            foreach (var stock in order.items)
+            try
             {
-                if (await _stock.Exists(stock.itemId.ToString()))
+                foreach (var stock in order.items)
                 {
-                    _logger.LogInformation("Found stock, id: {id}", stock.itemId);
-                    continue;
-                }
+                    if (await _stock.Exists(stock.itemId.ToString()))
+                    {
+                        _logger.LogInformation("Found stock, id: {id}", stock.itemId);
+                        continue;
+                    }
 
-                var expandoItem = items.FirstOrDefault(e => e.ITEM_ID == stock.itemId);
-                if (expandoItem == null)
-                {
-                    _logger.LogError("Cannot found expando item with id: {id}", stock.itemId);
-                    continue;
-                }
+                    var expandoItem = items.FirstOrDefault(e => e.ITEM_ID == stock.itemId);
+                    if (expandoItem == null)
+                    {
+                        _logger.LogError("Cannot found expando item with id: {id}", stock.itemId);
+                        continue;
+                    }
 
-                _logger.LogDebug($"Creating stock {JsonSerializer.Serialize(ExpandoItemToPohodaStock.Map(expandoItem))}");
-                if (!readOnly)
-                {
-                    _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
+                    _logger.LogDebug($"Creating stock {JsonSerializer.Serialize(ExpandoItemToPohodaStock.Map(expandoItem))}");
+                    if (!readOnly)
+                    {
+                        _stock.CreateStock(ExpandoItemToPohodaStock.Map(items.First(e => e.ITEM_ID == stock.itemId)));
+                    }
+                    _logger.LogInformation($"Stock with id {stock.itemId} sucessfully created");
                 }
-                _logger.LogInformation($"Stock with id {stock.itemId} sucessfully created");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"EnsurePohodaOrderItemsExists failed with message {ex.Message}");
             }
         }
 

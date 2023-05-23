@@ -37,7 +37,10 @@ public class ExpandoToPohodaOrder
                     "DE" => "Doprava DE",
                     "AT" => "Doprava AT",
                     "FR" => "Doprava FR",
-                    _ => throw new ArgumentException()
+                    "BE" => "Doprava BE",
+                    "ES" => "Doprava ES",
+                    "PT" => "Doprava PT",
+                    _ => "Doprava"
                 },
                 createOrderItemData
             );
